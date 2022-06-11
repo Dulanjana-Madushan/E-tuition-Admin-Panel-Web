@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+body {
+  background: #ffffff;
+  font-weight: 400;
+  font-family: 'Fira Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+}
