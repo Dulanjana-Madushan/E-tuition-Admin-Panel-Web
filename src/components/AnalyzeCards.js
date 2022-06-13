@@ -41,7 +41,7 @@ export default function AnalyzeCard({data}) {
  
 
   return (
-    <Box  sx={{backgroundColor:'White', m:1}}>
+    <Box  sx={{backgroundColor:"#EDf5E1" , m:1}}>
           {/*<Card 
                 sx={{width:match?'85vw':200,height:match?'':275}} 
                 onClick={data.onClick}
@@ -65,8 +65,8 @@ export default function AnalyzeCard({data}) {
         </CardContent>
         </CardActionArea>  
       </Card> */}
-      <Card sx={{width:match?'85vw':359,height:match?'':200, display: 'flex'}}  >
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Card sx={{width:match?'85vw':359,height:match?'':170, display: 'flex',borderRadius:'5%'}}  >
+      <Box sx={{ display: 'flex', flexDirection: 'column'}}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5">
             {data.text}
@@ -80,7 +80,7 @@ export default function AnalyzeCard({data}) {
         component="img"
         sx={{ width: 200 }}
         image={data.image}
-        alt="Live from space album cover"
+        alt="image"
       />
     </Card>
       </Box>    

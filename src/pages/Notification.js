@@ -25,13 +25,15 @@ const Notification = () => {
         <Box
             display='flex'
             flexDirection='column'
-            sx={{  mt: 8, pl:2,pr:2, width:'100%'}}
+            sx={{  mt: 8, pl:2,pr:2, width:'100%', backgroundColor:"#EDf5E1"}}
         >
             <Box
                 display='flex'
                 flexWrap="wrap"
-                backgroundColor="white"
-                sx={{justifyContent:'center'}}
+                backgroundColor="#EDf5E1"
+                paddingLeft={2} 
+                paddingBottom={7}
+                sx={{justifyContent:'left'}}
             >
             <Typography
               sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1}} 

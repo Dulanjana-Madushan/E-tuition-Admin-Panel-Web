@@ -50,64 +50,35 @@ const AllClasses = () => {
         <Box
             display='flex'
             flexDirection='column'
-            sx={{  mt: 8, pl:2,pr:2, width:'100%'}}
+            sx={{  mt: 8, pl:2,pr:2, width:'100%', backgroundColor:"#EDF5E1"}}
         >
             <Box
                 display='flex'
                 flexWrap="wrap"
-                backgroundColor="Blue"
-                sx={{justifyContent:'center'}}
+                backgroundColor="#EDf5e1"
+                paddingLeft={2}
+                paddingBottom={7}
+                sx={{justifyContent:'left'}}
             >
             <Typography
-              sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1}} 
+              sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1,color:"#05386B"}} 
             >
               All Classes
             </Typography>
             </Box>
-           
 
-            <Box
+            <Box 
                 display='flex'
                 flexWrap="wrap"
-                backgroundColor="Red"
-                sx={{justifyContent:'center'}}
-            >
-            <Stack direction="row" spacing={2}>
-                <Button variant="contained" startIcon={<AddIcon />} onClick={() =>
-                        setOpen(true)}>
-                    Add Classes
-                </Button>
-                
-                    <Modal open={open}>
-                        <Container className={classes.container} sx={{width:match?'':500,height:match?'':500}}>
-                            <form className={classes.form} autocomplete="off">
-                                <div className={classes.item}>
-                                    <TextField id="standard-basic" label="Title" size="medium" style={{marginTop: 20,width:"100%"}} variant="standard"/>
-                                    <TextField id="outlined-multiline-static"
-                                        multiline
-                                        rows={4}
-                                        label="Description" size="medium" style={{marginTop: 20,width:"100%"}} variant="standard"/>
-                                        <input type="file" style={{marginTop:20}}/>
-                                </div>
-                                <div className={classes.item} style={{marginTop:20, justifyContent:"center"}} >
-                                    <Button variant="contained" color="success" style={{width: 70,marginRight:20}}>Save</Button>
-                                    <Button variant="contained" color="error" onClick={() => setOpen(false)}>Cancel</Button>
-                                </div>
-                            </form>
-                        </Container>
-                    </Modal>
-                
-                
-            </Stack>
-            </Box>
-
-            <Box>
+                backgroundColor="#EDF5E1"
+                sx={{justifyContent:match?'center':'start'}}>
                 <ClassCard /> 
             </Box>
 
             <Box
                 display='flex'
                 flexWrap="wrap"
+                backgroundColor="#EDF5E1"
                 sx={{justifyContent:match?'center':'start'}}
             >
                 {error && <div>{error}</div>}
