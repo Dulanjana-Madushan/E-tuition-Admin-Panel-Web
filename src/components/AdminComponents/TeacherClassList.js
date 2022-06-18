@@ -33,7 +33,7 @@ export default function ClassCard({data}) {
 
   return (
     <Box
-      sx={{backgroundColor:'white', m:1}}
+      sx={{backgroundColor:'#EDF5E1', m:1}}
     >
       <Card
         sx={{width:match?'85vw':200,height:match?'':316}} onClick={()=>{

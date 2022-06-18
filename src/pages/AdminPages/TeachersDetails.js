@@ -1,15 +1,12 @@
 import { Box } from '@mui/system';
-import ClassCard from '../components/TeacherClassList';
 import Typography from '@mui/material/Typography';
-import useFetch from '../useFetch';
+import useFetch from '../../useFetch';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import CircularProgress from '@mui/material/CircularProgress';
-
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 //import CustomPaginationGrid from '../components/TeacherDataTable';
-import TeacherTable from '../components/TeacherDataTable';
+import TeacherTable from '../../components/AdminComponents/TeacherDataTable';
 
 
 const TeachersDetails = () => {

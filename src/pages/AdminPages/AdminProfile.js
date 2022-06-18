@@ -1,11 +1,7 @@
 import { Box } from '@mui/system';
-import ClassCard from '../components/TeacherClassList';
 import Typography from '@mui/material/Typography';
-import useFetch from '../useFetch';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import CircularProgress from '@mui/material/CircularProgress';
-
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { Card, CardMedia, Container,  IconButton,  Input,  Modal, TextField } from '@mui/material';
@@ -35,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 
 const AdminProfile = () => {
 
-    const {data, isLoading, error} = useFetch('http://localhost:5000/subjects/myclasses/5d7a514b5d2c12c7449be041');
 
     const theme = useTheme();
     const classes = useStyles();

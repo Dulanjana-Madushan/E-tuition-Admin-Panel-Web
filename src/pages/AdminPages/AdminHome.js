@@ -1,17 +1,17 @@
 
  import { Box } from '@mui/system';
- import ClassCard from '../components/TeacherClassList';
+ import ClassCard from '../../components/AdminComponents/TeacherClassList';
  import Typography from '@mui/material/Typography';
- import useFetch from '../useFetch';
+ import useFetch from '../../useFetch';
  import { useTheme } from '@mui/material/styles';
  import useMediaQuery from '@mui/material/useMediaQuery';
  import CircularProgress from '@mui/material/CircularProgress';
  
  import { useState } from 'react';
  import { makeStyles } from '@mui/styles';
-import AnalyzeCard from '../components/AnalyzeCards';
+import AnalyzeCard from '../../components/AdminComponents/AnalyzeCards';
 import { useHistory } from 'react-router-dom';
-import FirstPieChart from '../components/PieChart';
+import FirstPieChart from '../../components/AdminComponents/PieChart';
  
 // const useStyles = makeStyles({
 //   container:{

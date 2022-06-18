@@ -1,18 +1,16 @@
 import { Box } from '@mui/system';
-import ClassCard from '../components/TeacherClassList';
+//import ClassCard from '../../components/TeacherClassList';
 import Typography from '@mui/material/Typography';
-import useFetch from '../useFetch';
+import useFetch from '../../useFetch';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
-import StudentTable from '../components/StudentsDataTable';
-//import CustomPaginationGrid from '../components/StudentsDataTable';
 
 
-const StudentsDetails = () => {
+const Notification = () => {
 
     const {data, isLoading, error} = useFetch('http://localhost:5000/subjects/myclasses/5d7a514b5d2c12c7449be041');
 
@@ -33,28 +31,22 @@ const StudentsDetails = () => {
                 display='flex'
                 flexWrap="wrap"
                 backgroundColor="#EDf5E1"
-                paddingLeft={2}
+                paddingLeft={2} 
                 paddingBottom={7}
                 sx={{justifyContent:'left'}}
-                
             >
             <Typography
               sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1}} 
             >
-              Students Details
+              My Notifications
             </Typography>
             </Box>
+           
 
-            <Box>
-                <StudentTable/>
-            </Box>
-
-
-            {/*<Box>
-                <CustomPaginationGrid/>
-             </Box>*/}
+        
         </Box>
     );
 }
-export default StudentsDetails;
  
+export default Notification;
+

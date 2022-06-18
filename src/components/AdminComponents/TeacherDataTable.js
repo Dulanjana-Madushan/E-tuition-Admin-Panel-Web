@@ -1,9 +1,8 @@
 import * as React from 'react';
 import DataTable from './DataTable';
 import { DataGrid } from '@mui/x-data-grid';
-import useFetch from '../useFetch'
 import { useState, useEffect } from "react";
-
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -11,25 +10,36 @@ const columns = [
     field: 'name',
     headerName: 'First name',
     width: 150,
-    editable: true,
+    
   },
   {
     field: 'username',
     headerName: 'Last name',
     width: 150,
-    editable: true,
+    
   },
   {
     field: 'email',
     headerName: 'E-mail',
     type: 'number',
     width: 200,
-    editable: true,
+   
+  },
+  {
+    
+    headerName: 'Action',
+    width: 200,
+    render: (record) => {
+      return(
+        <>
+          <DeleteForeverIcon/>
+        </>
+      );
+    },
   },
 ];
 
-
-const StudentTable = () => {
+const TeacherTable = () => {
   const [users, setUsers]=useState([]);
 
   useEffect(() => {
@@ -45,10 +55,14 @@ const StudentTable = () => {
       <DataTable
         rows={users}
         columns={columns}
-        
       />
     </div>
   );
-}
+};
 
-export default StudentTable;
+export default TeacherTable;
+
+
+
+
+

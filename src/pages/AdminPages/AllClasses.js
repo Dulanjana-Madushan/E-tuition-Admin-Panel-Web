@@ -1,7 +1,7 @@
 import { Box } from '@mui/system';
-import ClassCard from '../components/TeacherClassList';
+import ClassCard from '../../components/AdminComponents/TeacherClassList';
 import Typography from '@mui/material/Typography';
-import useFetch from '../useFetch';
+import useFetch from '../../useFetch';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -67,9 +67,7 @@ const AllClasses = () => {
             </Typography>
             </Box>
 
-            <Box 
-                display='flex'
-                flexWrap="wrap"
+            <Box
                 backgroundColor="#EDF5E1"
                 sx={{justifyContent:match?'center':'start'}}>
                 <ClassCard /> 

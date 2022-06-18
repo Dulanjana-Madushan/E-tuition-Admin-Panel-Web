@@ -8,14 +8,9 @@ import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-//import MoreIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
 import Drawer from './SideDrawer';
-// import ClassCard from './TeacherClassList';
-import AllClasses from '../pages/AllClasses';
-// import { Container } from '@mui/material';
 import PayTable from './PayTable';
-//import {Drawer as MUIDrawer, Box } from '@mui/material';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 

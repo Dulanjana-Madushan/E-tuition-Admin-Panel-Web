@@ -1,18 +1,18 @@
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Login from "./Login";
 import SignUp from "./Register";
-import Navbar from './components/Navbar';
-import AnalyzeCards from './components/AnalyzeCards';
-import AllClasses from './pages/AllClasses';
-import TeachersDetails from './pages/TeachersDetails';
-import Notification from './pages/Notification';
+import Navbar from './components/AdminComponents/Navbar';
+import AnalyzeCards from './components/AdminComponents/AnalyzeCards';
+import AllClasses from './pages/AdminPages/AllClasses';
+import TeachersDetails from './pages/AdminPages/TeachersDetails';
+import Notification from './pages/AdminPages/Notification';
 import { makeStyles } from '@mui/styles';
-import AdminHome from './pages/AdminHome';
-import StudentsDetails from './pages/StudentsDetails';
+import AdminHome from './pages/AdminPages/AdminHome';
+import StudentsDetails from './pages/AdminPages/StudentsDetails';
 // import PayTable from './PayTable';
 import useToken from './useToken';
 import { useState } from 'react'; 
-import AdminProfile from './pages/AdminProfile';
+import AdminProfile from './pages/AdminPages/AdminProfile';
 // import ClassCard from './TeacherClassList';
 
 
