@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Login from "./Login";
-// import SignUp from "./Register";
+import SignUp from "./Register";
 import Navbar from './components/Navbar';
 import AnalyzeCards from './components/AnalyzeCards';
 import AllClasses from './pages/AllClasses';
@@ -39,9 +39,14 @@ function App() {
   return (
     <div className={classes.container}>
     <Router>
-      <Navbar />
-          <Switch>
-            {/*<Route path='/login' component={Login}/>*/}
+      <Switch>
+     
+        <Route path='/login' component={Login}/>
+        <Route path='/register' component={SignUp}/>
+     
+      <>  
+        <Navbar />
+
             <Route path='/' exact component={AdminHome} />
             <Route path='/profile' component={AdminProfile} />
             <Route path='/allclasses' component={AllClasses} />
@@ -49,7 +54,8 @@ function App() {
             <Route path='/studentsDetails' component={StudentsDetails} />
             <Route path='/notification' component={Notification} />
             
-            
+            </>  
+      
             {/*<Route path='/table'>
               <PayTable/>
             </Route> */}
