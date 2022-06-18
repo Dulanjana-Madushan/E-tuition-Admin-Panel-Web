@@ -17,6 +17,7 @@ import AllClasses from '../pages/AllClasses';
 import PayTable from './PayTable';
 //import {Drawer as MUIDrawer, Box } from '@mui/material';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 export default function Navbar() {
   
@@ -25,6 +26,8 @@ export default function Navbar() {
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   
+  const history = useHistory();
+
   const toggleDrawer = event => {
     if (
       event.type === "keydown" &&
@@ -67,6 +70,7 @@ export default function Navbar() {
           size="large"
           aria-label="account of current user"
           color="inherit"
+          
         >
           <Avatar />
         </IconButton>
@@ -110,8 +114,11 @@ export default function Navbar() {
                 edge="end"
                 aria-label="account of current user"
                 color="inherit"
+                onClick={()=>{
+                  history.push("/profile");
+              }}
               >
-                <Avatar alt="John Doe" src="john_doe.jpg"/>
+                <Avatar alt="John Doe" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOEuaL14xHFILfpNxSISzrJE3bnBckLdpHvA&usqp=CAU"/>
               </IconButton>
             </Box>
           </Toolbar>

@@ -11,6 +11,7 @@
  import { makeStyles } from '@mui/styles';
 import AnalyzeCard from '../components/AnalyzeCards';
 import { useHistory } from 'react-router-dom';
+import FirstPieChart from '../components/PieChart';
  
 // const useStyles = makeStyles({
 //   container:{
@@ -32,23 +33,22 @@ import { useHistory } from 'react-router-dom';
         {
           _id: 1,
           text: "All students",
-          description: "2000",
+          number: "2000",
           image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOEuaL14xHFILfpNxSISzrJE3bnBckLdpHvA&usqp=CAU",
-          onClick: () => history.push("/home/sinhala/classMaterials")
+ 
         },
         {
           _id: 2,
           text: "All Teachers",
-          description: "82",
-          image: "https://img.freepik.com/free-vector/noisy-big-megaphone_74855-7630.jpg?w=2000",
-          onClick: () => history.push("/home/sinhala/announcements")
+          number: "82",
+          image: "https://img.freepik.com/free-vector/noisy-big-megaphone_74855-7630.jpg?w=2000"
+          
         },
         {
           _id: 3,
           text: "All Classes",
-          description: "3257",
-          image: "https://img.freepik.com/free-vector/concept-credit-card-payment-landing-page_52683-24923.jpg?1?w=360",
-          onClick: () => history.push("/home/sinhala/payments")
+          number: "3257",
+          image: "https://img.freepik.com/free-vector/focused-tiny-people-reading-books_74855-5836.jpg?w=2000"
         },
       ];
      
@@ -80,6 +80,7 @@ import { useHistory } from 'react-router-dom';
                 display='flex'
                 flexWrap="wrap"
                 backgroundColor="#EDF5E1"
+                paddingBottom={2}
                 sx={{justifyContent:match?'center':'start'}}
             >
 
@@ -89,6 +90,31 @@ import { useHistory } from 'react-router-dom';
                     </div>
                 ))}
             </Box>
+
+
+            <Box
+               display='flex'
+               flexWrap="wrap"
+               paddingLeft={2}
+               sx={{justifyContent:'left'}}
+              >
+              <Typography
+               sx={{fontFamily:"Times New Roman" , fontSize:20,mb:1,mt:1,color:"#05386B"}} 
+              >
+               User Details
+             </Typography>
+
+            </Box>
+            <Box
+              display='flex'
+              flexWrap="wrap"
+              
+              paddingLeft={4}
+            >
+                 <FirstPieChart/>
+             </Box>
+             
+            
          </Box>
 
      );

@@ -9,7 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 //import CustomPaginationGrid from '../components/TeacherDataTable';
-import DataGridDemo from '../components/TeacherDataTable';
+import TeacherTable from '../components/TeacherDataTable';
 
 
 const TeachersDetails = () => {
@@ -46,7 +46,7 @@ const TeachersDetails = () => {
 
 
             <Box>
-                <DataGridDemo/>
+                <TeacherTable/>
             </Box>
 
 

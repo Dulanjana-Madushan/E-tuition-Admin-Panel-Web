@@ -65,14 +65,14 @@ export default function AnalyzeCard({data}) {
         </CardContent>
         </CardActionArea>  
       </Card> */}
-      <Card sx={{width:match?'85vw':359,height:match?'':170, display: 'flex',borderRadius:'5%'}}  >
+      <Card sx={{width:match?'85vw':350,height:match?'':170, display: 'flex', boxShadow: 12}}  >
       <Box sx={{ display: 'flex', flexDirection: 'column'}}>
         <CardContent sx={{ flex: '1 0 auto' }}>
-          <Typography component="div" variant="h5">
+          <Typography component="div" variant="h5"  sx={{fontSize:20,mb:1,mt:1,color:"#05386B"}}>
             {data.text}
           </Typography>
-          <Typography variant="subtitle1" color="text.secondary" component="div">
-            {data.description}
+          <Typography variant="subtitle1" color="text.secondary" component="div" >
+            {data.number}
           </Typography>
         </CardContent>
       </Box>

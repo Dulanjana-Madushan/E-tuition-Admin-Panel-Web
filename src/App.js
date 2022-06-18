@@ -12,6 +12,7 @@ import StudentsDetails from './pages/StudentsDetails';
 // import PayTable from './PayTable';
 import useToken from './useToken';
 import { useState } from 'react'; 
+import AdminProfile from './pages/AdminProfile';
 // import ClassCard from './TeacherClassList';
 
 
@@ -42,6 +43,7 @@ function App() {
           <Switch>
             {/*<Route path='/login' component={Login}/>*/}
             <Route path='/' exact component={AdminHome} />
+            <Route path='/profile' component={AdminProfile} />
             <Route path='/allclasses' component={AllClasses} />
             <Route path='/teachersDetails' component={TeachersDetails} />
             <Route path='/studentsDetails' component={StudentsDetails} />
