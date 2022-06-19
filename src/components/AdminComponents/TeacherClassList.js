@@ -50,10 +50,10 @@ export default function ClassCard({data}) {
         />
         <CardContent>
           <Typography gutterBottom height={30} overflow='clip' variant="h5" component="div">
-            {/*{data.subject}*/} Sinhala
+            {data.subject}
           </Typography>
           <Typography height={55} overflow='clip' variant="body2" color="text.secondary">
-            {/*{data.description}*/}This is fiest class
+            {data.description}
           </Typography>
         </CardContent>
         <CardActions sx={{justifyContent:'space-evenly', height:15, backgroundColor:'green',}}>

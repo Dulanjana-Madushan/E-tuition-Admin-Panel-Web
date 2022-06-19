@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AllClasses = () => {
 
-    const {data, isLoading, error} = useFetch('http://localhost:5000/subject/myclasses/5d7a514b5d2c12c7449be041');
+    const {data, isLoading, error} = useFetch('http://localhost:5000/subjects');
 
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
@@ -67,11 +67,11 @@ const AllClasses = () => {
             </Typography>
             </Box>
 
-            <Box
+            {/*<Box
                 backgroundColor="#EDF5E1"
                 sx={{justifyContent:match?'center':'start'}}>
                 <ClassCard /> 
-            </Box>
+            </Box>*/}
 
             <Box
                 display='flex'

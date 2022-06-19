@@ -3,6 +3,24 @@ import DataTable from './DataTable';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState, useEffect } from "react";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import useFetch from '../../useFetch';
+
+// const columns = [
+//     { field: 'id', headerName: 'ID', width: 90 },
+//     {
+//       field: 'name',
+//       headerName: 'First name',
+//       width: 150,
+      
+//     },
+//     {
+//       field: 'email',
+//       headerName: 'E-mail',
+//       type: 'number',
+//       width: 200,
+     
+//     },
+//   ];
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -40,7 +58,12 @@ const columns = [
 ];
 
 const TeacherTable = () => {
+
+  //const {data, isLoading, error} = useFetch('http://localhost:5000/users/teachers');
+
   const [users, setUsers]=useState([]);
+
+  //const [teachers, setUsers]=useState([]);
 
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
