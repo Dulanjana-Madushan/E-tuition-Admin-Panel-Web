@@ -158,7 +158,7 @@ export default function SideDrawer({open}) {
     {
       text: "Home",
       icon: <HomeRoundedIcon  />,
-      onClick: () => history.push("/")
+      onClick: () => history.push("/adminDashboard")
     },
     {
       text: "All classes",

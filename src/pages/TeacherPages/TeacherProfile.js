@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
-import { Card, CardMedia, Container,  IconButton,  Input,  Modal, TextField } from '@mui/material';
+import { Card, CardMedia, Checkbox, Container,  FormControlLabel,  FormGroup,  IconButton,  Input,  Modal, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const AdminProfile = () => {
+const TeacherProfile = () => {
 
 
     const theme = useTheme();
@@ -58,7 +58,7 @@ const AdminProfile = () => {
             <Typography
               sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1}} 
             >
-              Admin Profile
+              Teacher Profile
             </Typography>
 
             </Box>
@@ -104,7 +104,7 @@ const AdminProfile = () => {
             backgroundColor="#EDf5E1"
             component="form"
             sx={{
-                '& .MuiTextField-root': { m: 1, width: '40ch'},justifyContent:match?'center':'center'
+                '& .MuiTextField-root': { m: 1, width: '50ch'},justifyContent:match?'center':'center'
             }}
             noValidate
             autoComplete="off"
@@ -114,8 +114,8 @@ const AdminProfile = () => {
                 direction={{ xs: 'column', sm: 'row' }}
                 spacing={{ xs: 1, sm: 2, md: 4 }}
             >
-                <TextField label="First Name" id="filled-size-normal" defaultValue="John" variant="filled"/>
-                <TextField label="Last Name" id="filled-size-normal" defaultValue="Doe" variant="filled"/>
+                <TextField label="Title" id="filled-size-normal" defaultValue="Mr." variant="filled"/>
+                <TextField label="Name" id="filled-size-normal" defaultValue="Teacher First" variant="filled"/>
             </Stack>
 
 
@@ -124,9 +124,37 @@ const AdminProfile = () => {
             direction={{ xs: 'column', sm: 'row' }}
             spacing={{ xs: 1, sm: 2, md: 4 }}
             >
-            <TextField label="Email" id="filled-size-normal" defaultValue="johndoe@gmail.com" variant="filled"/>
-            <TextField label="Phone Number" id="filled-size-normal" defaultValue="0987654321" variant="filled"/>
+            <TextField label="Email" id="filled-size-normal" defaultValue="Teacher@gmail.com" variant="filled"/>
+            <TextField id="filled-size-normal" defaultValue="Male" variant="filled"/>
             </Stack>
+
+
+
+            <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={{ xs: 1, sm: 2, md: 4 }}
+            >
+            <TextField label="Phone" id="filled-size-normal" defaultValue="1234567890" variant="filled"/>
+            <TextField label="School/Institute" id="filled-size-normal" defaultValue="University of Ruhuna" variant="filled"/>
+            </Stack>
+
+
+
+            <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={{ xs: 1, sm: 2, md: 4 }}
+                sx={{
+                   justifyContent:match?'center':'left'
+                }}
+            >
+                <FormControlLabel control={<Checkbox/>} label="Undergraduate"></FormControlLabel>
+                <FormControlLabel control={<Checkbox/>} label="Postgraduate"></FormControlLabel>
+                <FormControlLabel control={<Checkbox/>} label="BSc"></FormControlLabel>
+                <FormControlLabel control={<Checkbox/>} label="MSc"></FormControlLabel>
+                <FormControlLabel control={<Checkbox/>} label="PHD"></FormControlLabel>
+         
+            </Stack>
+
 
             </Box>
 
@@ -151,5 +179,5 @@ const AdminProfile = () => {
     );
 }
  
-export default AdminProfile;
+export default TeacherProfile;
 

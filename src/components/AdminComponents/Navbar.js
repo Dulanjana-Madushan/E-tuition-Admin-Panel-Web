@@ -10,7 +10,6 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import Drawer from './SideDrawer';
-import PayTable from './PayTable';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
@@ -110,10 +109,10 @@ export default function Navbar() {
                 aria-label="account of current user"
                 color="inherit"
                 onClick={()=>{
-                  history.push("/profile");
+                  history.push("/aprofile");
               }}
               >
-                <Avatar alt="John Doe" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOEuaL14xHFILfpNxSISzrJE3bnBckLdpHvA&usqp=CAU"/>
+                <Avatar alt="John Doe" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_YtLi_0fU9VqLch7g0n4WzIAuQJnjLZu-hA&usqp=CAU"/>
               </IconButton>
             </Box>
           </Toolbar>

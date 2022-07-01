@@ -14,7 +14,13 @@ import useToken from './useToken';
 import { useState } from 'react'; 
 import AdminProfile from './pages/AdminPages/AdminProfile';
 // import ClassCard from './TeacherClassList';
-
+import TeacherNavbar from './components/TeacherComponents/TeacherNavbar';
+import TeacherHome from './pages/TeacherPages/TeacherHome';
+import Chat from './pages/TeacherPages/Chat';
+import TNotification from './pages/TeacherPages/Notification';
+import AddClass from './pages/TeacherPages/AddClass';
+import TeacherProfile from './pages/TeacherPages/TeacherProfile';
+import MaterialGrid from './components/AdminComponents/ClassMaterials';
 
 const useStyles = makeStyles({
   container:{
@@ -44,17 +50,31 @@ function App() {
         <Route path='/login' component={Login}/>
         <Route path='/register' component={SignUp}/>
      
-      <>  
+      {/* <>  
         <Navbar />
-
-            <Route path='/' exact component={AdminHome} />
-            <Route path='/profile' component={AdminProfile} />
+            <Route path='/adminDashboard' exact component={AdminHome} />
+            <Route path='/aprofile' component={AdminProfile} />
             <Route path='/allclasses' component={AllClasses} />
             <Route path='/teachersDetails' component={TeachersDetails} />
             <Route path='/studentsDetails' component={StudentsDetails} />
             <Route path='/notification' component={Notification} />
-            
-            </>  
+            <Route path='/teacherHome' component={TeacherHome} />  
+            <Route path='/chat' component={Chat} />  
+            <Route path='/tnotification' component={TNotification} />       
+      </>  */}
+
+      <>
+        <TeacherNavbar/>
+            <Route path='/teacherHome' component={TeacherHome} />  
+            <Route path='/chat' component={Chat} />  
+            <Route path='/tnotification' component={TNotification} />
+            <Route path='/addClass' component={AddClass} />  
+            <Route path='/tprofile' component={TeacherProfile} />
+            <Route path='/home/sinhala' component={MaterialGrid} />
+
+      </> 
+
+
       
             {/*<Route path='/table'>
               <PayTable/>

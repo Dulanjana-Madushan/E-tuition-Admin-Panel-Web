@@ -12,6 +12,7 @@
 import AnalyzeCard from '../../components/AdminComponents/AnalyzeCards';
 import { useHistory } from 'react-router-dom';
 import FirstPieChart from '../../components/AdminComponents/PieChart';
+import ColumnChart from '../../components/AdminComponents/ColumnChart';
  
 // const useStyles = makeStyles({
 //   container:{
@@ -33,21 +34,21 @@ import FirstPieChart from '../../components/AdminComponents/PieChart';
         {
           _id: 1,
           text: "All students",
-          number: "2000",
+          number: "100",
           image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOEuaL14xHFILfpNxSISzrJE3bnBckLdpHvA&usqp=CAU",
  
         },
         {
           _id: 2,
           text: "All Teachers",
-          number: "82",
+          number: "200",
           image: "https://img.freepik.com/free-vector/noisy-big-megaphone_74855-7630.jpg?w=2000"
           
         },
         {
           _id: 3,
           text: "All Classes",
-          number: "3257",
+          number: "600",
           image: "https://img.freepik.com/free-vector/focused-tiny-people-reading-books_74855-5836.jpg?w=2000"
         },
       ];
@@ -105,13 +106,15 @@ import FirstPieChart from '../../components/AdminComponents/PieChart';
              </Typography>
 
             </Box>
+
+
             <Box
               display='flex'
               flexWrap="wrap"
               
-              paddingLeft={4}
+              sx={{justifyContent:'center',width:'100%',}}
             >
-                 <FirstPieChart/>
+                 <ColumnChart/>
              </Box>
              
             

@@ -1,13 +1,15 @@
+import * as React from 'react';
 import { Box } from '@mui/system';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
-import { Card, CardMedia, Container,  IconButton,  Input,  Modal, TextField } from '@mui/material';
+import { Card, CardMedia,  IconButton,  Input, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     container:{
@@ -29,11 +31,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const AdminProfile = () => {
+const AddClass = () => {
 
 
     const theme = useTheme();
     const classes = useStyles();
+    const history = useHistory();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
     const [open, setOpen] = useState(false);
    
@@ -74,7 +77,7 @@ const AdminProfile = () => {
                     // component="img"
                     alt="class media"
                     style={{height: 250, width:250}}
-                    image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_YtLi_0fU9VqLch7g0n4WzIAuQJnjLZu-hA&usqp=CAU"
+                    image=""
                 />
                 </Card>
             </Box>
@@ -114,8 +117,8 @@ const AdminProfile = () => {
                 direction={{ xs: 'column', sm: 'row' }}
                 spacing={{ xs: 1, sm: 2, md: 4 }}
             >
-                <TextField label="First Name" id="filled-size-normal" defaultValue="John" variant="filled"/>
-                <TextField label="Last Name" id="filled-size-normal" defaultValue="Doe" variant="filled"/>
+                <TextField label="First Name" id="filled-size-normal" defaultValue="Normal" variant="filled"/>
+                <TextField label="Last Name" id="filled-size-normal" defaultValue="Normal" variant="filled"/>
             </Stack>
 
 
@@ -124,8 +127,18 @@ const AdminProfile = () => {
             direction={{ xs: 'column', sm: 'row' }}
             spacing={{ xs: 1, sm: 2, md: 4 }}
             >
-            <TextField label="Email" id="filled-size-normal" defaultValue="johndoe@gmail.com" variant="filled"/>
-            <TextField label="Phone Number" id="filled-size-normal" defaultValue="0987654321" variant="filled"/>
+            <TextField label="Email" id="filled-size-normal" defaultValue="Normal" variant="filled"/>
+            <TextField label="Phone Number" id="filled-size-normal" defaultValue="Normal" variant="filled"/>
+            </Stack>
+
+
+
+            <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={{ xs: 1, sm: 2, md: 4 }}
+            >
+            <TextField label="School" id="filled-size-normal" defaultValue="Normal" variant="filled"/>
+            <TextField label="Age" id="filled-size-normal" defaultValue="Normal" variant="filled"/>
             </Stack>
 
             </Box>
@@ -143,6 +156,10 @@ const AdminProfile = () => {
                     <Button variant="contained" color="success">
                         Update
                     </Button>
+                    <Button variant="contained" color="Error" onClick={()=>{
+                            history.push("/teacherHome");}}>
+                        Cancel
+                    </Button>
                     
                 </Stack>
             </Box>
@@ -151,5 +168,5 @@ const AdminProfile = () => {
     );
 }
  
-export default AdminProfile;
+export default AddClass;
 
