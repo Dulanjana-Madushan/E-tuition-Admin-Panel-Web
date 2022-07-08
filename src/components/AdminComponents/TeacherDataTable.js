@@ -40,13 +40,14 @@ const columns = [
     field: 'email',
     headerName: 'E-mail',
     type: 'number',
-    width: 200,
+    width: 300,
    
   },
   {
     
     headerName: 'Action',
     width: 200,
+    
     render: (record) => {
       return(
         <>
@@ -59,12 +60,10 @@ const columns = [
 
 const TeacherTable = () => {
 
+  //const [teachers, setUsers]=useState([]);
   //const {data, isLoading, error} = useFetch('http://localhost:5000/users/teachers');
 
   const [users, setUsers]=useState([]);
-
-  //const [teachers, setUsers]=useState([]);
-
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then((response) => response.json())
@@ -72,6 +71,13 @@ const TeacherTable = () => {
   },[]);
 
   //const {data} = useFetch('https://jsonplaceholder.typicode.com/users'); 
+
+  // const [teachers, setUsers]=useState([]);
+  // useEffect(() => {
+  //   fetch('http://localhost:5000/users/teachers')
+  //     .then((response) => response.json())
+  //     .then((json) => setUsers(json))
+  // },[]);
 
   return (
     <div style={{ height: 400, width: '100%' }}>

@@ -70,7 +70,7 @@ import ColumnChart from '../../components/AdminComponents/ColumnChart';
                  sx={{justifyContent:'left'}}
              >
              <Typography
-               sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1,color:"#05386B"}} 
+               sx={{fontSize:30,mb:1,mt:1,color:"#05386B"}} 
              >
                Admin Home
              </Typography>
@@ -100,7 +100,7 @@ import ColumnChart from '../../components/AdminComponents/ColumnChart';
                sx={{justifyContent:'left'}}
               >
               <Typography
-               sx={{fontFamily:"Times New Roman" , fontSize:20,mb:1,mt:1,color:"#05386B"}} 
+               sx={{fontSize:20,mb:1,mt:1,color:"#05386B"}} 
               >
                User Details
              </Typography>

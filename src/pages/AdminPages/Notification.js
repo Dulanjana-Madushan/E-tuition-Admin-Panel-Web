@@ -25,12 +25,12 @@ const Notification = () => {
         <Box
             display='flex'
             flexDirection='column'
-            sx={{  mt: 8, pl:2,pr:2, width:'100%', backgroundColor:"#EDf5E1"}}
+            sx={{  mt: 8, pl:2,pr:2, width:'100%', backgroundColor:"white"}}
         >
             <Box
                 display='flex'
                 flexWrap="wrap"
-                backgroundColor="#EDf5E1"
+                backgroundColor="white"
                 paddingLeft={2} 
                 paddingBottom={7}
                 sx={{justifyContent:'left'}}

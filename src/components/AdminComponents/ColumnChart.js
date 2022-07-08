@@ -10,7 +10,7 @@ function ColumnChart() {
       series={[
         {
             //name:'teachers',
-            data:[100,200,600],
+            data:[4,4,8],
             //color:['#cccccc','#666666','#777777']
         }
       ]}

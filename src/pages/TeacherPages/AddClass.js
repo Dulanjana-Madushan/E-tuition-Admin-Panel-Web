@@ -61,7 +61,7 @@ const AddClass = () => {
             <Typography
               sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1}} 
             >
-              Admin Profile
+              Add class
             </Typography>
 
             </Box>

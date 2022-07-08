@@ -102,22 +102,22 @@ export default function MaterialGrid({data}) {
             return (
               <Box  sx={{backgroundColor:'white', m:1}}>
               <Card onClick={onClick}
-        sx={{width:match?'85vw':200,height:match?'':275}} 
+        sx={{width:match?'85vw':350,height:match?'':225}} 
       >
       <CardActionArea>
         <CardMedia
-          // component="img"
+          component="img"
           alt="add material"
           className={classes.media}
-          style={{height: 50, paddingTop: '50.25%'}}
+          style={{height: 140}}
           image={image}
           
         ></CardMedia>
         <CardContent>
-          <Typography gutterBottom height={30} overflow='clip' variant="h5" component="div">
+          <Typography variant="h5" component="div">
             {text}
           </Typography>
-          <Typography height={55} overflow='clip' variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.secondary">
             {description}
           </Typography>
         </CardContent>

@@ -23,7 +23,7 @@ const columns = [
     field: 'email',
     headerName: 'E-mail',
     type: 'number',
-    width: 200,
+    width: 300,
     editable: true,
   },
 ];

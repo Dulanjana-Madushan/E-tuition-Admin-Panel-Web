@@ -61,7 +61,7 @@ const AllClasses = () => {
                 sx={{justifyContent:'left'}}
             >
             <Typography
-              sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1,color:"#05386B"}} 
+              sx={{fontSize:30,mb:1,mt:1,color:"#05386B"}} 
             >
               All Classes
             </Typography>

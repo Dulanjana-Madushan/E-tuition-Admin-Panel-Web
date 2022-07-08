@@ -38,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
 
 const TeacherHome = () => {
 
-    const {data, isLoading, error} = useFetch('http://localhost:5000/subject/myclasses/5d7a514b5d2c12c7449be041');
+    const {data, isLoading, error} = useFetch('http://localhost:5000/subjects');
+    //const {data, isLoading, error} = useFetch('http://localhost:5000/subject/myclasses/5d7a514b5d2c12c7449be041');
 
     const theme = useTheme();
     const history = useHistory();
@@ -54,12 +55,17 @@ const TeacherHome = () => {
         <Box
             display='flex'
             flexDirection='column'
+            backgroundColor="#EDF5E1"
             sx={{  mt: 8, pl:2,pr:2, width:'100%'}}
         >
             <Box
+                marginTop={2}
+                marginBottom={2}
                 display='flex'
                 flexWrap="wrap"
-                backgroundColor="white"
+                backgroundColor="#EDF5E1"
+                paddingLeft={2}
+                //paddingBottom={7}
                 sx={{justifyContent:'center'}}
             >
             <Typography
@@ -71,43 +77,28 @@ const TeacherHome = () => {
            
 
             <Box
+                
                 display='flex'
                 flexWrap="wrap"
-                backgroundColor="white"
+                backgroundColor="#EDF5E1"
+                paddingLeft={2}
+                paddingTop={2}
+                paddingBottom={2}
                 sx={{justifyContent:'center'}}
             >
-            <Stack direction="row" spacing={2}>
-                <Button variant="contained" startIcon={<AddIcon />}  //onClick={()=>{history.push("/addClass");}}
+           
+                <Button variant="contained" startIcon={<AddIcon />} onClick={()=>{history.push("/teacherHome/addClass");}}
                 >
                     Add Class
                 </Button>
                 
-                    {/* <Modal open={open}>
-                        <Container className={classes.container} sx={{width:match?'':500,height:match?'':500}}>
-                            <form className={classes.form} autocomplete="off">
-                                <div className={classes.item}>
-                                    <TextField id="standard-basic" label="Title" size="medium" style={{marginTop: 20,width:"100%"}} variant="standard"/>
-                                    <TextField id="outlined-multiline-static"
-                                        multiline
-                                        rows={4}
-                                        label="Description" size="medium" style={{marginTop: 20,width:"100%"}} variant="standard"/>
-                                        <input type="file" style={{marginTop:20}}/>
-                                </div>
-                                <div className={classes.item} style={{marginTop:20, justifyContent:"center"}} >
-                                    <Button variant="contained" color="success" style={{width: 70,marginRight:20}}>Save</Button>
-                                    <Button variant="contained" color="error" onClick={() => setOpen(false)}>Cancel</Button>
-                                </div>
-                            </form>
-                        </Container>
-                    </Modal> */}
                 
-                
-            </Stack>
             </Box>
 
-            <Box>
+            {/* <Box
+            >
                 <ClassCard /> 
-            </Box>
+            </Box> */}
 
             <Box
                 display='flex'

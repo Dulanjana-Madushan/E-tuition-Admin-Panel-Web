@@ -57,7 +57,7 @@ export default function ClassCard({data}) {
           </Typography>
         </CardContent>
         <CardActions sx={{justifyContent:'space-evenly', height:15, backgroundColor:'green',}}>
-          <Button size='small' sx={{color:'white'}}>Share</Button>
+          
           <Button size="small" sx={{color:'white'}}>View Class</Button>
         </CardActions>
         </CardActionArea>

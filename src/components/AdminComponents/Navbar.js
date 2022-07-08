@@ -1,12 +1,14 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import MoreIcon from '@mui/icons-material/More';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import Drawer from './SideDrawer';
@@ -41,6 +43,7 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -61,16 +64,31 @@ export default function Navbar() {
       
       <MenuItem>
         <IconButton
-          size="large"
+          size="medium"
           aria-label="account of current user"
           color="inherit"
+          onClick={()=>{
+            history.push("/aprofile");
+          }}
           
         >
-          <Avatar />
-        </IconButton>
+      
+        </IconButton >
         <p>Profile</p>
       </MenuItem>
+
+      <MenuItem>
+        <IconButton
+          size="medium"
+          aria-label="log out"
+          color="inherit"
+        >
+       
+        </IconButton>
+        <p>log out</p>
+      </MenuItem>
     </Menu>
+    
   );
 
   return (
@@ -89,7 +107,7 @@ export default function Navbar() {
               color="inherit"
               aria-label="open drawer"
               onClick={toggleDrawer}
-              sx={{ mr: 2 ,display:{xm:'flex', sm:'none'}}}
+              sx={{ mr: 2 ,display:{xm:'flex', sm:'flex'}}}
             >
               <MenuIcon />
             </IconButton>
@@ -97,20 +115,32 @@ export default function Navbar() {
               variant="h6"
               noWrap
               component="div"
-              sx={{fontFamily:"Times New Roman" , fontSize:30,color:"#EDF5E1"}}
+              sx={{fontSize:30,color:"#EDF5E1"}}
             >
               E - Tuition
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
+              <Button onClick={()=>{
+                  localStorage.removeItem('token');
+                  history.push("/login");
+                  }} 
+                  sx={{fontSize:15,color:"#EDF5E1"}}>
+                LogOut
+              </Button>
+            </Box>
+            <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
               <IconButton
                 size="large"
                 edge="end"
-                aria-label="account of current user"
                 color="inherit"
-                onClick={()=>{
-                  history.push("/aprofile");
-              }}
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                //onClick={()=>{
+                //  history.push("/aprofile");
+                //}}
               >
                 <Avatar alt="John Doe" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_YtLi_0fU9VqLch7g0n4WzIAuQJnjLZu-hA&usqp=CAU"/>
               </IconButton>

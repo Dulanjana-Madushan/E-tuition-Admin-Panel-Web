@@ -30,7 +30,7 @@ const StudentsDetails = () => {
                 
             >
             <Typography
-              sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1}} 
+              sx={{fontSize:30,mb:1,mt:1}} 
             >
               Students Details
             </Typography>
