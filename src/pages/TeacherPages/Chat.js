@@ -10,7 +10,7 @@ function Chat() {
 
 import { Box } from '@mui/system';
 import Typography from '@mui/material/Typography';
-import useFetch from '../../useFetch';
+import useFetch from '../../services/useFetch';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -21,7 +21,7 @@ import { makeStyles } from '@mui/styles';
 
 const Chat = () => {
 
-    const {data, isLoading, error} = useFetch('http://localhost:5000/subjects/myclasses/5d7a514b5d2c12c7449be041');
+    // const {data, isLoading, error} = useFetch('http://localhost:5000/subjects/myclasses/5d7a514b5d2c12c7449be041');
 
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));

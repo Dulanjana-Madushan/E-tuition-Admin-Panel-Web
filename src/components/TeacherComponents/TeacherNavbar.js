@@ -10,8 +10,11 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import Drawer from './TeacherDrawer';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+// import { maxWidth } from '@mui/system';
+import logo from '../../images/logo.png';
+import profile from "../../images/john_doe.jpg";
 
 export default function Navbar() {
   
@@ -35,10 +38,6 @@ export default function Navbar() {
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
   };
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -75,12 +74,12 @@ export default function Navbar() {
 
   return (
     <>
-      <Box sx={{display:'flex', backgroundColor: '#adc345', height:"5"}}>
+      <Box sx={{display:'flex', height:"5"}}>
         <AppBar 
           position="fixed" 
           sx={{ 
             zIndex: (theme) => theme.zIndex.drawer + 1, 
-            backgroundColor:'#379683' }}
+            backgroundColor:"#1b5e20" }}
         >
           <Toolbar>
             <IconButton
@@ -92,6 +91,14 @@ export default function Navbar() {
               sx={{ mr: 2 ,display:{xm:'flex', sm:'none'}}}
             >
               <MenuIcon />
+            </IconButton>
+            <IconButton
+                edge="start"
+                onClick={()=>{
+                  history.push("/teacher");
+              }}
+              >
+                <Avatar alt="logo" src={logo}/>
             </IconButton>
             <Typography
               variant="h6"
@@ -112,148 +119,20 @@ export default function Navbar() {
                   history.push("/tprofile");
               }}
               >
-                <Avatar alt="John Doe" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_YtLi_0fU9VqLch7g0n4WzIAuQJnjLZu-hA&usqp=CAU"/>
+                <Avatar alt="John Doe" src={profile}/>
               </IconButton>
             </Box>
           </Toolbar>
         </AppBar>
         {renderMobileMenu}
       </Box>
-      
-        <Box sx={{display:'flex'}}>
-          <Drawer open={open}/>
-          {/*<TeacherHome path='/home'/>*/}
-        </Box>
+      <Box sx={{display:'flex'}}>
+        <Drawer open={open}/>
+        {/*<TeacherHome path='/home'/>*/}
+      </Box>
         
     
     
     </>
   );
 }
-
-// import * as React from 'react';
-// import AppBar from '@mui/material/AppBar';
-// import Box from '@mui/material/Box';
-// import Toolbar from '@mui/material/Toolbar';
-// import IconButton from '@mui/material/IconButton';
-// import Typography from '@mui/material/Typography';
-// import Avatar from '@mui/material/Avatar';
-// import MenuItem from '@mui/material/MenuItem';
-// import Menu from '@mui/material/Menu';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import { useState } from 'react';
-// import Drawer from './TeacherDrawer';
-// //import {Drawer as MUIDrawer, Box } from '@mui/material';
-// import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-
-// export default function TeacherNavbar() {
-  
-//   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-//   const [open, setOpen] = useState(false);
-
-//   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  
-//   const toggleDrawer = event => {
-//     if (
-//       event.type === "keydown" &&
-//       (event.key === "Tab" || event.key === "Shift")
-//     ) {
-//       return;
-//     }
-
-//     setOpen(!open);
-//   };
-
-//   const handleMobileMenuClose = () => {
-//     setMobileMoreAnchorEl(null);
-//   };
-
-//   const handleMobileMenuOpen = (event) => {
-//     setMobileMoreAnchorEl(event.currentTarget);
-//   };
-
-//   const mobileMenuId = 'primary-search-account-menu-mobile';
-//   const renderMobileMenu = (
-//     <Menu
-//       anchorEl={mobileMoreAnchorEl}
-//       anchorOrigin={{
-//         vertical: 'top',
-//         horizontal: 'right',
-//       }}
-//       id={mobileMenuId}
-//       keepMounted
-//       transformOrigin={{
-//         vertical: 'top',
-//         horizontal: 'right',
-//       }}
-//       open={isMobileMenuOpen}
-//       onClose={handleMobileMenuClose}
-//     >
-      
-//       <MenuItem>
-//         <IconButton
-//           size="large"
-//           aria-label="account of current user"
-//           color="inherit"
-//         >
-//           <Avatar />
-//         </IconButton>
-//         <p>Profile</p>
-//       </MenuItem>
-//     </Menu>
-//   );
-
-//   return (
-//     <>
-//       <Box sx={{display:'flex', backgroundColor: '#adc345', height:"5"}}>
-//         <AppBar 
-//           position="fixed" 
-//           sx={{ 
-//             zIndex: (theme) => theme.zIndex.drawer + 1, 
-//             backgroundColor:'#1b5e20' }}
-//         >
-//           <Toolbar>
-//             <IconButton
-//               size="large"
-//               edge="start"
-//               color="inherit"
-//               aria-label="open drawer"
-//               onClick={toggleDrawer}
-//               sx={{ mr: 2 ,display:{xm:'flex', sm:'none'}}}
-//             >
-//               <MenuIcon />
-//             </IconButton>
-//             <Typography
-//               variant="h6"
-//               noWrap
-//               component="div"
-//               sx={{fontFamily:"Times New Roman" , fontSize:30}}
-//             >
-//               E - Tuition
-//             </Typography>
-//             <Box sx={{ flexGrow: 1 }} />
-//             <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
-//               <IconButton
-//                 size="large"
-//                 edge="end"
-//                 aria-label="account of current user"
-//                 color="inherit"
-//               >
-//                 <Avatar alt="John Doe" src="john_doe.jpg"/>
-//               </IconButton>
-//             </Box>
-//           </Toolbar>
-//         </AppBar>
-//         {renderMobileMenu}
-//       </Box>
-      
-//         <Box sx={{display:'flex'}}>
-//           <Drawer open={open}/>
-//           {/*<TeacherHome path='/home'/>*/}
-//         </Box>
-        
-    
-    
-//     </>
-//   );
-// }

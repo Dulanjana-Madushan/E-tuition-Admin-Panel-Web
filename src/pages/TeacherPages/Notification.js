@@ -11,7 +11,7 @@ export default Notification;*/
 
 import { Box } from '@mui/system';
 import Typography from '@mui/material/Typography';
-import useFetch from '../../useFetch';
+import useFetch from '../../services/useFetch';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CircularProgress from '@mui/material/CircularProgress';

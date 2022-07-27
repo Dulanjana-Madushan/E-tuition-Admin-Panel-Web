@@ -10,7 +10,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import { useHistory } from 'react-router-dom';
+import {base_url} from './Const/Const';
+import { useHistory } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -24,31 +25,71 @@ function Copyright(props) {
   );
 }
 
-async function loginUser(credentials) {
-    return fetch('http://localhost:5000/auth/login', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
+// async function loginUser(credentials) {
+//     return fetch('http://localhost:5000/auth/login', {
+//       method: 'POST',
+//       headers: {'Content-Type': 'application/json'},
+//       body: JSON.stringify(credentials)
+//     })
+//       .then(data => data.json())
      
-   }
+//    }
 
 export default function Login({setToken}) {
     // const history = useHistory();
 
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(false);
+    const history = useHistory();
 
-    const handleSubmit = async e => {
-        e.preventDefault();
-        const token = await loginUser({
-          email,
-          password
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      const body = JSON.stringify({
+          email: email,
+          password: password,
         });
-        setToken(token);
-   
-  };
+  
+      setIsLoading(true);
+      setError(null);
+      
+      fetch(base_url+'auth/login', {
+              method: 'POST',
+              headers: {"Content-Type":"application/json"},
+              body:body
+          }).then(res=>{
+            setIsLoading(true);
+            return res.json();
+          })
+          .then(data=>{
+            console.log(data);
+              setIsLoading(false);
+              setToken(data.token);
+              console.log(data.token);
+              if(!data['success']){
+                  setError(data['error']);
+                  return;
+              }
+              localStorage.setItem('role', data['role']);
+              let role = localStorage.getItem('role');
+              if(role === 'admin'){
+                  history.push('/admin');
+              }else if(role === 'teacher'){
+                  history.push('/teacher');
+              }
+              
+          })
+          .catch(err => {
+              if(err.name === "AbortError"){
+                  console.log('Fetch aborted');
+              }else{
+                  setIsLoading(false);
+                  setError(err.message);
+                  console.log(err.message);
+              }
+          })
+    };
 
   return (
     <Container component="main" maxWidth="sm">
@@ -103,7 +144,7 @@ export default function Login({setToken}) {
                     {/* {error} */}
                 </span>
             </Typography>
-            <Button
+            {!isLoading && <Button
                 type="submit"
                 fullWidth
                 color="success"
@@ -112,7 +153,7 @@ export default function Login({setToken}) {
                 //disabled={isLoading}
             >
                 Log In
-            </Button>
+            </Button>}
             <Grid container>
                 <Grid item xs>
                 <Link href="#" variant="body2">
@@ -260,4 +301,4 @@ export default function Login({setToken}) {
 
 Login.propTypes = {
     setToken: PropTypes.func.isRequired
-  }
+}
