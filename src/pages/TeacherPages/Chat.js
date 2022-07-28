@@ -41,7 +41,7 @@ const Chat = () => {
                 display='flex'
                 flexWrap="wrap"
                 marginBottom={2}
-                sx={{justifyContent:'center',border:'1px solid green'}}
+                sx={{justifyContent:'center',backgroundColor:'#D9DDDC'}}
             >
             <Typography
               sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1}} 

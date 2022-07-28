@@ -26,7 +26,7 @@ const Lms = () => {
                 display='flex'
                 flexWrap="wrap"
                 marginBottom={2}
-                sx={{justifyContent:'center',border:'1px solid green'}}
+                sx={{justifyContent:'center',backgroundColor:'#D9DDDC'}}
             >
             <Typography
                 sx={{fontFamily:"Times New Roman" , fontSize
@@ -42,7 +42,7 @@ const Lms = () => {
                 sx={{justifyContent:'right', mt:1}}
             >
                 <Button variant="contained" startIcon={<AddIcon />} onClick={()=>{history.push("/subjects/" + subjectid + "/createquiz");}}
-                >
+                 sx={{backgroundColor:"green",color:"white"}}>
                     Create New
                 </Button>          
             </Box>

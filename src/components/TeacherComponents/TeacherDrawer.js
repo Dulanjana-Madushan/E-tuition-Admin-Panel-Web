@@ -75,7 +75,7 @@ export default function SideDrawer({open}) {
                         >
                         <ListItemAvatar>
                           <Avatar
-                            sx={{backgroundColor:'white',color:'#028A0F'}} variant="rounded">
+                            sx={{backgroundColor:'white',color:'#028A0F'}} >
                             <HomeIcon />
                           </Avatar>
                         </ListItemAvatar>
@@ -94,7 +94,7 @@ export default function SideDrawer({open}) {
 
                         <ListItemAvatar>
                           <Avatar
-                          sx={{backgroundColor:'white',color:'#028A0F'}} variant="rounded">
+                          sx={{backgroundColor:'white',color:'#028A0F'}} >
                             <ChatIcon />
                           </Avatar>
                         </ListItemAvatar>
@@ -112,7 +112,7 @@ export default function SideDrawer({open}) {
                     >
                         <ListItemAvatar>
                           <Avatar
-                          sx={{backgroundColor:'white',color:'#028A0F'}} variant="rounded">
+                          sx={{backgroundColor:'white',color:'#028A0F'}} >
                             <NotificationsIcon />
                           </Avatar>
                         </ListItemAvatar>
@@ -131,7 +131,7 @@ export default function SideDrawer({open}) {
 
                         <ListItemAvatar>
                           <Avatar
-                          sx={{backgroundColor:'white',color:'#028A0F'}} variant="rounded">
+                          sx={{backgroundColor:'white',color:'#028A0F'}}>
                             <SettingsIcon />
                           </Avatar>
                         </ListItemAvatar>
