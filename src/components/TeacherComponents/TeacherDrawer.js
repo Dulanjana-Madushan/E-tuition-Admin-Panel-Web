@@ -14,13 +14,15 @@ import { useTheme } from '@mui/material/styles';
 import { makeStyles }from '@mui/styles';
 import { useState } from 'react';
 import React, { useHistory } from 'react-router-dom';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
 
 const useStyles = makeStyles({
     root: {
         "&$selected": {
             backgroundColor: "white",
             width:200,
-            color: "blue",
+            color: "black",
             borderTopLeftRadius:10,
             borderBottomLeftRadius:10,
             "&:hover": {
@@ -60,7 +62,7 @@ export default function SideDrawer({open}) {
         >
             <Toolbar />
             <Box>
-                <List sx={{color:'#000000'}}>
+                <List sx={{color:'#ffffff'}}>
                     <ListItemButton
                         selected={selectedIndex === 0}
                         onClick={() => {
@@ -71,55 +73,69 @@ export default function SideDrawer({open}) {
                             selected: styles.selected
                         }}
                         >
-                            <ListItemIcon>
-                                <HomeIcon />
-                            </ListItemIcon>
+                        <ListItemAvatar>
+                          <Avatar
+                            sx={{backgroundColor:'white',color:'#028A0F'}} variant="rounded">
+                            <HomeIcon />
+                          </Avatar>
+                        </ListItemAvatar>
                             <ListItemText primary="Home" />
                     </ListItemButton>
                     <ListItemButton
-                            selected={selectedIndex === 2}
+                            selected={selectedIndex === 1}
                             onClick={() => {
-                            setSelectedIndex(2);
+                            setSelectedIndex(1);
                             history.push("/chat")}}
                             classes={{
                                 root: styles.root,
                                 selected: styles.selected
                             }}
                         >
-                            <ListItemIcon>
-                                <ChatIcon />
-                            </ListItemIcon>
+
+                        <ListItemAvatar>
+                          <Avatar
+                          sx={{backgroundColor:'white',color:'#028A0F'}} variant="rounded">
+                            <ChatIcon />
+                          </Avatar>
+                        </ListItemAvatar>
                             <ListItemText primary="Chat" />
                     </ListItemButton>
                     <ListItemButton
-                        selected={selectedIndex === 3}
+                        selected={selectedIndex === 2}
                         onClick={() => {
-                        setSelectedIndex(3);
+                        setSelectedIndex(2);
                         history.push("/tnotification")}}
                         classes={{
                             root: styles.root,
                             selected: styles.selected
                         }}
                     >
-                        <ListItemIcon>
+                        <ListItemAvatar>
+                          <Avatar
+                          sx={{backgroundColor:'white',color:'#028A0F'}} variant="rounded">
                             <NotificationsIcon />
-                        </ListItemIcon>
+                          </Avatar>
+                        </ListItemAvatar>
                         <ListItemText primary="Notifications" />
                     </ListItemButton>
                     <ListItemButton
-                        selected={selectedIndex === 4}
+                        selected={selectedIndex === 3}
                         onClick={() => {
-                        setSelectedIndex(4);
+                        setSelectedIndex(3);
                         history.push("/setting")}}
                         classes={{
                             root: styles.root,
                             selected: styles.selected
                         }}
                     >
-                        <ListItemIcon>
+
+                        <ListItemAvatar>
+                          <Avatar
+                          sx={{backgroundColor:'white',color:'#028A0F'}} variant="rounded">
                             <SettingsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Setting" />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary="Settings" />
                     </ListItemButton>
                 </List>
             </Box>

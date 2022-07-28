@@ -30,12 +30,15 @@ const TeacherProfile = () => {
         <Box
             display='flex'
             flexDirection='column'
-            sx={{mt: 6, pl:2, pr:2, width:'100%', backgroundColor:"#EDf5E1"}}
+            padding={2}
+            sx={{mt: 6, pl:2, pr:2, width:'100%'}}
         >
             <Box
+                marginTop = {2}
                 display='flex'
                 flexWrap="wrap"
-                marginTop={2}
+                marginBottom={2}
+                sx={{justifyContent:'center',border:'1px solid green'}}
             >
                 <Typography
                     sx={{fontFamily:"Times New Roman" , fontSize:30, mb:1, mt:1}} 
@@ -187,7 +190,7 @@ const TeacherProfile = () => {
                 <Box
                 display='flex'
                 flexWrap="wrap"
-                backgroundColor="#EDf5E1"
+                //backgroundColor="#EDf5E1"
                 paddingTop={2}
                 paddingBottom={2}
                 sx={{justifyContent:match?'center':'center'}}

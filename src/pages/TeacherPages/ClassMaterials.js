@@ -49,28 +49,28 @@ export default function MaterialGrid({data}) {
       text: "Announcements",
       description: "send and view announcements",
       image: "https://img.freepik.com/free-vector/noisy-big-megaphone_74855-7630.jpg?w=2000",
-      onClick: () => history.push("/home/sinhala/announcements")
+      onClick: () => history.push("/subjects/" + subjectid + "/announcements")
     },
     {
       _id: 4,
       text: "Payments",
       description: "payment list",
       image: "https://img.freepik.com/free-vector/concept-credit-card-payment-landing-page_52683-24923.jpg?1?w=360",
-      onClick: () => history.push("/home/sinhala/payments")
+      onClick: () => history.push("/subjects/" + subjectid + "/payments")
     },
     {
       _id: 5,
       text: "Student list",
       description: "view the student list",
       image: "https://img.freepik.com/free-vector/set-social-people-media-profile-member_24877-53571.jpg?w=2000",
-      onClick: () => history.push("/home/sinhala/studentList")
+      onClick: () => history.push("/subjects/" + subjectid + "/studentList")
     },
     {
       _id: 6,
       text: "Add student",
       description: "add students to the class",
       image: "https://img.freepik.com/free-vector/focused-tiny-people-reading-books_74855-5836.jpg?w=2000",
-      onClick: () => history.push("/home/sinhala/addStudent")
+      onClick: () => history.push("/subjects/" + subjectid + "/addStudent")
     },
     {
       _id: 7,

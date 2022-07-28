@@ -22,13 +22,15 @@ const TeacherHome = () => {
         <Box
             display='flex'
             flexDirection='column'
+            padding={2}
             sx={{mt: 6, pl:2,pr:2, width:'100%'}}
         >
             <Box
                 marginTop = {2}
                 display='flex'
                 flexWrap="wrap"
-                sx={{justifyContent:'center'}}
+                marginBottom={2}
+                sx={{justifyContent:'center',border:'1px solid green'}}
             >
                 <Typography
                     sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1}} 

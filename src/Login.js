@@ -54,7 +54,7 @@ export default function Login({setToken}) {
       setIsLoading(true);
       setError(null);
       
-      fetch(base_url+'auth/login', {
+      fetch(base_url+'/auth/login', {
               method: 'POST',
               headers: {"Content-Type":"application/json"},
               body:body

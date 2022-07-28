@@ -25,6 +25,10 @@ import QuizForm from './pages/TeacherPages/QuizForm';
 import QuizList from './pages/TeacherPages/QuizList';
 import Lms from './pages/TeacherPages/Lms';
 import Review from './pages/TeacherPages/Review';
+import Announcements from './pages/TeacherPages/Announcements';
+import Payments from './pages/TeacherPages/Payments';
+import StudentList from './pages/TeacherPages/StudentList';
+import AddStudent from './pages/TeacherPages/AddStudent';
 
 const useStyles = makeStyles({
   container:{
@@ -64,6 +68,10 @@ function App() {
             <Route exact path = '/subjects/:subjectid/quiz' component = {QuizList} />
             <Route exact path = '/subjects/:subjectid/createquiz' component = {QuizForm} />
             <Route exact path = '/subjects/:subjectid/lms' component = {Lms} />
+            <Route exact path = '/subjects/:subjectid/announcements' component = {Announcements} />
+            <Route exact path = '/subjects/:subjectid/payments' component = {Payments} />
+            <Route exact path = '/subjects/:subjectid/studentlist' component = {StudentList} />
+            <Route exact path = '/subjects/:subjectid/addstudent' component = {AddStudent} />
             <Route exact path = '/subjects/:subjectid/reviews' component = {Review} />
             <Route exact path = '/subjects/:subjectid' component = {MaterialGrid} />
             <Route exact path = '/subjects' component = {AddClass} />  
