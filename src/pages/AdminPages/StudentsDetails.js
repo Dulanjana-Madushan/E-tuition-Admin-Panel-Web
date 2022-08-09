@@ -1,12 +1,13 @@
 import { Box } from '@mui/system';
 import Typography from '@mui/material/Typography';
-import useFetch from '../../useFetch';
+import useFetch from '../../services/useFetch';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import StudentTable from '../../components/AdminComponents/StudentsDataTable';
 //import CustomPaginationGrid from '../components/AdminComponents/StudentsDataTable';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const StudentsDetails = () => {
@@ -18,15 +19,17 @@ const StudentsDetails = () => {
         <Box
             display='flex'
             flexDirection='column'
-            sx={{  mt: 8, pl:2,pr:2, width:'100%', backgroundColor:"#EDf5E1"}}
+            sx={{  mt: 8, pl:2,pr:2, width:'100%'}}
         >
             <Box
+                marginTop = {2}
+                marginBottom = {2}
                 display='flex'
                 flexWrap="wrap"
-                backgroundColor="#EDf5E1"
+                //backgroundColor="#EDf5e1"
                 paddingLeft={2}
-                paddingBottom={7}
-                sx={{justifyContent:'left'}}
+                paddingBottom={2}
+               sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
                 
             >
             <Typography

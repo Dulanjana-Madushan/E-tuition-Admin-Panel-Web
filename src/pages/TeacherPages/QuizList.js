@@ -27,8 +27,7 @@ const QuizList = () => {
                 sx={{justifyContent:'center',backgroundColor:'#D9DDDC'}}
             >
             <Typography
-                sx={{fontFamily:"Times New Roman" , fontSize
-                :30,}}
+                sx={{fontSize:30,mb:1,mt:1}}
             >
                 Quiz List
             </Typography>
@@ -40,7 +39,7 @@ const QuizList = () => {
                 sx={{justifyContent:'right'}}
             >
                 <Button variant="contained" startIcon={<AddIcon />} onClick={()=>{history.push("/subjects/" + subjectid + "/createquiz");}}
-                >
+                sx={{backgroundColor:"#4b0082",color:"white"}}>
                     Create Quiz
                 </Button>          
             </Box>
@@ -59,7 +58,7 @@ const QuizList = () => {
             >
                 {data && data.map((item) => (
                     <div key={item._id}>
-                        <Box sx={{backgroundColor:'#EDF5E1', pl:1, pr:1,}}>
+                        <Box sx={{backgroundColor:'#f2cafe', pl:1, pr:1,borderRadius: 2}}>
                         <Typography variant='body2'>
                                 Created At : {item.createdAt}
                             </Typography>
@@ -71,9 +70,8 @@ const QuizList = () => {
                             </Typography>
                             <Button 
                                 size='small'
-                                color="success"
                                 variant="contained"
-                                sx={{mb:1}}
+                                sx={{mb:1,backgroundColor:"#4b0082",color:"white"}}
                                 onClick={()=>{history.push("/quiz/" + item._id);}}
                             >
                                 Update

@@ -1,7 +1,7 @@
 import { Box } from '@mui/system';
 import ClassCard from '../../components/AdminComponents/TeacherClassList';
 import Typography from '@mui/material/Typography';
-import useFetch from '../../useFetch';
+import useFetch from '../../services/useFetch';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { Container,  Modal, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Class } from '@mui/icons-material';
+import { base_url } from '../../Const/Const';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AllClasses = () => {
 
-    const {data, isLoading, error} = useFetch('http://localhost:5000/subjects');
+    const {data, isLoading, error} = useFetch(base_url+'/subjects');
 
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
@@ -50,15 +51,17 @@ const AllClasses = () => {
         <Box
             display='flex'
             flexDirection='column'
-            sx={{  mt: 8, pl:2,pr:2, width:'100%', backgroundColor:"#EDF5E1"}}
+            sx={{  mt: 8, pl:2,pr:2, width:'100%'}}
         >
             <Box
-                display='flex'
-                flexWrap="wrap"
-                backgroundColor="#EDf5e1"
-                paddingLeft={2}
-                paddingBottom={7}
-                sx={{justifyContent:'left'}}
+                 marginTop = {2}
+                 marginBottom = {2}
+                 display='flex'
+                 flexWrap="wrap"
+                 //backgroundColor="#EDf5e1"
+                 paddingLeft={2}
+                 paddingBottom={2}
+                sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
             >
             <Typography
               sx={{fontSize:30,mb:1,mt:1,color:"#05386B"}} 
@@ -76,12 +79,12 @@ const AllClasses = () => {
             <Box
                 display='flex'
                 flexWrap="wrap"
-                backgroundColor="#EDF5E1"
+                //backgroundColor="#EDF5E1"
                 sx={{justifyContent:match?'center':'start'}}
             >
                 {error && <div>{error}</div>}
                 {isLoading && <CircularProgress color="success" />}
-                {data && data.data.map((item) => (
+                {data && data.map((item) => (
                     <div key={item._id}>
                         <ClassCard data={item} />
                     </div>

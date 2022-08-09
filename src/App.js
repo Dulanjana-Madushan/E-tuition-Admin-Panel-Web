@@ -1,19 +1,20 @@
 import React, { useState } from 'react'; 
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Login from "./Login";
-// import SignUp from "./Register";
-// import Navbar from './components/AdminComponents/Navbar';
-// import AnalyzeCards from './components/AdminComponents/AnalyzeCards';
-// import AllClasses from './pages/AdminPages/AllClasses';
-// import TeachersDetails from './pages/AdminPages/TeachersDetails';
+import SignUp from "./Register";
+import Navbar from './components/AdminComponents/Navbar';
+import AnalyzeCards from './components/AdminComponents/AnalyzeCards';
+import AllClasses from './pages/AdminPages/AllClasses';
+import ClassDetails from './pages/AdminPages/ClassDetails';
+import TeachersDetails from './pages/AdminPages/TeachersDetails';
 import { makeStyles } from '@mui/styles';
-// import AdminHome from './pages/AdminPages/AdminHome';
-// import StudentsDetails from './pages/AdminPages/StudentsDetails';
-// import Notification from './pages/AdminPages/Notification';
-// import PayTable from './PayTable';
-// import ClassCard from './TeacherClassList';
+import AdminHome from './pages/AdminPages/AdminHome';
+import StudentsDetails from './pages/AdminPages/StudentsDetails';
+import Notification from './pages/AdminPages/Notification';
 import useToken from './services/useToken';
-// import AdminProfile from './pages/AdminPages/AdminProfile';
+import AdminProfile from './pages/AdminPages/AdminProfile';
+import OneStudent from './pages/AdminPages/OneStudent';
+import OneTeacher from './pages/AdminPages/OneTeacher';
 import TeacherNavbar from './components/TeacherComponents/TeacherNavbar';
 import TeacherHome from './pages/TeacherPages/TeacherHome';
 import Chat from './pages/TeacherPages/Chat';
@@ -50,19 +51,22 @@ function App() {
     <Router>
       <Switch>
         <Route path='/login' ><Login setToken={setToken} /></Route>
-        {/* <Route path='/register' component={SignUp}/> */}
+        <Route path='/register' component={SignUp}/>
      
-      {/* <>  
+      <>  
         <Navbar />
-            <Route path='/adminDashboard' exact component={AdminHome} />
+            <Route path='/admin' component={AdminHome} />
             <Route path='/aprofile' component={AdminProfile} />
             <Route path='/allclasses' component={AllClasses} />
-            <Route path='/teachersDetails' component={TeachersDetails} />
-            <Route path='/studentsDetails' component={StudentsDetails} />
-            <Route path='/tnotification' component={TNotification} />       
-      </>  */}
+            <Route exact path='/classdetails/:subjectid' component = {ClassDetails} />
+            <Route path='/allteachers' component={TeachersDetails} />
+            <Route path='/allstudents' component={StudentsDetails} />
+            <Route path='/notification' component={Notification} />
+            <Route exact path='/studentdetails/:userid' component={OneStudent} />
+            <Route exact path='/teacherdetails/:userid' component={OneTeacher} />       
+      </> 
 
-      <>
+      {/* <>
         <TeacherNavbar/>
             <Route path = '/teacher' component = {TeacherHome} />  
             <Route exact path = '/subjects/:subjectid/quiz' component = {QuizList} />
@@ -79,7 +83,7 @@ function App() {
             <Route path = '/chat' component = {Chat} />  
             <Route path = '/tnotification' component = {TNotification} />
             <Route path = '/tprofile' component = {TeacherProfile} />
-      </> 
+      </>  */}
 
 
       

@@ -9,6 +9,7 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import useFetch from '../../services/useFetch';
 import { base_url } from '../../Const/Const';
 import { genders, titles } from '../../Const/Const';
+import Image from '../../images/profile_photo.png';
 
 const TeacherProfile = () => {
 
@@ -24,7 +25,7 @@ const TeacherProfile = () => {
     const [qualifications, seQualifications] = useState(null);
 
     const {data, isLoading, error} = useFetch(base_url + '/auth/me');
-    console.log(data);
+    console.log(data.photo.webContentLink);
    
     return (  
         <Box
@@ -41,7 +42,7 @@ const TeacherProfile = () => {
                 sx={{justifyContent:'center',backgroundColor:'#D9DDDC'}}
             >
                 <Typography
-                    sx={{fontFamily:"Times New Roman" , fontSize:30, mb:1, mt:1}} 
+                    sx={{fontSize:30, mb:1, mt:1}} 
                 >
                     Teacher Profile
                 </Typography>
@@ -53,12 +54,12 @@ const TeacherProfile = () => {
                     flexWrap="wrap"
                     sx={{justifyContent:'center'}}
                 >
-                    {!selectedImage && (
+                   
                                     <div>
-                                        <img alt="profile" height="250px" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsQ-YHX2i3RvTDDmpfnde4qyb2P8up7Wi3Ww&usqp=CAU'/>
+                                        <img alt="profile" height="250px" src={data.photo.webContentLink}/>
                                     </div>
-                                )}
-                    {selectedImage && (
+                              
+                    {/* {selectedImage && (
                                     <div>
                                         <img alt="profile" height="250px" src={URL.createObjectURL(selectedImage)} />
                                         <br />
@@ -67,7 +68,7 @@ const TeacherProfile = () => {
                                             setSelectedImage(null)}}>Remove</button>
                                         <br/><br/>
                                     </div>
-                                )}
+                                )} */}
                 </Box>
                 <Box 
                     display='flex'

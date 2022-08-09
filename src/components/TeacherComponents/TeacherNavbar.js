@@ -15,6 +15,7 @@ import { useHistory } from 'react-router-dom';
 // import { maxWidth } from '@mui/system';
 import logo from '../../images/logo.png';
 import profile from "../../images/john_doe.jpg";
+import { Button } from '@mui/material';
 
 export default function Navbar() {
   
@@ -79,7 +80,7 @@ export default function Navbar() {
           position="fixed" 
           sx={{ 
             zIndex: (theme) => theme.zIndex.drawer + 1, 
-            backgroundColor:"#1b5e20" }}
+            backgroundColor:"#4b0082" }}
         >
           <Toolbar>
             <IconButton
@@ -104,11 +105,20 @@ export default function Navbar() {
               variant="h6"
               noWrap
               component="div"
-              sx={{fontFamily:"Times New Roman" , fontSize:30,color:"#EDF5E1"}}
+              sx={{fontSize:30,color:"#EDF5E1"}}
             >
               E - Tuition
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
+              <Button onClick={()=>{
+                  localStorage.removeItem('token');
+                  history.push("/login");
+                  }} 
+                  sx={{fontSize:15,color:"#EDF5E1"}}>
+                LogOut
+              </Button>
+            </Box>
             <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
               <IconButton
                 size="large"

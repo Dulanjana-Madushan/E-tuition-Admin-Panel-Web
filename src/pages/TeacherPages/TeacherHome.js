@@ -30,10 +30,10 @@ const TeacherHome = () => {
                 display='flex'
                 flexWrap="wrap"
                 marginBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#D9DDDC'}}
+                sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
             >
                 <Typography
-                    sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1}} 
+                    sx={{fontSize:30,mb:1,mt:1}} 
                 >
                     My Classes
                 </Typography>
@@ -45,7 +45,7 @@ const TeacherHome = () => {
                 sx={{justifyContent:'right', mb:2}}
             >
                 <Button variant="contained" startIcon={<AddIcon />} onClick={()=>{history.push('/subjects');}}
-                sx={{backgroundColor:"green",color:"white"}}>
+                sx={{backgroundColor:"#4b0082",color:"white"}}>
                     Add Class
                 </Button>          
             </Box>

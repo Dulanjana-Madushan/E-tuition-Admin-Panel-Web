@@ -1,7 +1,6 @@
 import { Box } from '@mui/system';
 //import ClassCard from '../../components/TeacherClassList';
 import Typography from '@mui/material/Typography';
-import useFetch from '../../useFetch';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -11,8 +10,6 @@ import { makeStyles } from '@mui/styles';
 
 
 const Notification = () => {
-
-    const {data, isLoading, error} = useFetch('http://localhost:5000/subjects/myclasses/5d7a514b5d2c12c7449be041');
 
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
@@ -28,15 +25,17 @@ const Notification = () => {
             sx={{  mt: 8, pl:2,pr:2, width:'100%', backgroundColor:"white"}}
         >
             <Box
+                marginTop = {2}
+                marginBottom = {2}
                 display='flex'
                 flexWrap="wrap"
-                backgroundColor="white"
-                paddingLeft={2} 
-                paddingBottom={7}
-                sx={{justifyContent:'left'}}
-            >
+                //backgroundColor="#EDf5e1"
+                paddingLeft={2}
+                paddingBottom={2}
+               sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}>
+
             <Typography
-              sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1}} 
+              sx={{fontSize:30,mb:1,mt:1}} 
             >
               My Notifications
             </Typography>

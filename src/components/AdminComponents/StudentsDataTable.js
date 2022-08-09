@@ -1,52 +1,86 @@
 import * as React from 'react';
 import DataTable from './DataTable';
 import { DataGrid } from '@mui/x-data-grid';
-//import useFetch from '../useFetch';
 import { useState, useEffect } from "react";
+import useFetch from '../../services/useFetch';
+import { base_url } from '../../Const/Const';
+import { forwardRef } from 'react';
+import Edit from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { useHistory,useParams } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'name',
-    headerName: 'First name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'username',
-    headerName: 'Last name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'email',
-    headerName: 'E-mail',
-    type: 'number',
-    width: 300,
-    editable: true,
-  },
-];
 
 
 const StudentTable = () => {
-  const [users, setUsers]=useState([]);
+  const history = useHistory();
+  const { subjectid } = useParams();
 
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then((response) => response.json())
-      .then((json) => setUsers(json))
-  },[]);
+  const {data, isLoading, error} = useFetch(base_url + '/admin/students'); 
+  console.log(data);
 
-  //const {data} = useFetch('https://jsonplaceholder.typicode.com/users'); 
+  const MatEdit = ({index}) =>{
+    const handleEditClick = () => {
+      
+    }
+  
+    return <FormControlLabel
+              control={
+                <IconButton  onClick={()=>{
+                  history.push("/studentdetails/"+index);
+                  console.log(index);
+                 }}>
+                  <Edit/>
+                </IconButton>
+              }
+            />
+  };
+              
+  const columns = [
+    { field: '_id', headerName: 'ID', width: 90 , hide:true},
+    {
+      field: 'edit',
+      headerName: 'Edit',
+      width: 200,
+      disableClickEventBubbling:true,
+      renderCell: (params) => {
+        return (
+          <div>
+            <MatEdit index={params.row._id}/>
+          </div>
+        );
+      }
+    },
+    {
+      field: 'name',
+      headerName: 'First name',
+      width: 200,
+  
+    },
+    {
+      field: 'email',
+      headerName: 'E-mail',
+      width: 300,
+  
+    },
+    {
+      field: 'isPending',
+      headerName: 'Status(verified or not)',
+      width: 300,
+  
+    },
+  ];
 
   return (
     <div style={{ height: 400, width: '100%' }}>
-      <DataTable
-        rows={users}
+      {isLoading && <CircularProgress color="success" />}
+      {data && <DataTable
+        rows={data}
         columns={columns}
         
-      />
+      />}
     </div>
   );
 }

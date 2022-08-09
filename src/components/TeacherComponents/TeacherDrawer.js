@@ -16,13 +16,14 @@ import { useState } from 'react';
 import React, { useHistory } from 'react-router-dom';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
+import { Typography } from '@mui/material';
 
 const useStyles = makeStyles({
     root: {
         "&$selected": {
             backgroundColor: "white",
             width:200,
-            color: "black",
+            color: "#4b0082",
             borderTopLeftRadius:10,
             borderBottomLeftRadius:10,
             "&:hover": {
@@ -30,7 +31,9 @@ const useStyles = makeStyles({
             }
         },
         "&:hover": {
-            backgroundColor: "white"
+            backgroundColor: "white",
+            transform: "scale3d(1.1, 1.1, 1)",
+            transition: "0.5s"
         }
     },
     selected: {},
@@ -54,7 +57,7 @@ export default function SideDrawer({open}) {
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
-                    backgroundColor:'#66bb6a',
+                    backgroundColor:'#D9DDDC',
                     borderRight:'none',
                     boxSizing: 'border-box',
                 },
@@ -62,7 +65,7 @@ export default function SideDrawer({open}) {
         >
             <Toolbar />
             <Box>
-                <List sx={{color:'#ffffff'}}>
+                <List sx={{color:'#000000'}}>
                     <ListItemButton
                         selected={selectedIndex === 0}
                         onClick={() => {
@@ -73,14 +76,12 @@ export default function SideDrawer({open}) {
                             selected: styles.selected
                         }}
                         >
-                        <ListItemAvatar>
-                          <Avatar
-                            sx={{backgroundColor:'white',color:'#028A0F'}} >
-                            <HomeIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                            <ListItemText primary="Home" />
+                            <ListItemIcon>
+                                <HomeIcon sx={{color:'#000000'}}/>
+                            </ListItemIcon>
+                            <Typography sx={{fontWeight: 600}}>Home</Typography>
                     </ListItemButton>
+
                     <ListItemButton
                             selected={selectedIndex === 1}
                             onClick={() => {
@@ -91,15 +92,14 @@ export default function SideDrawer({open}) {
                                 selected: styles.selected
                             }}
                         >
-
-                        <ListItemAvatar>
-                          <Avatar
-                          sx={{backgroundColor:'white',color:'#028A0F'}} >
-                            <ChatIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                            <ListItemText primary="Chat" />
+                            <ListItemIcon>
+                                <ChatIcon sx={{color:'#000000'}}/>
+                            </ListItemIcon>
+               
+                       
+                            <Typography sx={{fontWeight: 600}}>Chat</Typography>
                     </ListItemButton>
+
                     <ListItemButton
                         selected={selectedIndex === 2}
                         onClick={() => {
@@ -110,14 +110,12 @@ export default function SideDrawer({open}) {
                             selected: styles.selected
                         }}
                     >
-                        <ListItemAvatar>
-                          <Avatar
-                          sx={{backgroundColor:'white',color:'#028A0F'}} >
-                            <NotificationsIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Notifications" />
+                        <ListItemIcon>
+                            <NotificationsIcon sx={{color:'#000000'}}/>
+                        </ListItemIcon>
+                        <Typography sx={{fontWeight: 600}}>Notification</Typography>
                     </ListItemButton>
+
                     <ListItemButton
                         selected={selectedIndex === 3}
                         onClick={() => {
@@ -128,14 +126,11 @@ export default function SideDrawer({open}) {
                             selected: styles.selected
                         }}
                     >
-
-                        <ListItemAvatar>
-                          <Avatar
-                          sx={{backgroundColor:'white',color:'#028A0F'}}>
-                            <SettingsIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Settings" />
+                    
+                    <ListItemIcon>
+                        <SettingsIcon sx={{color:'#000000'}}/>
+                    </ListItemIcon>
+                    <Typography sx={{fontWeight: 600}}>Settings</Typography>
                     </ListItemButton>
                 </List>
             </Box>

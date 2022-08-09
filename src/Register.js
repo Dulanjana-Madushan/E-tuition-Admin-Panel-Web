@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Image from './images/hey.png';
 
 function Copyright(props) {
   return (
@@ -63,22 +64,29 @@ export default function SignUp() {
   };
 
   return (
+  <Grid container>
+    <Grid item md={6}>
+            <div className="container">
+                <img alt="profile" height="550px" width="100%" src={Image}/>
+            </div>
+    </Grid>
+    <Grid item md={6} sm={12}>
     <Container component="main" maxWidth="sm">
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            border: 'solid',
-            padding: 5,
+            border: 'none',
+            padding: 2,
           }}
         >
-          <Avatar sx={{bgcolor: 'green' }}>
+          <Avatar sx={{bgcolor: '#4b0082' }}>
             <LoginOutlined />
           </Avatar>
           <Typography component="h1" variant="h5">
-              <span style= {{fontSize:40, fontFamily:"Times New Roman"}}>Sign up</span>
+              <span style= {{fontSize:40}}>Sign up</span>
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
@@ -132,8 +140,7 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              color="success"
+              sx={{ mt: 3, mb: 2 ,backgroundColor: '#4b0082'}}
               disabled={isLoading}
             >
               Sign Up
@@ -148,7 +155,9 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 4 }} />
+        <Copyright sx={{ mt: 1 }} />
     </Container>
+    </Grid>
+  </Grid>
   );
 }

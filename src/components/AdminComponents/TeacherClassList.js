@@ -10,7 +10,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { makeStyles }from '@mui/styles';
 import { CardActionArea } from '@mui/material';
-import { useHistory } from 'react-router-dom';
+import { useHistory,useParams } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import MaterialGrid from './ClassMaterials';
 
@@ -28,6 +28,7 @@ export default function ClassCard({data}) {
   const theme = useTheme();
   const classes = useStyles();
   const history = useHistory();
+  const { subjectid } = useParams();
 
   const match = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -37,7 +38,7 @@ export default function ClassCard({data}) {
     >
       <Card
         sx={{width:match?'85vw':200,height:match?'':316}} onClick={()=>{
-          history.push("/home/sinhala");
+          history.push("/classdetails/"+data._id);
       }}
       >
       <CardActionArea>
@@ -46,7 +47,7 @@ export default function ClassCard({data}) {
           alt="class media"
           className={classes.media}
           style={{height: 50, paddingTop: '56.25%'}}
-          image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7cmu-yfeosVSTyQwE1Iy2XP0v_KWNK6w7hA&usqp=CAU"
+          image={data.post.webContentLink}
         />
         <CardContent>
           <Typography gutterBottom height={30} overflow='clip' variant="h5" component="div">
@@ -56,10 +57,7 @@ export default function ClassCard({data}) {
             {data.description}
           </Typography>
         </CardContent>
-        <CardActions sx={{justifyContent:'space-evenly', height:15, backgroundColor:'green',}}>
-          
-          <Button size="small" sx={{color:'white'}}>View Class</Button>
-        </CardActions>
+        
         </CardActionArea>
       </Card>
     </Box>

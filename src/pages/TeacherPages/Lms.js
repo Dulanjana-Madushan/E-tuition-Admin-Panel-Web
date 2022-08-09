@@ -26,11 +26,10 @@ const Lms = () => {
                 display='flex'
                 flexWrap="wrap"
                 marginBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#D9DDDC'}}
+                sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
             >
             <Typography
-                sx={{fontFamily:"Times New Roman" , fontSize
-                :30,}}
+                sx={{fontSize:30,mb:1,mt:1}}
             >
                 Class Notes
             </Typography>
@@ -41,8 +40,8 @@ const Lms = () => {
                 flexDirection='row'
                 sx={{justifyContent:'right', mt:1}}
             >
-                <Button variant="contained" startIcon={<AddIcon />} onClick={()=>{history.push("/subjects/" + subjectid + "/createquiz");}}
-                 sx={{backgroundColor:"green",color:"white"}}>
+                <Button variant="contained" size='small' startIcon={<AddIcon />} onClick={()=>{history.push("/subjects/" + subjectid + "/createquiz");}}
+                 sx={{backgroundColor:"#4b0082",color:"white"}}>
                     Create New
                 </Button>          
             </Box>
@@ -61,7 +60,7 @@ const Lms = () => {
             >
                 {data && data.map((item) => (
                     <div key={item._id}>
-                        <Box sx={{backgroundColor:'#EDF5E1', pl:1, pr:1, mt:1}}>
+                        <Box sx={{backgroundColor:'#f2cafe', pl:1, pr:1, mt:1,borderRadius: 2}}>
                             <Typography variant='h6' sx={{textDecoration:'underline'}}>
                                 {item.title}
                             </Typography>
@@ -92,9 +91,8 @@ const Lms = () => {
                             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'end'}}>
                                 <Button 
                                     size='small'
-                                    color="success"
                                     variant="contained"
-                                    sx={{mb:1, mt:1}}
+                                    sx={{mb:1, mt:1,backgroundColor:"#4b0082",color:"white"}}
                                     onClick={()=>{history.push("/quiz/" + item._id);}}
                                 >
                                     Add Documents

@@ -16,8 +16,8 @@ import { Typography, Card, CardMedia, CardContent, CardActionArea, useTheme, use
 const useStyles = makeStyles({
   media: {
     "&:hover": {
-      transform: "scale3d(1.2, 1.2, 1)",
-      transition: "1s"
+      //transform: "scale3d(1.2, 1.2, 1)",
+      //transition: "1s"
     }
   }
 });

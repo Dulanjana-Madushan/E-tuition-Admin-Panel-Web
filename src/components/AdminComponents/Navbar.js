@@ -14,6 +14,7 @@ import { useState } from 'react';
 import Drawer from './SideDrawer';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import profile from "../../images/john_doe.jpg";
 
 export default function Navbar() {
   
@@ -61,8 +62,21 @@ export default function Navbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      
+
+
       <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          color="inherit"
+          
+        >
+          <Avatar />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+      
+      {/* <MenuItem>
         <IconButton
           size="medium"
           aria-label="account of current user"
@@ -86,7 +100,7 @@ export default function Navbar() {
        
         </IconButton>
         <p>log out</p>
-      </MenuItem>
+      </MenuItem> */}
     </Menu>
     
   );
@@ -98,7 +112,7 @@ export default function Navbar() {
           position="fixed" 
           sx={{ 
             zIndex: (theme) => theme.zIndex.drawer + 1, 
-            backgroundColor:'#379683' }}
+            backgroundColor:'#4b0082' }}
         >
           <Toolbar>
             <IconButton
@@ -137,12 +151,12 @@ export default function Navbar() {
                 aria-label="show more"
                 aria-controls={mobileMenuId}
                 aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                //onClick={()=>{
-                //  history.push("/aprofile");
-                //}}
+                //onClick={handleMobileMenuOpen}
+                onClick={()=>{
+                 history.push("/aprofile");
+                }}
               >
-                <Avatar alt="John Doe" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_YtLi_0fU9VqLch7g0n4WzIAuQJnjLZu-hA&usqp=CAU"/>
+                <Avatar alt="John Doe" src={profile}/>
               </IconButton>
             </Box>
           </Toolbar>

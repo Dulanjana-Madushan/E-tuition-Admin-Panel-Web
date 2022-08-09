@@ -41,7 +41,7 @@ const AddClass = () => {
                 flexWrap="wrap"
             >
                 <Typography
-                    sx={{fontFamily:"Times New Roman" , fontSize:30, mb:1, mt:1}} 
+                    sx={{fontSize:30, mb:1, mt:1}} 
                 >
                     Create Class
                 </Typography>
@@ -57,7 +57,7 @@ const AddClass = () => {
                     component="form"
                     flexDirection='column'
                     width={match?'100%':'50%'}
-                    sx={{justifyContent:'center',border:2, borderColor:'gray', borderRadius:5, padding: 2, mb:4}}
+                    sx={{justifyContent:'center',border:2, borderColor:'gray', borderRadius:2, padding: 2, mb:4}}
                 >
                     <TextField 
                         required
@@ -219,7 +219,7 @@ const AddClass = () => {
                         type="submit"
                         color="success"
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
+                        sx={{ mt: 3, mb: 2,backgroundColor:"#4b0082",color:"white" }}
                     >
                         Create
                     </Button>}

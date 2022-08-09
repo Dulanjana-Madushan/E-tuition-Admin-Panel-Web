@@ -1,38 +1,37 @@
 import { Box } from '@mui/system';
 import Typography from '@mui/material/Typography';
-import useFetch from '../../useFetch';
+import useFetch from '../../services/useFetch';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 //import CustomPaginationGrid from '../components/TeacherDataTable';
 import TeacherTable from '../../components/AdminComponents/TeacherDataTable';
-
+import CircularProgress from '@mui/material/CircularProgress';
 
 const TeachersDetails = () => {
 
-    const {data, isLoading, error} = useFetch('http://localhost:5000/subjects/myclasses/5d7a514b5d2c12c7449be041');
-
-    const theme = useTheme();
-    const match = useMediaQuery(theme.breakpoints.down("sm"));
-    const [open, setOpen] = useState(false);
-
-
     
+
+    // const theme = useTheme();
+    // const match = useMediaQuery(theme.breakpoints.down("sm"));
+    // const [open, setOpen] = useState(false);
 
     return (  
         <Box
             display='flex'
             flexDirection='column'
-            sx={{  mt: 8, pl:2,pr:2, width:'100%', backgroundColor:"#EDf5E1"}}
+            sx={{  mt: 8, pl:2,pr:2, width:'100%'}}
         >
             <Box
-                display='flex'
-                flexWrap="wrap"
-                backgroundColor="#EDf5E1"
-                paddingLeft={2}
-                paddingBottom={7}
-                sx={{justifyContent:'left'}}
+               marginTop = {2}
+               marginBottom = {2}
+               display='flex'
+               flexWrap="wrap"
+               //backgroundColor="#EDf5e1"
+               paddingLeft={2}
+               paddingBottom={2}
+              sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
             >
             <Typography
               sx={{fontSize:30,mb:1,mt:1}} 
@@ -43,6 +42,7 @@ const TeachersDetails = () => {
 
 
             <Box>
+                
                 <TeacherTable/>
             </Box>
 

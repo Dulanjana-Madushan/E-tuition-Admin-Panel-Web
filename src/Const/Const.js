@@ -1,4 +1,5 @@
-export const base_url = 'http://localhost:5000';
+//export const base_url = 'http://localhost:5000';
+export const base_url = 'https://tutorlk-data.herokuapp.com';
 
 export const types = [
     "Select Type",

@@ -24,11 +24,10 @@ const Review = () => {
                 display='flex'
                 flexWrap="wrap"
                 marginBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#D9DDDC'}}
+                sx={{justifyContent:'center',backgroundColor:'#D9DDDC', borderRadius:2}}
             >
             <Typography
-                sx={{fontFamily:"Times New Roman" , fontSize
-                :30,}}
+                sx={{fontSize:30,mb:1,mt:1}}
             >
                 Reviews
             </Typography>
@@ -73,7 +72,7 @@ const Review = () => {
                             display='flex'
                             flexWrap="wrap"
                             flexDirection='row'
-                            sx={{backgroundColor:'#EDF5E1', pl:1, pr:1, mt:1, alignItems:'center', border:1, borderColor:'#E0E0E0', borderRadius:2}}
+                            sx={{backgroundColor:'#f2cafe', pl:1, pr:1, mt:1, alignItems:'center', border:1, borderColor:'#E0E0E0', borderRadius:2}}
                         >
                             <Avatar alt="logo" src={profile}/>
                             <Box sx={{pl:1}}></Box>

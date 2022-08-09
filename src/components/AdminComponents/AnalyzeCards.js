@@ -38,7 +38,7 @@ export default function AnalyzeCard({data}) {
   const history = useHistory();
   const match = useMediaQuery(theme.breakpoints.down("sm"));
 
- 
+
 
   return (
     <Box  sx={{backgroundColor:"#EDf5E1" , m:1}}>
@@ -46,20 +46,20 @@ export default function AnalyzeCard({data}) {
       <Box sx={{ display: 'flex', flexDirection: 'column'}}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5"  sx={{fontSize:20,mb:1,mt:1,color:"#05386B"}}>
-            {data.text}
+            {data.name}
           </Typography>
-          <Typography variant="subtitle1" color="text.secondary" component="div" >
-            {data.number}
+          <Typography variant="subtitle1" color="text.secondary" component="div">
+            {data.count}
           </Typography>
         </CardContent>
       </Box>
       <CardMedia
         component="img"
-        sx={{ width: 200 }}
-        image={data.image}
-        alt="image"
+        sx={{ width: 300 }}
+        image={data.image} 
       />
     </Card>
+        
       </Box>    
   );
 }
