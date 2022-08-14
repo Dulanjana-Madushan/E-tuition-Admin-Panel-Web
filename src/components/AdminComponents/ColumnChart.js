@@ -2,29 +2,58 @@ import Chart from 'react-apexcharts';
 import React, { useState , useEffect } from 'react';
 import axios from 'axios';
 import { base_url } from '../../Const/Const';
+import useFetch from '../../services/useFetch';
 
 
-function ColumnChart(data) {
-  console.log(data);
-  //console.log(data.data.length);
-  // var i;
-  // for(i=0;i<3;i++){
-  //   console.log(data.data[i]);
-  // }
+function ColumnChart() {
+  // const {data, isLoading, error} = useFetch(base_url+"/admin/");
+  // console.log(data);
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [science, setScience] = useState(null);
+  const [art, setArt] = useState(null);
+  const [commerece,setCommerce] = useState(null);
 
-async function getData(){
-  const number = [];
-  await axios.get(base_url+"/admin/",{
-    method: 'GET',
-    headers: {"Content-Type":"application/json",
-      "Authorization": "Bearer " + localStorage.getItem('token')}
-  })
-  .then(Response=>{
-    console.log("Response",Response);
-  })
-};
-  
+  useEffect(()=>{
+    const abortCont = new AbortController();
 
+    fetch(base_url+"/admin/analytics", {
+        method: 'GET',
+        headers: {"Content-Type":"application/json",
+        "Authorization": "Bearer " + localStorage.getItem('token')}},
+    {signal:abortCont.signal})
+        .then(res =>{
+            // if(!res.ok){
+            //     throw Error('Could not fetch data');
+            // }
+            return res.json();
+        })
+        .then(data => {
+            if(data['success']){
+                setData(data['data']);
+                console.log("blaaah",data);
+                setScience(data.science);
+                console.log(data.science);
+            }else{
+                setError(data['error'])
+            }
+            setIsLoading(false);
+            // setError(null);
+        })
+        .catch(err => {
+            if(err.name === "AbortError"){
+                console.log('Fetch aborted');
+            }else{
+                setIsLoading(false);
+                setError(err.message);
+            }
+        })
+
+        return () => abortCont.abort();
+
+},[base_url+"/admin/analytics"])
+ 
 
   return (
     <Chart
@@ -32,14 +61,15 @@ async function getData(){
       height={400}
       width={500}
       series={[
-        // {
+         {
         //     //name:'teachers',
-        //     data:[4,4,8],
+            data : [4,4,6]
+        //data : data && data.map(o => o.count)
         //     //color:['#cccccc','#666666','#777777']
-        // }
+         }
       ]}
       options={{
-        //colors:['#555555','#222222','#888888']
+        //colors:['green','blue','#888888'],
         plotOptions: {
             bar: {
               columnWidth: '75%',

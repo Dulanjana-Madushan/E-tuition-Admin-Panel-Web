@@ -18,6 +18,10 @@ const OneTeacher = () => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [name, setName] = useState(null);
     const [email, setEmail] = useState(null);
+    const [phone, setPhone] = useState(null);
+    const [gender, setGender] = useState(null);
+    const [qualifications, setQualifications] = useState(null);
+    const [school, setSchool] = useState(null);
 
     const {data, isLoading, error} = useFetch(base_url + '/users/' + userid);
 
@@ -38,7 +42,7 @@ const OneTeacher = () => {
                  //backgroundColor="#EDf5e1"
                  paddingLeft={2}
                  paddingBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
+                sx={{justifyContent:'center',backgroundColor:'#F2F2F2',borderRadius: 2}}
             >
                 <Typography
                     sx={{fontSize:30, mb:1, mt:1}} 
@@ -108,6 +112,60 @@ const OneTeacher = () => {
                             defaultValue={data.user.email}
                             onChange={e => setEmail(e.target.value)}/>
                     </Stack>
+                    <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={{ xs: 1, sm: 2, md: 4 }}
+                    >
+                        <TextField 
+                            id="phone"
+                            label="Phone" 
+                            name="phone"
+                            size='small'
+                            defaultValue={data.user.phone}
+                            onChange={e => setPhone(e.target.value)}
+                        />
+                        </Stack>
+                        <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={{ xs: 1, sm: 2, md: 4 }}
+                    >
+                         
+        
+                        <TextField
+                            id="qualifications"
+                            label="Qualifications"
+                            name="qualifications"
+                            size='small'
+                            defaultValue={data.user.qualifications.toString()}
+                            onChange={e => setQualifications(e.target.value)}/>
+                    </Stack>
+                    <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={{ xs: 1, sm: 2, md: 4 }}
+                    >
+                        <TextField 
+                            id="gender"
+                            label="Gender" 
+                            name="gender"
+                            size='small'
+                            defaultValue={data.user.gender}
+                            onChange={e => setGender(e.target.value)}
+                        />
+                        </Stack>
+                        <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={{ xs: 1, sm: 2, md: 4 }}
+                    >
+                         
+        
+                        <TextField
+                            id="school"
+                            label="School"
+                            name="school"
+                            size='small'
+                            defaultValue={data.user.school}
+                            onChange={e => setSchool(e.target.value)}/>
+                    </Stack> 
                 </Box>
             </div>}
            

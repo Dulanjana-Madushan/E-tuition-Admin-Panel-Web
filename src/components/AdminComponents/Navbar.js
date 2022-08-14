@@ -15,8 +15,14 @@ import Drawer from './SideDrawer';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import profile from "../../images/john_doe.jpg";
+import useFetch from '../../services/useFetch';
+import { base_url } from '../../Const/Const';
 
 export default function Navbar() {
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const {data, isLoading, error} = useFetch(base_url + '/auth/me');
+  console.log(data);
   
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
@@ -112,7 +118,7 @@ export default function Navbar() {
           position="fixed" 
           sx={{ 
             zIndex: (theme) => theme.zIndex.drawer + 1, 
-            backgroundColor:'#4b0082' }}
+            backgroundColor:'white' }}
         >
           <Toolbar>
             <IconButton
@@ -121,7 +127,7 @@ export default function Navbar() {
               color="inherit"
               aria-label="open drawer"
               onClick={toggleDrawer}
-              sx={{ mr: 2 ,display:{xm:'flex', sm:'flex'}}}
+              sx={{ mr: 2 ,display:{xm:'flex', sm:'flex'},color: "#3F51B5"}}
             >
               <MenuIcon />
             </IconButton>
@@ -129,9 +135,9 @@ export default function Navbar() {
               variant="h6"
               noWrap
               component="div"
-              sx={{fontSize:30,color:"#EDF5E1"}}
+              sx={{fontSize:30,color:"#3F51B5"}}
             >
-              E - Tuition
+             tutorLK
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
@@ -139,12 +145,12 @@ export default function Navbar() {
                   localStorage.removeItem('token');
                   history.push("/login");
                   }} 
-                  sx={{fontSize:15,color:"#EDF5E1"}}>
+                  sx={{fontSize:15,color:"#3F51B5"}}>
                 LogOut
               </Button>
             </Box>
             <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
-              <IconButton
+            {data && <IconButton
                 size="large"
                 edge="end"
                 color="inherit"
@@ -156,8 +162,9 @@ export default function Navbar() {
                  history.push("/aprofile");
                 }}
               >
-                <Avatar alt="John Doe" src={profile}/>
+                <Avatar alt="John Doe" src={data.photo.webContentLink}/>
               </IconButton>
+            } 
             </Box>
           </Toolbar>
         </AppBar>
@@ -165,7 +172,7 @@ export default function Navbar() {
       </Box>
       
         <Box sx={{display:'flex'}}>
-          <Drawer open={open}/>
+          <Drawer open={!open}/>
           {/*<TeacherHome path='/home'/>*/}
         </Box>
         

@@ -29,7 +29,7 @@ const StudentsDetails = () => {
                 //backgroundColor="#EDf5e1"
                 paddingLeft={2}
                 paddingBottom={2}
-               sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
+               sx={{justifyContent:'center',backgroundColor:'#F2F2F2',borderRadius: 2}}
                 
             >
             <Typography

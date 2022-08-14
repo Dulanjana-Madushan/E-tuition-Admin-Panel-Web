@@ -3,15 +3,16 @@ import { useState } from 'react';
 
 import { Box } from '@mui/system';
 import { Button, Stack, Typography, Checkbox, FormControlLabel, MenuItem, IconButton, TextField,
-    useTheme, useMediaQuery, FormGroup } from '@mui/material';
+    useTheme, useMediaQuery, CircularProgress, FormGroup } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 import useFetch from '../../services/useFetch';
 import { base_url } from '../../Const/Const';
 import { genders, titles } from '../../Const/Const';
 import Image from '../../images/profile_photo.png';
+import PropTypes from 'prop-types';
 
-const AdminProfile = () => {
+const AdminProfile = ({setToken}) => {
 
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
@@ -23,9 +24,56 @@ const AdminProfile = () => {
     const [gender, setGender] = useState(null);
     const [school, setSchool] = useState(null);
     const [qualifications, seQualifications] = useState(null);
+    const [errorr, setErrorr] = useState(null)
+    const [isLoadingg, setIsLoadingg] = useState(false);
 
     const {data, isLoading, error} = useFetch(base_url + '/auth/me');
     console.log(data);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const body = JSON.stringify({
+            name: name,
+            email: email,
+            phone: phone,
+            school: school,
+          });
+    
+        setIsLoadingg(true);
+        setErrorr(null);
+        
+        fetch(base_url+'/users'+data._id, {
+                method: 'PUT',
+                headers: {"Content-Type":"application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')},
+                body:body
+            }).then(res=>{
+              setIsLoadingg(true);
+              return res.json();
+            })
+            .then(dataa=>{
+              console.log(dataa);
+                setIsLoadingg(false);
+                setToken(dataa.token);
+                console.log(dataa.token);
+                if(!dataa['success']){
+                    setErrorr(dataa['error']);
+                    return;
+                }
+                localStorage.setItem('role', dataa['role']);
+                let role = localStorage.getItem('role');
+                
+            })
+            .catch(err => {
+                if(err.name === "AbortError"){
+                    console.log('Fetch aborted');
+                }else{
+                    setIsLoadingg(false);
+                    setErrorr(err.message);
+                    console.log(err.message);
+                }
+            })
+      };
    
     return (  
         <Box
@@ -39,7 +87,7 @@ const AdminProfile = () => {
                 display='flex'
                 flexWrap="wrap"
                 marginBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#D9DDDC'}}
+                sx={{justifyContent:'center',backgroundColor:'#F2F2F2'}}
             >
                 <Typography
                     sx={{fontSize:30, mb:1, mt:1}} 
@@ -48,6 +96,8 @@ const AdminProfile = () => {
                 </Typography>
 
             </Box>
+            <Box component="form" onSubmit={handleSubmit}  sx={{ mt: 1 ,justifyContent:'center'}}>
+            {isLoading && <CircularProgress color="success" />}
             {data && <div>
                 <Box
                     display='flex'
@@ -114,6 +164,11 @@ const AdminProfile = () => {
                                 </MenuItem>
                             ))}
                         </TextField>
+                        </Stack>
+                        <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={{ xs: 1, sm: 2, md: 4 }}
+                    >
                         <TextField
                             required
                             id="name"
@@ -136,6 +191,11 @@ const AdminProfile = () => {
                             defaultValue={data.email}
                             onChange={e => setEmail(e.target.value)}
                         />
+                        </Stack>
+                        <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={{ xs: 1, sm: 2, md: 4 }}
+                    >
                         <TextField
                             required
                             id='phone'
@@ -165,6 +225,11 @@ const AdminProfile = () => {
                                 </MenuItem>
                             ))}
                         </TextField>
+                        </Stack>
+                        <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={{ xs: 1, sm: 2, md: 4 }}
+                    >
                         <TextField
                             required
                             id="school" 
@@ -179,13 +244,13 @@ const AdminProfile = () => {
                         direction={{ xs: 'column', sm: 'row' }}
                         spacing={{ xs: 1, sm: 2, md: 4 }}
                     >
-                        {/* <FormGroup> */}
+                        
                             <FormControlLabel control={<Checkbox checked/>} label="Undergraduate"></FormControlLabel>
                             <FormControlLabel control={<Checkbox/>} label="Postgraduate"></FormControlLabel>
                             <FormControlLabel control={<Checkbox/>} label="BSc"></FormControlLabel>
                             <FormControlLabel control={<Checkbox/>} label="MSc"></FormControlLabel>
                             <FormControlLabel control={<Checkbox/>} label="PHD"></FormControlLabel>
-                        {/* </FormGroup> */}
+                       
                     </Stack>
                 </Box>
                 <Box
@@ -198,16 +263,20 @@ const AdminProfile = () => {
                 >
                     <Stack direction={{ xs: 'column', sm: 'row' }}
                     spacing={{ xs: 1, sm: 2, md: 4 }}>
-                        <Button variant="contained" color="success">
+                        {!isLoading && <Button  type="submit" variant="contained" color="success" sx={{ mt: 3, mb: 2 ,backgroundColor: '#4b0082'}}>
                             Update
-                        </Button>
+                        </Button>}
                         
                     </Stack>
                 </Box>
             </div>}
-           
+            </Box>
         </Box>
     );
+}
+
+AdminProfile.propTypes = {
+    setToken: PropTypes.func.isRequired
 }
  
 export default AdminProfile;

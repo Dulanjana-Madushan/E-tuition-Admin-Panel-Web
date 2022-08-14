@@ -3,15 +3,16 @@ import { useState } from 'react';
 
 import { Box } from '@mui/system';
 import { Button, Stack, Typography, Checkbox, FormControlLabel, MenuItem, IconButton, TextField,
-    useTheme, useMediaQuery, FormGroup } from '@mui/material';
+    useTheme, useMediaQuery,CircularProgress, FormGroup } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 import useFetch from '../../services/useFetch';
 import { base_url } from '../../Const/Const';
 import { genders, titles } from '../../Const/Const';
 import Image from '../../images/profile_photo.png';
+import PropTypes from 'prop-types';
 
-const TeacherProfile = () => {
+export default function TeacherProfile({setToken}){
 
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
@@ -23,9 +24,72 @@ const TeacherProfile = () => {
     const [gender, setGender] = useState(null);
     const [school, setSchool] = useState(null);
     const [qualifications, seQualifications] = useState(null);
+    const [errorr, setErrorr] = useState(null)
+    const [isLoadingg, setIsLoadingg] = useState(false);
 
     const {data, isLoading, error} = useFetch(base_url + '/auth/me');
-    console.log(data.photo.webContentLink);
+
+    function refreshPage(){
+        window.location.reload(false);
+    }
+
+    const handleSubmit = async (event) => {
+        // if(name == null){
+        //     console.log(name);
+        //     setName(data.name);
+        //     console.log(name);
+        // }
+        if(email === null){
+            console.log(email);
+         setEmail(data.email);
+            console.log(email);
+        }
+        if(phone === null){
+            console.log(phone);
+          setPhone(data.phone);
+            console.log(phone);
+        }
+        // if(school == null){
+        //  setSchool(data.school);
+        // }
+        event.preventDefault();
+        const body = JSON.stringify({
+            //name: name,
+            email: email,
+            phone: phone,
+            //school: school,
+          });
+    
+        setIsLoadingg(true);
+        setErrorr(null);
+        
+        await fetch(base_url+'/users', {
+                method: 'PUT',
+                headers: {"Content-Type":"application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')},
+                body:body
+            }).then(res=>{
+              setIsLoadingg(true);
+              return res.json();
+            })
+            .then(dataa=>{
+              console.log("blah",dataa);
+                setIsLoadingg(false);
+                if(!dataa['success']){
+                    setErrorr(dataa['error']);
+                    return;
+                }
+            })
+            .catch(err => {
+                if(err.name === "AbortError"){
+                    console.log('Fetch aborted');
+                }else{
+                    setIsLoadingg(false);
+                    setErrorr(err.message);
+                    console.log(err.message);
+                }
+            })
+      };
    
     return (  
         <Box
@@ -48,6 +112,8 @@ const TeacherProfile = () => {
                 </Typography>
 
             </Box>
+            <Box component="form" onSubmit={handleSubmit}  sx={{ mt: 1 ,justifyContent:'center'}}>
+            {isLoading && <CircularProgress color="success" />}
             {data && <div>
                 <Box
                     display='flex'
@@ -114,6 +180,11 @@ const TeacherProfile = () => {
                                 </MenuItem>
                             ))}
                         </TextField>
+                        </Stack>
+                        <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={{ xs: 1, sm: 2, md: 4 }}
+                    >
                         <TextField
                             required
                             id="name"
@@ -136,6 +207,11 @@ const TeacherProfile = () => {
                             defaultValue={data.email}
                             onChange={e => setEmail(e.target.value)}
                         />
+                        </Stack>
+                        <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={{ xs: 1, sm: 2, md: 4 }}
+                    >
                         <TextField
                             required
                             id='phone'
@@ -165,6 +241,11 @@ const TeacherProfile = () => {
                                 </MenuItem>
                             ))}
                         </TextField>
+                        </Stack>
+                        <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={{ xs: 1, sm: 2, md: 4 }}
+                    >
                         <TextField
                             required
                             id="school" 
@@ -198,17 +279,21 @@ const TeacherProfile = () => {
                 >
                     <Stack direction={{ xs: 'column', sm: 'row' }}
                     spacing={{ xs: 1, sm: 2, md: 4 }}>
-                        <Button variant="contained" color="success">
+                        <Button type="submit" variant="contained" color="success" >
                             Update
                         </Button>
                         
                     </Stack>
                 </Box>
             </div>}
-           
+           </Box>
         </Box>
     );
 }
  
-export default TeacherProfile;
+
+TeacherProfile.propTypes = {
+    setToken: PropTypes.func.isRequired
+}
+
 

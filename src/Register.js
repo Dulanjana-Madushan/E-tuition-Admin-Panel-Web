@@ -9,13 +9,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Image from './images/hey.png';
+import Image1 from './images/cover_two_students.jpg';
+import Image2 from './images/web_login.png';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-        E - Tuition
+        tutorLK
       {' '}
       {new Date().getFullYear()}
       {'.'}
@@ -66,9 +67,20 @@ export default function SignUp() {
   return (
   <Grid container>
     <Grid item md={6}>
+    <Box
+                sx={{
+                //marginTop: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                border: 'none',
+                padding: 4,
+                }}
+            >
             <div className="container">
-                <img alt="profile" height="550px" width="100%" src={Image}/>
+                <img alt="profile" height="550px" width="100%" src={Image1}/>
             </div>
+            </Box>
     </Grid>
     <Grid item md={6} sm={12}>
     <Container component="main" maxWidth="sm">
@@ -80,11 +92,13 @@ export default function SignUp() {
             alignItems: 'center',
             border: 'none',
             padding: 2,
+            backgroundColor: '#F2F2F2',
+            borderRadius: 2,
           }}
         >
-          <Avatar sx={{bgcolor: '#4b0082' }}>
-            <LoginOutlined />
-          </Avatar>
+          <Avatar src={Image2} sx={{bgcolor: '#3F51B5', width:60,height:60}}/>
+            {/* <LoginOutlined />
+          </Avatar> */}
           <Typography component="h1" variant="h5">
               <span style= {{fontSize:40}}>Sign up</span>
           </Typography>
@@ -140,7 +154,7 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 ,backgroundColor: '#4b0082'}}
+              sx={{ mt: 2, mb: 2 ,backgroundColor: '#3F51B5'}}
               disabled={isLoading}
             >
               Sign Up
@@ -155,7 +169,9 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 1 }} />
+        <Copyright 
+        //sx={{ mt: 1 }} 
+        />
     </Container>
     </Grid>
   </Grid>

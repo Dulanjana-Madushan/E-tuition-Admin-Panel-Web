@@ -33,7 +33,7 @@ export default function ClassCard({data}) {
                         alt="class media"
                         className={classes.media}
                         style={{height: 50, paddingTop: '56.25%'}}
-                        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7cmu-yfeosVSTyQwE1Iy2XP0v_KWNK6w7hA&usqp=CAU"
+                        image={data.post.webContentLink}
                     />
                     <CardContent>
                         <Typography  gutterBottom height={30} overflow='clip' variant="h6" component="div">

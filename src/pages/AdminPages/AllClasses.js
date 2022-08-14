@@ -44,8 +44,7 @@ const AllClasses = () => {
     const [open, setOpen] = useState(false);
     
 
-
-    
+ 
 
     return ( 
         <Box
@@ -58,29 +57,22 @@ const AllClasses = () => {
                  marginBottom = {2}
                  display='flex'
                  flexWrap="wrap"
-                 //backgroundColor="#EDf5e1"
                  paddingLeft={2}
                  paddingBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
+                sx={{justifyContent:'center',backgroundColor:'#F2F2F2',borderRadius: 2}}
             >
             <Typography
-              sx={{fontSize:30,mb:1,mt:1,color:"#05386B"}} 
+              sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5"}} 
             >
               All Classes
             </Typography>
             </Box>
 
-            {/*<Box
-                backgroundColor="#EDF5E1"
-                sx={{justifyContent:match?'center':'start'}}>
-                <ClassCard /> 
-            </Box>*/}
-
             <Box
                 display='flex'
                 flexWrap="wrap"
                 //backgroundColor="#EDF5E1"
-                sx={{justifyContent:match?'center':'start'}}
+                sx={{justifyContent:match?'center':'center'}}
             >
                 {error && <div>{error}</div>}
                 {isLoading && <CircularProgress color="success" />}

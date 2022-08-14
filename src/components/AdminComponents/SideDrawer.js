@@ -26,7 +26,7 @@ const useStyles = makeStyles({
         "&$selected": {
           backgroundColor: "white",
           width:200,
-          color: "#4b0082",
+          color: "#3F51B5",
           borderTopLeftRadius:10,
           borderBottomLeftRadius:10,
           "&:hover": {
@@ -70,7 +70,7 @@ export default function SideDrawer({open}) {
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
                   width: drawerWidth,
-                  backgroundColor:'#D9DDDC',
+                  //backgroundColor:'#F2F2F2',
                   borderRight:'none',
                   boxSizing: 'border-box',
                 },

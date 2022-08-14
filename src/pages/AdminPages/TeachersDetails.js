@@ -31,7 +31,7 @@ const TeachersDetails = () => {
                //backgroundColor="#EDf5e1"
                paddingLeft={2}
                paddingBottom={2}
-              sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
+              sx={{justifyContent:'center',backgroundColor:'#F2F2F2',borderRadius: 2}}
             >
             <Typography
               sx={{fontSize:30,mb:1,mt:1}} 
@@ -41,7 +41,11 @@ const TeachersDetails = () => {
             </Box>
 
 
-            <Box>
+            <Box
+            display='flex'
+            flexWrap="wrap"
+            sx={{justifyContent:'center'}}
+            >
                 
                 <TeacherTable/>
             </Box>

@@ -43,7 +43,7 @@ const AdminHome = () => {
              display='flex'
              flexDirection='column'
              sx={{  mt: 8, pl:2,pr:2, width:'100%', 
-             //backgroundColor:"#EDF5E1"
+             backgroundColor:"white"
             }}
          >
              <Box
@@ -54,12 +54,12 @@ const AdminHome = () => {
                  //backgroundColor="#EDf5e1"
                  paddingLeft={2}
                  paddingBottom={2}
-                 sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
+                 sx={{justifyContent:'center',backgroundColor:'#F2F2F2',borderRadius: 2}}
              >
              <Typography
-               sx={{fontSize:30,mb:1,mt:1,color:"#05386B"}} 
+               sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}} 
              >
-               Admin Home
+               Dashboard
              </Typography>
              </Box>
          
@@ -67,9 +67,8 @@ const AdminHome = () => {
              <Box
                 display='flex'
                 flexWrap="wrap"
-                //backgroundColor="#EDF5E1"
                 paddingBottom={2}
-                sx={{justifyContent:match?'center':'start'}}
+                sx={{justifyContent:match?'center':'center'}}
             >
                 {isLoading && <CircularProgress color="success" />}
                 {data && data.map((item) => (
@@ -87,7 +86,7 @@ const AdminHome = () => {
                sx={{justifyContent:'left'}}
               >
               <Typography
-               sx={{fontSize:20,mb:1,mt:1,color:"#05386B"}} 
+               sx={{fontSize:20,mb:1,mt:1,color:"#3F51B5"}} 
               >
                User Details
              </Typography>
@@ -101,7 +100,7 @@ const AdminHome = () => {
               
               sx={{justifyContent:'center',width:'100%',}}
             >
-                 <ColumnChart data={data}/>
+                 <ColumnChart/>
              </Box>
              
             

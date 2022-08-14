@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Login from "./Login";
 import SignUp from "./Register";
 import Navbar from './components/AdminComponents/Navbar';
-import AnalyzeCards from './components/AdminComponents/AnalyzeCards';
 import AllClasses from './pages/AdminPages/AllClasses';
 import ClassDetails from './pages/AdminPages/ClassDetails';
 import TeachersDetails from './pages/AdminPages/TeachersDetails';

@@ -107,7 +107,7 @@ export default function Navbar() {
               component="div"
               sx={{fontSize:30,color:"#EDF5E1"}}
             >
-              E - Tuition
+              tutorLK
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>

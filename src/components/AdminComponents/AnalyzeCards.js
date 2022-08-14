@@ -13,6 +13,7 @@ import { makeStyles }from '@mui/styles';
 import List from '@mui/material/List';
 import { CardActionArea } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import profile from "../../images/john_doe.jpg";
 
 //import add from './images/class/add.png';
 //import announcemet from './images/class/announcement.png';
@@ -41,11 +42,11 @@ export default function AnalyzeCard({data}) {
 
 
   return (
-    <Box  sx={{backgroundColor:"#EDf5E1" , m:1}}>
+    <Box  sx={{ m:1}}>
       <Card sx={{width:match?'85vw':350,height:match?'':170, display: 'flex', boxShadow: 12}}  >
       <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-        <CardContent sx={{ flex: '1 0 auto' }}>
-          <Typography component="div" variant="h5"  sx={{fontSize:20,mb:1,mt:1,color:"#05386B"}}>
+        <CardContent sx={{ flex: '1 0 auto'}}>
+          <Typography component="div" variant="h5"  sx={{fontSize:20,mb:1,mt:1,color:"#3F51B5"}}>
             {data.name}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
@@ -55,6 +56,7 @@ export default function AnalyzeCard({data}) {
       </Box>
       <CardMedia
         component="img"
+        alt={profile}
         sx={{ width: 300 }}
         image={data.image} 
       />
