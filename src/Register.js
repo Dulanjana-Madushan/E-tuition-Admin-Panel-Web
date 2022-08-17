@@ -8,7 +8,7 @@ import LoginOutlined from '@mui/icons-material/LoginOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Image1 from './images/cover_two_students.jpg';
 import Image2 from './images/web_login.png';
 
@@ -28,7 +28,7 @@ export default function SignUp() {
 
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false);
-    const history = useHistory();
+    const history = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();

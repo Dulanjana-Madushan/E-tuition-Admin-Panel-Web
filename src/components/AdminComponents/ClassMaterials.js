@@ -12,7 +12,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { makeStyles }from '@mui/styles';
 import List from '@mui/material/List';
 import { CardActionArea } from '@mui/material';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 //import add from './images/class/add.png';
 //import announcemet from './images/class/announcement.png';
@@ -35,7 +35,7 @@ export default function MaterialGrid({data}) {
   // const [width, setWidth] = React.useState(300)
   const theme = useTheme();
   const classes = useStyles();
-  const history = useHistory();
+  const history = useNavigate();
 
 
 

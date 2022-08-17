@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Box } from '@mui/system';
 import { makeStyles }from '@mui/styles';
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 export default function ClassCard({data}) {
     const theme = useTheme();
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
 
     return (
@@ -26,7 +26,7 @@ export default function ClassCard({data}) {
         >
             <Card
                 sx = {{width: match?'85vw':200, height:match?'':300}} 
-                onClick={()=>{history.push("/subjects/" + data._id);}}
+                onClick={()=>{navigate("/teacher/subjects/" + data._id);}}
             >
                 <CardActionArea>
                     <CardMedia

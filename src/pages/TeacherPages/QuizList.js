@@ -1,4 +1,4 @@
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Box } from '@mui/system';
 import { Typography, Button, CircularProgress } from '@mui/material';
@@ -9,7 +9,7 @@ import { base_url } from '../../Const/Const';
 
 const QuizList = () => {
 
-    const history = useHistory();
+    const history = useNavigate();
     const {subjectid} = useParams();
     const {data, isLoading, error} = useFetch(base_url + '/subjects/' + subjectid + '/quiz');
     console.log(data)

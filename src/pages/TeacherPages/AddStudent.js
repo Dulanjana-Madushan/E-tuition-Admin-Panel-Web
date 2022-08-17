@@ -1,4 +1,4 @@
-import { useHistory, useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 
 import { Box } from '@mui/system';
 import { Avatar, CircularProgress, Rating, Typography } from '@mui/material';

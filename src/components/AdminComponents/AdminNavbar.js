@@ -8,17 +8,16 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MoreIcon from '@mui/icons-material/More';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import Drawer from './SideDrawer';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Outlet} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import profile from "../../images/john_doe.jpg";
 import useFetch from '../../services/useFetch';
 import { base_url } from '../../Const/Const';
 
-export default function Navbar() {
+export default function AdminNavbar() {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const {data, isLoading, error} = useFetch(base_url + '/auth/me');
@@ -29,7 +28,7 @@ export default function Navbar() {
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const toggleDrawer = event => {
     if (
@@ -78,6 +77,7 @@ export default function Navbar() {
           
         >
           <Avatar />
+          {/* <Outlet /> */}
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -88,7 +88,7 @@ export default function Navbar() {
           aria-label="account of current user"
           color="inherit"
           onClick={()=>{
-            history.push("/aprofile");
+            navigate("/aprofile");
           }}
           
         >
@@ -127,7 +127,7 @@ export default function Navbar() {
               color="inherit"
               aria-label="open drawer"
               onClick={toggleDrawer}
-              sx={{ mr: 2 ,display:{xm:'flex', sm:'flex'},color: "#3F51B5"}}
+              sx={{ mr: 2 ,display:{xm:'flex', sm:'none'},color: "#3F51B5"}}
             >
               <MenuIcon />
             </IconButton>
@@ -143,7 +143,7 @@ export default function Navbar() {
             <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
               <Button onClick={()=>{
                   localStorage.removeItem('token');
-                  history.push("/login");
+                  navigate("/login");
                   }} 
                   sx={{fontSize:15,color:"#3F51B5"}}>
                 LogOut
@@ -159,7 +159,7 @@ export default function Navbar() {
                 aria-haspopup="true"
                 //onClick={handleMobileMenuOpen}
                 onClick={()=>{
-                 history.push("/aprofile");
+                 navigate("/aprofile");
                 }}
               >
                 <Avatar alt="John Doe" src={data.photo.webContentLink}/>
@@ -170,11 +170,12 @@ export default function Navbar() {
         </AppBar>
         {renderMobileMenu}
       </Box>
+    
+      <Box sx={{display:'flex'}}>
+        <Drawer open={!open}/>
+        <Outlet/>
+      </Box>
       
-        <Box sx={{display:'flex'}}>
-          <Drawer open={!open}/>
-          {/*<TeacherHome path='/home'/>*/}
-        </Box>
         
     
     

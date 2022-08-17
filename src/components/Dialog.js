@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -10,7 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 
 export default function DialogAlert() {
   const [open, setOpen] = useState(true);
-  const history = useHistory();
+  const history = useNavigate();
 
   const handleClose = () => {
     setOpen(false);
@@ -19,7 +19,6 @@ export default function DialogAlert() {
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      {/* <DialogTitle>Set backup account</DialogTitle> */}
       <DialogContent>
           <DialogContentText>
             Your Session has expired. Please log in again.

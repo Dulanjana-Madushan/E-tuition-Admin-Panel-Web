@@ -13,7 +13,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { useTheme } from '@mui/material/styles';
 import { makeStyles }from '@mui/styles';
 import { useState } from 'react';
-import React, { useHistory } from 'react-router-dom';
+import React, { useNavigate } from 'react-router-dom';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import { Typography } from '@mui/material';
@@ -43,7 +43,7 @@ export default function SideDrawer({open}) {
 
     const styles = useStyles();
     const theme = useTheme();
-    const history = useHistory();
+    const navigate = useNavigate();
     const isMdUp = useMediaQuery(theme.breakpoints.up("sm"));
     const [selectedIndex, setSelectedIndex] = useState(0);
     const drawerWidth = 200;
@@ -70,7 +70,7 @@ export default function SideDrawer({open}) {
                         selected={selectedIndex === 0}
                         onClick={() => {
                             setSelectedIndex(0);
-                            history.push("/teacher")}}
+                            navigate("/teacher")}}
                         classes={{
                             root: styles.root,
                             selected: styles.selected
@@ -86,7 +86,7 @@ export default function SideDrawer({open}) {
                             selected={selectedIndex === 1}
                             onClick={() => {
                             setSelectedIndex(1);
-                            history.push("/chat")}}
+                            navigate("/teacher/chat")}}
                             classes={{
                                 root: styles.root,
                                 selected: styles.selected
@@ -104,7 +104,7 @@ export default function SideDrawer({open}) {
                         selected={selectedIndex === 2}
                         onClick={() => {
                         setSelectedIndex(2);
-                        history.push("/tnotification")}}
+                        navigate("/tnotification")}}
                         classes={{
                             root: styles.root,
                             selected: styles.selected
@@ -120,7 +120,7 @@ export default function SideDrawer({open}) {
                         selected={selectedIndex === 3}
                         onClick={() => {
                         setSelectedIndex(3);
-                        history.push("/setting")}}
+                        navigate("/setting")}}
                         classes={{
                             root: styles.root,
                             selected: styles.selected

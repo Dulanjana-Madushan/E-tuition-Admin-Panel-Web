@@ -1,38 +1,12 @@
 import { Box } from '@mui/system';
-import ClassCard from '../../components/AdminComponents/TeacherClassList';
+import ClassCard from '../../components/AdminComponents/ClassCard';
 import Typography from '@mui/material/Typography';
 import useFetch from '../../services/useFetch';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CircularProgress from '@mui/material/CircularProgress';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import AddIcon from '@mui/icons-material/Add';
-import { useState } from 'react';
-import { Container,  Modal, TextField } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { Class } from '@mui/icons-material';
 import { base_url } from '../../Const/Const';
-
-
-const useStyles = makeStyles((theme) => ({
-    container:{
-        width: 500,
-        height: 500,
-        backgroundColor: "white",
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        margin: "auto",
-        //[theme.breakpoints.down("sm")]:{
-        /*"@media (max-width: 1440px)": {
-            width: "50vw",
-            height: "70vh",
-        },*/
-    },
-}));
+import DialogAlert from '../../components/Dialog';
 
 const AllClasses = () => {
 
@@ -40,11 +14,6 @@ const AllClasses = () => {
 
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
-    const classes = useStyles();
-    const [open, setOpen] = useState(false);
-    
-
- 
 
     return ( 
         <Box
@@ -71,11 +40,11 @@ const AllClasses = () => {
             <Box
                 display='flex'
                 flexWrap="wrap"
-                //backgroundColor="#EDF5E1"
                 sx={{justifyContent:match?'center':'center'}}
             >
+                {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
                 {error && <div>{error}</div>}
-                {isLoading && <CircularProgress color="success" />}
+                {isLoading && <CircularProgress color="primary" />}
                 {data && data.map((item) => (
                     <div key={item._id}>
                         <ClassCard data={item} />

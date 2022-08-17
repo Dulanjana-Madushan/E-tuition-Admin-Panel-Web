@@ -11,7 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { base_url } from '../../Const/Const';
 import useFetch from '../../services/useFetch';
-import { useHistory,useParams } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -36,9 +36,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 
-export default function TeacherTable() {
-  const history = useHistory();
-  const {data, isLoading, error} = useFetch(base_url + '/admin/teachers');
+export default function TeacherTable({data}) {
+  const navigate = useNavigate();
+  // const {data, isLoading, error} = useFetch(base_url + '/admin/teachers');
   console.log(data);
   return (
       <Box 
@@ -68,7 +68,7 @@ export default function TeacherTable() {
                     sx={{justifyContent:'right', mt:1}}
                   >
                     <Button variant="none" onClick={()=>{
-                      history.push("/teacherdetails/"+row._id)
+                     navigate("/adminteacherdetails/"+row._id)
                     }}
                     sx={{backgroundColor:"#4b0082",color:"white"}}>
                         view

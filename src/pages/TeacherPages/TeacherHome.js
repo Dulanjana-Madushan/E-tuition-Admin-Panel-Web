@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Box } from '@mui/system';
 import { Typography, CircularProgress, Button, useTheme, useMediaQuery } from '@mui/material';
@@ -15,7 +15,7 @@ const TeacherHome = () => {
     const {data, isLoading, error} = useFetch(base_url + '/subjects/mysubjects');
 
     const theme = useTheme();
-    const history = useHistory();
+    const navigate = useNavigate();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
 
     return ( 
@@ -44,7 +44,7 @@ const TeacherHome = () => {
                 flexDirection='row'
                 sx={{justifyContent:'right', mb:2}}
             >
-                <Button variant="contained" startIcon={<AddIcon />} onClick={()=>{history.push('/subjects');}}
+                <Button variant="contained" startIcon={<AddIcon />} onClick={()=>{navigate('/teacher/subjects');}}
                 sx={{backgroundColor:"#4b0082",color:"white"}}>
                     Add Class
                 </Button>          

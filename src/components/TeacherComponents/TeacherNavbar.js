@@ -11,20 +11,20 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import Drawer from './TeacherDrawer';
 // import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 // import { maxWidth } from '@mui/system';
 import logo from '../../images/logo.png';
 import profile from "../../images/john_doe.jpg";
 import { Button } from '@mui/material';
 
-export default function Navbar() {
+export default function TeacherNavbar() {
   
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   
-  const history = useHistory();
+  const history = useNavigate();
 
   const toggleDrawer = event => {
     if (
@@ -138,7 +138,7 @@ export default function Navbar() {
       </Box>
       <Box sx={{display:'flex'}}>
         <Drawer open={open}/>
-        {/*<TeacherHome path='/home'/>*/}
+        <Outlet/>
       </Box>
         
     

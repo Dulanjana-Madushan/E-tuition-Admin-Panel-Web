@@ -143,13 +143,14 @@ export default function TeacherProfile({setToken}){
                 > 
                     <label htmlFor="icon-button-file">
                         <input 
+                        accept="image/*"
                             id="icon-button-file" 
                             type="file" 
                             style={{display:"none"}}
                             onChange={(event) => {
                                 setSelectedImage(event.target.files[0]);
                             }} />
-                        <IconButton color="primary" aria-label="upload picture" >
+                        <IconButton color="primary" aria-label="upload picture" component="span">
                             <PhotoCamera/>
                         </IconButton>
                     </label>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Box } from '@mui/system';
 import { makeStyles }from '@mui/styles';
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 export default function MaterialGrid({data}) {
   const theme = useTheme();
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const match = useMediaQuery(theme.breakpoints.down("sm"));
   const { subjectid } = useParams();
 
@@ -35,49 +35,49 @@ export default function MaterialGrid({data}) {
       text: "Class Materials",
       description: "desc",
       image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOEuaL14xHFILfpNxSISzrJE3bnBckLdpHvA&usqp=CAU",
-      onClick: () => history.push("/subjects/" + subjectid + "/lms")
+      onClick: () => navigate("/teacher/subjects/" + subjectid + "/lms")
     },
     {
       _id: 2,
       text: "Quiz",
       description: "add quizzes",
       image: "https://img.freepik.com/free-vector/quiz-word-concept_23-2147844150.jpg?w=2000",
-      onClick: () => history.push("/subjects/" + subjectid + "/quiz")
+      onClick: () => navigate("/subjects/" + subjectid + "/quiz")
     },
     {
       _id: 3,
       text: "Announcements",
       description: "send and view announcements",
       image: "https://img.freepik.com/free-vector/noisy-big-megaphone_74855-7630.jpg?w=2000",
-      onClick: () => history.push("/subjects/" + subjectid + "/announcements")
+      onClick: () => navigate("/subjects/" + subjectid + "/announcements")
     },
     {
       _id: 4,
       text: "Payments",
       description: "payment list",
       image: "https://img.freepik.com/free-vector/concept-credit-card-payment-landing-page_52683-24923.jpg?1?w=360",
-      onClick: () => history.push("/subjects/" + subjectid + "/payments")
+      onClick: () => navigate("/subjects/" + subjectid + "/payments")
     },
     {
       _id: 5,
       text: "Student list",
       description: "view the student list",
       image: "https://img.freepik.com/free-vector/set-social-people-media-profile-member_24877-53571.jpg?w=2000",
-      onClick: () => history.push("/subjects/" + subjectid + "/studentList")
+      onClick: () => navigate("/subjects/" + subjectid + "/studentList")
     },
     {
       _id: 6,
       text: "Add student",
       description: "add students to the class",
       image: "https://img.freepik.com/free-vector/focused-tiny-people-reading-books_74855-5836.jpg?w=2000",
-      onClick: () => history.push("/subjects/" + subjectid + "/addStudent")
+      onClick: () => navigate("/subjects/" + subjectid + "/addStudent")
     },
     {
       _id: 7,
       text: "Reviews",
       description: "view reviews",
       image: "https://img.freepik.com/free-vector/organic-flat-feedback-concept_52683-62653.jpg?size=626&ext=jpg&ga=GA1.2.1329645765.1658573936",
-      onClick: () => history.push("/subjects/" + subjectid + "/reviews")
+      onClick: () => navigate("/subjects/" + subjectid + "/reviews")
     },
     
   ];

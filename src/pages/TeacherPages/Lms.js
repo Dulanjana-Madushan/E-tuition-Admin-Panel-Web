@@ -1,19 +1,100 @@
-import { useHistory, useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
 
 import { Box } from '@mui/system';
-import { Typography, Button, CircularProgress } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { 
+    Typography, 
+    Button, 
+    CircularProgress, 
+    TextField,
+    Container } from '@mui/material';
 
-import useFetch from '../../services/useFetch';
 import { base_url } from '../../Const/Const';
 import pdf from '../../images/pdf_icon.png';
 import quiz from '../../images/quiz.png';
 
 const Lms = () => {
-
-    const history = useHistory();
+    const navigate = useNavigate();
     const {subjectid} = useParams();
-    const {data, isLoading, error} = useFetch(base_url + '/subjects/' + subjectid + '/lms');
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [updated, setUpdated] = useState(false);
+    const [title, setTitle] = useState(null);
+    const [description, setDescription] = useState(null);
+
+    useEffect(()=>{
+        const abortCont = new AbortController();
+        fetch(base_url + '/subjects/' + subjectid + '/lms', {
+            method: 'GET',
+            headers: {"Content-Type":"application/json",
+            "Authorization": "Bearer " + localStorage.getItem('token')}},
+        )
+            .then(res =>{
+                return res.json();
+            })
+            .then(data => {
+                if(data['success']){
+                    setData(data['data']);
+                }else{
+                    setError(data['error'])
+                }
+                setIsLoading(false);
+            })
+            .catch(err => {
+                if(err.name === "AbortError"){
+                    setError('Fetch aborted');
+                }else{
+                    setIsLoading(false);
+                    setError(err.message);
+                }
+            })
+
+            return () => abortCont.abort();
+
+    },[updated])
+
+    
+    const handleSubmit = (event) => {
+
+        event.preventDefault();
+        const body = JSON.stringify({
+            title: title,
+            description: description,
+          });
+   
+        setIsLoading(true);
+        setError(null);
+        fetch(base_url+'/subjects/' + subjectid + '/lms', {
+            method: 'POST',
+            headers: {"Content-Type":"application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            },
+            body:body
+        }).then(res=>{
+        setIsLoading(true);
+        return res.json();
+        })
+        .then(data=>{
+            setIsLoading(false);
+            if(!data['success']){
+                setError(data['error']);
+                return;
+            }
+            setTitle(null);
+            setDescription(null);
+            setUpdated(!updated);
+        })
+        .catch(err => {
+            if(err.name === "AbortError"){
+                console.log('Fetch aborted');
+            }else{
+                setIsLoading(false);
+                setError(err.message);
+            }
+        })  
+    }
+
 
     return (
         <Box 
@@ -34,17 +115,44 @@ const Lms = () => {
                 Class Notes
             </Typography>
             </Box>
-            <Box
-                display='flex'
-                flexWrap="wrap"
-                flexDirection='row'
-                sx={{justifyContent:'right', mt:1}}
-            >
-                <Button variant="contained" size='small' startIcon={<AddIcon />} onClick={()=>{history.push("/subjects/" + subjectid + "/createquiz");}}
-                 sx={{backgroundColor:"#4b0082",color:"white"}}>
-                    Create New
-                </Button>          
-            </Box>
+            <Container component="main" maxWidth="sm">
+                <form onSubmit={handleSubmit}>
+                    <TextField
+                        required
+                        size='small'
+                        autoComplete="title"
+                        name="title"
+                        fullWidth
+                        id="title"
+                        label="Title"
+                        margin="normal"
+                        onChange={e => setTitle(e.target.value)}
+                    />
+                    <TextField
+                        size='small'
+                        autoComplete="description"
+                        name="description"
+                        fullWidth
+                        id="description"
+                        label="Description"
+                        margin="dense"
+                        multiline={true}
+                        onChange={e => setDescription(e.target.value)}
+                    />
+                    <Box
+                        display='flex'
+                        flexWrap="wrap"
+                        flexDirection='row'
+                        sx={{justifyContent:'right', mt:1}}
+                    >
+                        <Button variant="contained"  type="submit"
+                        sx={{backgroundColor:"green",color:"white"}}>
+                            Add
+                        </Button>          
+                    </Box>
+                </form>
+            </Container>
+            
             <Box
                 display='flex'
                 flexWrap="wrap"
@@ -93,7 +201,7 @@ const Lms = () => {
                                     size='small'
                                     variant="contained"
                                     sx={{mb:1, mt:1,backgroundColor:"#4b0082",color:"white"}}
-                                    onClick={()=>{history.push("/quiz/" + item._id);}}
+                                    onClick={()=>{navigate("/quiz/" + item._id);}}
                                 >
                                     Add Documents
                                 </Button>

@@ -1,11 +1,8 @@
-import { useHistory, useParams, Link } from 'react-router-dom';
-
+import { useParams} from 'react-router-dom';
 import { Box } from '@mui/system';
 import { Avatar, CircularProgress, Rating } from '@mui/material';
 import { useState } from 'react';
-import { Button, Stack, Typography, Checkbox, FormControlLabel, MenuItem, IconButton, TextField,
-    useTheme, useMediaQuery, FormGroup } from '@mui/material';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { Stack, Typography, TextField, useTheme, useMediaQuery } from '@mui/material';
 
 import useFetch from '../../services/useFetch';
 import { base_url } from '../../Const/Const';

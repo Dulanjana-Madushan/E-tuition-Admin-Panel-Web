@@ -1,13 +1,13 @@
 import { useTheme } from '@emotion/react';
 import { Box, Typography, useMediaQuery } from '@mui/material';
 import React from 'react'
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function MaterialUpload() {
 
 const theme = useTheme();
-const history = useHistory();
+const history = useNavigate();
   
 
 

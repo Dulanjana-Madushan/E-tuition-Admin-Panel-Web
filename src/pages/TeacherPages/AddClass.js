@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Box } from '@mui/system';
 import { TextField, Button, MenuItem, Typography, useMediaQuery, useTheme } from '@mui/material';
@@ -12,7 +12,7 @@ const AddClass = () => {
 
     const ref = useRef();
     const theme = useTheme();
-    const history = useHistory();
+    const history = useNavigate();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
 
     const [error, setError] = useState(null)

@@ -14,9 +14,6 @@ const useFetch = (url) => {
             "Authorization": "Bearer " + localStorage.getItem('token')}},
         {signal:abortCont.signal})
             .then(res =>{
-                // if(!res.ok){
-                //     throw Error('Could not fetch data');
-                // }
                 return res.json();
             })
             .then(data => {
@@ -26,11 +23,10 @@ const useFetch = (url) => {
                     setError(data['error'])
                 }
                 setIsLoading(false);
-                // setError(null);
             })
             .catch(err => {
                 if(err.name === "AbortError"){
-                    console.log('Fetch aborted');
+                    setError('Fetch aborted');
                 }else{
                     setIsLoading(false);
                     setError(err.message);

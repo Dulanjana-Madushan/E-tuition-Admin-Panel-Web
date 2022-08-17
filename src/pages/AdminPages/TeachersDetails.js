@@ -5,13 +5,14 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
-//import CustomPaginationGrid from '../components/TeacherDataTable';
 import TeacherTable from '../../components/AdminComponents/TeacherDataTable';
 import CircularProgress from '@mui/material/CircularProgress';
+import { base_url } from '../../Const/Const';
+import DialogAlert from '../../components/Dialog';
 
 const TeachersDetails = () => {
 
-    
+  const {data, isLoading, error} = useFetch(base_url + '/admin/teachers');
 
     // const theme = useTheme();
     // const match = useMediaQuery(theme.breakpoints.down("sm"));
@@ -28,7 +29,6 @@ const TeachersDetails = () => {
                marginBottom = {2}
                display='flex'
                flexWrap="wrap"
-               //backgroundColor="#EDf5e1"
                paddingLeft={2}
                paddingBottom={2}
               sx={{justifyContent:'center',backgroundColor:'#F2F2F2',borderRadius: 2}}
@@ -46,15 +46,11 @@ const TeachersDetails = () => {
             flexWrap="wrap"
             sx={{justifyContent:'center'}}
             >
-                
-                <TeacherTable/>
+                {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
+                {error && <div>{error}</div>}
+                {isLoading && <CircularProgress color="primary" />}
+                {data && <TeacherTable data={data}/>}
             </Box>
-
-
-            {/*<Box>
-                <CustomPaginationGrid/>
-    </Box>*/}
-
             
         </Box>
     );

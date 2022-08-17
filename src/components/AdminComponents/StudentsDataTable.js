@@ -11,7 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { base_url } from '../../Const/Const';
 import useFetch from '../../services/useFetch';
-import { useHistory,useParams } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -37,7 +37,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 export default function TeacherTable() {
-  const history = useHistory();
+  const history = useNavigate();
   const {data, isLoading, error} = useFetch(base_url + '/admin/students');
   console.log(data);
   return (
