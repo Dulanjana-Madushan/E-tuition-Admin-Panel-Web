@@ -41,7 +41,7 @@ const useStyles = makeStyles({
     }
 })
 
-export default function SideDrawer({open}) {
+export default function AdminDrawer({open}) {
 
     const styles = useStyles();
     const theme = useTheme();
@@ -91,7 +91,7 @@ export default function SideDrawer({open}) {
                     <ListItemButton
                         selected={selectedIndex === 1}
                         onClick={(event) => {handleListItemClick(1);
-                         navigate("/admin/allclasses")}}
+                         navigate("/admin/all-classes")}}
                         classes={{
                             root: styles.root,
                             selected: styles.selected
@@ -107,7 +107,7 @@ export default function SideDrawer({open}) {
                     <ListItemButton
                         selected={selectedIndex === 2}
                         onClick={(event) => {handleListItemClick(2);
-                        navigate("/admin/allteachers")}}
+                        navigate("/admin/all-teachers")}}
                         classes={{
                             root: styles.root,
                             selected: styles.selected
@@ -122,7 +122,7 @@ export default function SideDrawer({open}) {
                     <ListItemButton
                         selected={selectedIndex === 3}
                         onClick={(event) => {handleListItemClick(3);
-                        navigate("/admin/allstudents")}}
+                        navigate("/admin/all-students")}}
                         classes={{
                             root: styles.root,
                             selected: styles.selected
@@ -137,7 +137,7 @@ export default function SideDrawer({open}) {
                     <ListItemButton
                         selected={selectedIndex === 4}
                         onClick={(event) => {handleListItemClick(4);
-                        navigate("/admin/notification")}}
+                        navigate("/admin/complains")}}
                         classes={{
                             root: styles.root,
                             selected: styles.selected
@@ -146,7 +146,7 @@ export default function SideDrawer({open}) {
                         <ListItemIcon>
                             <NotificationsIcon sx={{color:'#000000'}}/>
                         </ListItemIcon>
-                        <Typography sx={{fontWeight: 600}}>Notification</Typography>
+                        <Typography sx={{fontWeight: 600}}>Complains</Typography>
                     </ListItemButton>
 
 

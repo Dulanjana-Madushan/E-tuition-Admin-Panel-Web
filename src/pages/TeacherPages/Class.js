@@ -2,8 +2,14 @@ import * as React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Box } from '@mui/system';
-import { makeStyles }from '@mui/styles';
-import { Typography, Card, CardMedia, CardContent, CardActionArea, useTheme, useMediaQuery } from '@mui/material';
+import { 
+  Typography, 
+  Card, 
+  CardMedia, 
+  CardContent, 
+  CardActionArea, 
+  useTheme, 
+  useMediaQuery } from '@mui/material';
 
 //import add from './images/class/add.png';
 //import announcemet from './images/class/announcement.png';
@@ -12,19 +18,8 @@ import { Typography, Card, CardMedia, CardContent, CardActionArea, useTheme, use
 //import students from './images/class/students.png';
 //import add from './images/class/add.png';
 
-
-const useStyles = makeStyles({
-  media: {
-    "&:hover": {
-      //transform: "scale3d(1.2, 1.2, 1)",
-      //transition: "1s"
-    }
-  }
-});
-
-export default function MaterialGrid({data}) {
+export default function Class({data}) {
   const theme = useTheme();
-  const classes = useStyles();
   const navigate = useNavigate();
   const match = useMediaQuery(theme.breakpoints.down("sm"));
   const { subjectid } = useParams();
@@ -42,42 +37,42 @@ export default function MaterialGrid({data}) {
       text: "Quiz",
       description: "add quizzes",
       image: "https://img.freepik.com/free-vector/quiz-word-concept_23-2147844150.jpg?w=2000",
-      onClick: () => navigate("/subjects/" + subjectid + "/quiz")
+      onClick: () => navigate("/teacher/subjects/" + subjectid + "/quiz")
     },
     {
       _id: 3,
       text: "Announcements",
       description: "send and view announcements",
       image: "https://img.freepik.com/free-vector/noisy-big-megaphone_74855-7630.jpg?w=2000",
-      onClick: () => navigate("/subjects/" + subjectid + "/announcements")
+      onClick: () => navigate("/teacher/subjects/" + subjectid + "/announcements")
     },
     {
       _id: 4,
       text: "Payments",
       description: "payment list",
       image: "https://img.freepik.com/free-vector/concept-credit-card-payment-landing-page_52683-24923.jpg?1?w=360",
-      onClick: () => navigate("/subjects/" + subjectid + "/payments")
+      onClick: () => navigate("/teacher/subjects/" + subjectid + "/payments")
     },
     {
       _id: 5,
       text: "Student list",
       description: "view the student list",
       image: "https://img.freepik.com/free-vector/set-social-people-media-profile-member_24877-53571.jpg?w=2000",
-      onClick: () => navigate("/subjects/" + subjectid + "/studentList")
+      onClick: () => navigate("/teacher/subjects/" + subjectid + "/studentList")
     },
     {
       _id: 6,
       text: "Add student",
       description: "add students to the class",
       image: "https://img.freepik.com/free-vector/focused-tiny-people-reading-books_74855-5836.jpg?w=2000",
-      onClick: () => navigate("/subjects/" + subjectid + "/addStudent")
+      onClick: () => navigate("/teacher/subjects/" + subjectid + "/addStudents")
     },
     {
       _id: 7,
       text: "Reviews",
       description: "view reviews",
       image: "https://img.freepik.com/free-vector/organic-flat-feedback-concept_52683-62653.jpg?size=626&ext=jpg&ga=GA1.2.1329645765.1658573936",
-      onClick: () => navigate("/subjects/" + subjectid + "/reviews")
+      onClick: () => navigate("/teacher/subjects/" + subjectid + "/reviews")
     },
     
   ];
@@ -100,7 +95,6 @@ export default function MaterialGrid({data}) {
                 <CardMedia
                   component="img"
                   alt="add material"
-                  className={classes.media}
                   style={{height: 140}}
                   image={image}
                 ></CardMedia>

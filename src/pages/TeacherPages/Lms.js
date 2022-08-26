@@ -9,6 +9,7 @@ import {
     TextField,
     Container } from '@mui/material';
 
+import DialogAlert from '../../components/Dialog';
 import { base_url } from '../../Const/Const';
 import pdf from '../../images/pdf_icon.png';
 import quiz from '../../images/quiz.png';
@@ -107,7 +108,7 @@ const Lms = () => {
                 display='flex'
                 flexWrap="wrap"
                 marginBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
+                sx={{justifyContent:'center',backgroundColor:'#D9DDDC', borderRadius: 2}}
             >
             <Typography
                 sx={{fontSize:30,mb:1,mt:1}}
@@ -158,8 +159,9 @@ const Lms = () => {
                 flexWrap="wrap"
                 sx={{justifyContent:'center'}}
             >
-                {error && <div>{error}</div>}
-                {isLoading && <CircularProgress color="success" />}
+                {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
+                {error && <div color="red">{error}</div>}
+                {isLoading && <CircularProgress color="primary" />}
             </Box>
             <Box
                 display='flex'
@@ -201,7 +203,7 @@ const Lms = () => {
                                     size='small'
                                     variant="contained"
                                     sx={{mb:1, mt:1,backgroundColor:"#4b0082",color:"white"}}
-                                    onClick={()=>{navigate("/quiz/" + item._id);}}
+                                    onClick={()=>{navigate("/teacher/lms/" + item._id + "/lmsdocs");}}
                                 >
                                     Add Documents
                                 </Button>

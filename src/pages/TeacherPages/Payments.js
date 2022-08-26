@@ -1,9 +1,15 @@
 import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
 
 import { Box } from '@mui/system';
-import { Avatar, CircularProgress, Rating, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const Payments = () => {
+    const [value, setValue] = useState(new Date());
 
     return (
         <Box 
@@ -16,15 +22,40 @@ const Payments = () => {
                 display='flex'
                 flexWrap="wrap"
                 marginBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#D9DDDC'}}
+                sx={{justifyContent:'center',backgroundColor:'#D9DDDC', borderRadius: 2}}
             >
             <Typography
-                sx={{fontFamily:"Times New Roman" , fontSize
-                :30,}}
+                sx={{fontSize:30,mb:1,mt:1}} 
             >
                 Payments
             </Typography>
-            </Box>
+            </Box >
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Box 
+                display='flex'
+                flexWrap="wrap"
+                flexDirection='row'
+                sx={{justifyContent:'center'}}
+                >
+                     <Typography
+                        sx={{fontSize:20,mb:1,mt:1,mr:2}} 
+                    >
+                        Select Year and Month
+                    </Typography>
+                    <DatePicker
+                    inputFormat="MMMM-yyyy"
+                    views={['month', 'year']}
+                    minDate={new Date('2012-03-01')}
+                    maxDate={new Date('2050-06-01')}
+                    value={value}
+                    disableFuture={true}
+                    onChange={(newValue) => {
+                        setValue(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} helperText={null} />}
+                    />
+                </Box>
+            </LocalizationProvider>
         </Box>
     );
 }

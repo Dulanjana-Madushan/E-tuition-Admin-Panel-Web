@@ -10,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
-import Drawer from './SideDrawer';
+import Drawer from './AdminDrawer';
 import { BrowserRouter as Router, Route, Switch, Outlet} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import profile from "../../images/john_doe.jpg";
@@ -77,7 +77,6 @@ export default function AdminNavbar() {
           
         >
           <Avatar />
-          {/* <Outlet /> */}
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -159,7 +158,7 @@ export default function AdminNavbar() {
                 aria-haspopup="true"
                 //onClick={handleMobileMenuOpen}
                 onClick={()=>{
-                 navigate("/aprofile");
+                 navigate("/admin/admin-profile");
                 }}
               >
                 <Avatar alt="John Doe" src={data.photo.webContentLink}/>
