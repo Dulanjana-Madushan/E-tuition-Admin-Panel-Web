@@ -95,7 +95,6 @@ export default function TeacherProfile({setToken}){
         <Box
             display='flex'
             flexDirection='column'
-            padding={2}
             sx={{mt: 6, pl:2, pr:2, width:'100%'}}
         >
             <Box
@@ -273,7 +272,7 @@ export default function TeacherProfile({setToken}){
                 <Box
                 display='flex'
                 flexWrap="wrap"
-                //backgroundColor="#EDf5E1"
+                backgroundColor="#EDf5E1"
                 paddingTop={2}
                 paddingBottom={2}
                 sx={{justifyContent:match?'center':'center'}}
