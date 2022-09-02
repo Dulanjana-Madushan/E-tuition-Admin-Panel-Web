@@ -9,7 +9,7 @@ import { base_url } from '../../Const/Const';
 
 const QuizList = () => {
 
-    const history = useNavigate();
+    const navigate = useNavigate();
     const {subjectid} = useParams();
     const {data, isLoading, error} = useFetch(base_url + '/subjects/' + subjectid + '/quiz');
     console.log(data)
@@ -38,7 +38,7 @@ const QuizList = () => {
                 flexDirection='row'
                 sx={{justifyContent:'right'}}
             >
-                <Button variant="contained" startIcon={<AddIcon />} onClick={()=>{history.push("/subjects/" + subjectid + "/createquiz");}}
+                <Button variant="contained" startIcon={<AddIcon />} onClick={()=>{navigate("/teacher/subjects/" + subjectid + "/createquiz");}}
                 sx={{backgroundColor:"#4b0082",color:"white"}}>
                     Create Quiz
                 </Button>          
@@ -60,7 +60,7 @@ const QuizList = () => {
                     <div key={item._id}>
                         <Box sx={{backgroundColor:'#f2cafe', pl:1, pr:1,borderRadius: 2}}>
                         <Typography variant='body2'>
-                                Created At : {item.createdAt}
+                                Created At : {item.createdAt.substring(0,10)}
                             </Typography>
                             <Typography variant='h6'>
                                 Title : {item.title}
@@ -72,7 +72,7 @@ const QuizList = () => {
                                 size='small'
                                 variant="contained"
                                 sx={{mb:1,backgroundColor:"#4b0082",color:"white"}}
-                                onClick={()=>{history.push("/quiz/" + item._id);}}
+                                onClick={()=>{navigate("/teacher/quiz/" + item._id);}}
                             >
                                 Update
                             </Button>

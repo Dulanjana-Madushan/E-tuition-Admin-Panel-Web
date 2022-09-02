@@ -5,14 +5,19 @@ import { Box } from '@mui/system';
 import { 
     Typography, 
     Button, 
-    CircularProgress, 
-    TextField,
-    Container } from '@mui/material';
+     TextField,
+    Container, 
+    Dialog, 
+    DialogContent, 
+    DialogTitle, 
+    DialogActions } from '@mui/material';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import QuizIcon from '@mui/icons-material/Quiz';
+import NotesIcon from '@mui/icons-material/Notes';
+import BeatLoader from "react-spinners/BeatLoader";
 
 import DialogAlert from '../../components/Dialog';
 import { base_url } from '../../Const/Const';
-import pdf from '../../images/pdf_icon.png';
-import quiz from '../../images/quiz.png';
 
 const Lms = () => {
     const navigate = useNavigate();
@@ -23,6 +28,32 @@ const Lms = () => {
     const [updated, setUpdated] = useState(false);
     const [title, setTitle] = useState(null);
     const [description, setDescription] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
+    const [dialogData, setDialogData] = useState({});
+    const [titleUpdate, setTitleUpdate] = useState(dialogData.title);
+    const [descriptionUpdate, setDescriptionUpdate] = useState(dialogData.description);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleDeleteOpen = () => {
+        setOpenDelete(true);
+    };
+
+    const handleDeleteClose = () => {
+        setOpenDelete(false);
+    };
+
+    const clearForm = () => {
+        setTitle(null);
+        setDescription(null);
+    }
 
     useEffect(()=>{
         const abortCont = new AbortController();
@@ -80,10 +111,49 @@ const Lms = () => {
             setIsLoading(false);
             if(!data['success']){
                 setError(data['error']);
+            }else{
+                clearForm();
+                setUpdated(!updated);
+            }
+        })
+        .catch(err => {
+            if(err.name === "AbortError"){
+                console.log('Fetch aborted');
+            }else{
+                setIsLoading(false); 
+                setError(err.message);
+            }
+        })  
+    }
+
+    const handleUpdate = (event) => {
+
+        event.preventDefault();
+        const body = JSON.stringify({
+            title: titleUpdate,
+            description: descriptionUpdate,
+          });
+        setIsLoading(true);
+        setError(null);
+        fetch(base_url+'/lms/' + dialogData._id, {
+            method: 'PUT',
+            headers: {"Content-Type":"application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            },
+            body:body
+        }).then(res=>{
+        setIsLoading(true);
+        return res.json();
+        })
+        .then(data=>{
+            setIsLoading(false);
+            if(!data['success']){
+                setError(data['error']);
                 return;
             }
-            setTitle(null);
-            setDescription(null);
+            handleClose();
+            setTitleUpdate(null);
+            setDescriptionUpdate(null);
             setUpdated(!updated);
         })
         .catch(err => {
@@ -96,6 +166,38 @@ const Lms = () => {
         })  
     }
 
+    const handleDelete = (lmsId) => {
+
+        setIsLoading(true);
+        setError(null);
+        fetch(base_url+ '/lms/' + lmsId, {
+            method: 'DELETE',
+            headers: {"Content-Type":"application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            },
+           
+        }).then(res=>{
+        setIsLoading(true);
+        return res.json();
+        })
+        .then(data=>{
+            setIsLoading(false);
+            if(!data['success']){
+                setError(data['error']);
+                return;
+            }
+            handleDeleteClose()
+            setUpdated(!updated);
+        })
+        .catch(err => {
+            if(err.name === "AbortError"){
+                console.log('Fetch aborted');
+            }else{
+                setIsLoading(false);
+                setError(err.message);
+            }
+        })  
+    }
 
     return (
         <Box 
@@ -103,18 +205,18 @@ const Lms = () => {
             flexDirection='column'
             sx={{ mt: 8, pl:2,pr:2, width:'100%'}}  
         >
-             <Box
+            <Box
                 marginTop = {2}
                 display='flex'
                 flexWrap="wrap"
                 marginBottom={2}
                 sx={{justifyContent:'center',backgroundColor:'#D9DDDC', borderRadius: 2}}
             >
-            <Typography
-                sx={{fontSize:30,mb:1,mt:1}}
-            >
-                Class Notes
-            </Typography>
+                <Typography
+                    sx={{fontSize:30,mb:1,mt:1}}
+                >
+                    Class Notes
+                </Typography>
             </Box>
             <Container component="main" maxWidth="sm">
                 <form onSubmit={handleSubmit}>
@@ -127,6 +229,7 @@ const Lms = () => {
                         id="title"
                         label="Title"
                         margin="normal"
+                        value={title}
                         onChange={e => setTitle(e.target.value)}
                     />
                     <TextField
@@ -137,6 +240,7 @@ const Lms = () => {
                         id="description"
                         label="Description"
                         margin="dense"
+                        value={description}
                         multiline={true}
                         onChange={e => setDescription(e.target.value)}
                     />
@@ -153,15 +257,18 @@ const Lms = () => {
                     </Box>
                 </form>
             </Container>
-            
             <Box
                 display='flex'
                 flexWrap="wrap"
                 sx={{justifyContent:'center'}}
             >
                 {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
-                {error && <div color="red">{error}</div>}
-                {isLoading && <CircularProgress color="primary" />}
+                {error && <Typography color="red">{error}</Typography>}
+                {isLoading && <BeatLoader
+                    color="indigo"
+                    speedMultiplier={1}
+                    />
+                }
             </Box>
             <Box
                 display='flex'
@@ -170,29 +277,112 @@ const Lms = () => {
             >
                 {data && data.map((item) => (
                     <div key={item._id}>
-                        <Box sx={{backgroundColor:'#f2cafe', pl:1, pr:1, mt:1,borderRadius: 2}}>
-                            <Typography variant='h6' sx={{textDecoration:'underline'}}>
-                                {item.title}
+                        <Box sx={{border:1, pl:1, pr:1, mt:1,borderRadius: 2}}>
+                            <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                                <Typography variant='h6' sx={{textDecoration:'underline'}}>
+                                    {item.title}
+                                </Typography>
+                                <Box>
+                                    <Button 
+                                        size='small'
+                                        sx={{mb:1, mt:1, mr:5}}
+                                        onClick={()=>{setDialogData(item);handleClickOpen()}}
+                                    >
+                                        Update
+                                    </Button>
+                                    <Dialog open={open} onClose={handleClose}>
+                                        <DialogTitle>Update{dialogData._id}</DialogTitle>
+                                        <DialogContent>
+                                            <form onSubmit={handleUpdate}>
+                                                <TextField
+                                                    required
+                                                    size="small"
+                                                    margin="dense"
+                                                    id="title"
+                                                    label="Title"
+                                                    fullWidth
+                                                    variant="standard"
+                                                    defaultValue={dialogData.title}
+                                                    onChange={e=>setTitleUpdate(e.target.value)}
+                                                />
+                                                <TextField
+                                                    size="small"
+                                                    margin="dense"
+                                                    id="description"
+                                                    label="Description"
+                                                    fullWidth
+                                                    variant="standard"
+                                                    multiline={true}
+                                                    defaultValue={dialogData.description}
+                                                    onChange={e=>setDescriptionUpdate(e.target.value)}
+                                                />
+                                                <Button onClick={handleClose}>Cancel</Button>
+                                                <Button type="submit">Update</Button>
+                                            </form>
+                                        </DialogContent>
+                                    </Dialog>
+                                    <Button 
+                                        size='small'
+                                        sx={{mb:1, mt:1, mr:5, color: 'red'}}
+                                        onClick={handleDeleteOpen}
+                                    >
+                                        Delete
+                                    </Button>
+                                    <Dialog
+                                        open={openDelete}
+                                        onClose={handleDeleteClose}
+                                    >
+                                        <DialogTitle>
+                                            Do you want to delete this?"
+                                        </DialogTitle>
+                                        <DialogActions>
+                                        <Button onClick={()=>handleDelete(item._id)}>
+                                            Yes
+                                        </Button>
+                                        <Button onClick={handleDeleteClose}>
+                                            No
+                                        </Button>
+                                        </DialogActions>
+                                    </Dialog>
+                                </Box>
+                            </Box>
+                            <Typography>
+                                {item.description}
                             </Typography>
-                            <Box 
-                                sx={{pl:3,}}
-                            >
+                            <Box >
                                 {item.content && item.content.map((content) => (
                                     <div key={content._id}>
                                         <Box sx={{pt:1,}}></Box>
+                                        {content.uploadType === 'text' && 
+                                            <Box sx={{display:'flex', flexDirection:'row', justifyContent:'start', alignItems:'center'}}>
+                                                <NotesIcon/><Box sx={{pr:1,}}></Box>
+                                                    <Typography variant='body2' >{content.text}</Typography>
+                                            </Box>}
                                         {content.uploadType === 'classNotes' && 
                                             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'start', alignItems:'center'}}>
-                                                <img src={pdf} width={20}/><Box sx={{pr:1,}}></Box>
+                                                <PictureAsPdfIcon/><Box sx={{pr:1,}}></Box>
                                                 <a href = {content.document.webViewLink} target={"_blank"} variant='body1'>{content.document.name}</a>
                                             </Box>}
                                         {content.uploadType === 'assignments' && 
-                                            <Box sx={{display:'flex', flexDirection:'row', justifyContent:'start', alignItems:'center'}}>
-                                                <img src={pdf} width={20}/><Box sx={{pr:1,}}></Box>
-                                                <a href = {content.document.webViewLink} target={"_blank"} variant='body1'>{content.document.name}</a>
+                                            <Box sx={{display:'flex', flexDirection:'column'}}>
+                                                <Box sx={{display:'flex', flexDirection:'row', justifyContent:'start', alignItems:'center'}}>
+                                                    <PictureAsPdfIcon/><Box sx={{pr:1,}}></Box>
+                                                    <a href = {content.document.webViewLink} target={"_blank"} variant='body1'>{content.document.name}</a>
+                                                </Box>
+                                                <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
+                                                    <Button 
+                                                        size='small'
+                                                        // variant="filled"
+                                                        sx={{mb:1, mt:1,}}
+                                                        onClick={()=>{navigate("/teacher/subjects/" + subjectid + "/submissions/" + content._id + "/all");}}
+                                                    >
+                                                        View Submissions
+                                                    </Button>
+                                                </Box>
                                             </Box>}
-                                        {content.uploadType === 'quizezz' && 
+                                        {content.uploadType === 'quiz' && 
                                             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'start', alignItems:'center'}}>
-                                                <img src={quiz} width={20}/><Box sx={{pr:1,}}></Box>
+                                                <QuizIcon/><Box sx={{pr:1,}}></Box>
                                                 <Link to={`/quiz/${content.quiz}`} variant='body1'>{content.name}</Link>
                                             </Box>}
                                     </div>
@@ -203,7 +393,7 @@ const Lms = () => {
                                     size='small'
                                     variant="contained"
                                     sx={{mb:1, mt:1,backgroundColor:"#4b0082",color:"white"}}
-                                    onClick={()=>{navigate("/teacher/lms/" + item._id + "/lmsdocs");}}
+                                    onClick={()=>{navigate("/teacher/subjects/" + subjectid + "/lms/" + item._id);}}
                                 >
                                     Add Documents
                                 </Button>

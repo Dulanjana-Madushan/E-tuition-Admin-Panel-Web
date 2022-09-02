@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { 
@@ -16,38 +16,118 @@ import {
     CircularProgress} from "@mui/material";
 
 import DialogAlert from '../../components/Dialog';
-import FilePicker from "../../components/FilePicker";
 import { base_url } from '../../Const/Const';
 
-export default function AddDoc() {
+import Avatar from '@mui/material/Avatar';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import AddIcon from '@mui/icons-material/Add';
+
+export default function AddDoc(props) {
+    const ref = useRef();
+    const navigate = useNavigate();
+    const { subjectid, lmsid } = useParams();
+
+    const [data, setData] = useState(null);
     const [Svalue, setSvalue] = useState(null);
     const [text, setText] = useState(null);
+    const [quiz, setQuiz] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const { lmsid } = useParams();
-    const navigate = useNavigate();
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [open, setOpen] = useState(true);
+
+    useEffect(()=>{
+        const abortCont = new AbortController();
+        fetch(base_url + '/subjects/' + subjectid + '/quiz', {
+            method: 'GET',
+            headers: {"Content-Type":"application/json",
+            "Authorization": "Bearer " + localStorage.getItem('token')}},
+        )
+            .then(res =>{
+                return res.json();
+            })
+            .then(data => {
+                if(data['success']){
+                    setData(data['data']);
+                }else{
+                    setError(data['error'])
+                }
+                setIsLoading(false);
+            })
+            .catch(err => {
+                if(err.name === "AbortError"){
+                    setError('Fetch aborted');
+                }else{
+                    setIsLoading(false);
+                    setError(err.message);
+                }
+            })
+
+            return () => abortCont.abort();
+
+    },[Svalue])
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const handleChange = (event) => {
+        setSelectedFile(null)
         setSvalue(event.target.value);
+        if(Svalue == 'quiz')handleOpen()        
     };
 
     const handleSubmit = (event) => {
 
         event.preventDefault();
-        const body = JSON.stringify({
-            text: text,
-            uploadType: Svalue,
-        });
+        var requestOptions;
+        var url;
+        if(Svalue == 'classNotes' || Svalue === "assignment" ){
+            const formData = new FormData();
+            formData.append("uploadType", Svalue)
+            formData.append("documents", selectedFile);
+            requestOptions = {
+                method: 'POST',
+                headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
+                body: formData
+            };
+            url = base_url + '/lms/' + lmsid + '/lmsfiles';
 
+        }else if(Svalue == 'quiz'){
+            requestOptions = {
+                method: 'POST',
+                headers: {"Content-Type":"application/json", "Authorization": "Bearer " + localStorage.getItem('token')},
+                body: JSON.stringify({
+                    uploadType: Svalue,
+                    name: quiz.title,
+                    quiz: quiz._id
+                })
+            };
+            url = base_url+'/lms/' + lmsid + '/lmsdoc';
+        }else if(Svalue == 'text'){
+            requestOptions = {
+                method: 'POST',
+                headers: {"Content-Type":"application/json", "Authorization": "Bearer " + localStorage.getItem('token')},
+                body: JSON.stringify({
+                    uploadType: Svalue,
+                    text: text,
+                }),
+            };
+            url = base_url+'/lms/' + lmsid + '/lmsdoc';;
+        }
+        
         setIsLoading(true);
         setError(null);
-        fetch(base_url+'/lms/' + lmsid + '/lmsdoc', {
-            method: 'POST',
-            headers: {"Content-Type":"application/json",
-                "Authorization": "Bearer " + localStorage.getItem('token')
-            },
-            body:body
-        }).then(res=>{
+        fetch(url, requestOptions).then(res=>{
             setIsLoading(true);
             return res.json();
         })
@@ -117,7 +197,7 @@ export default function AddDoc() {
                         <Box
                             width='200px'
                         >
-                            <FormControlLabel value="assignment" control={<Radio />} label="Assignment" onChange={handleChange} />
+                            <FormControlLabel value="assignments" control={<Radio />} label="Assignment" onChange={handleChange} />
                         </Box>
                         <Box
                             width='200px'
@@ -136,13 +216,83 @@ export default function AddDoc() {
                     }}
                 >
                 {
-                    Svalue === "classNotes" || Svalue === "assignment" 
-                    ? <FilePicker/> 
+                    Svalue === "classNotes" || Svalue === "assignments" 
+                    ? <div>
+                        <Box 
+                            display='flex'
+                            flexWrap="wrap"
+                            padding={1}
+                            sx={{justifyContent:'start', border:1, borderColor:'#cfd8dc', borderRadius:1}}
+                        >
+                            <div>
+                                <input
+                                    type="file"
+                                    name="document"
+                                    ref={ref}
+                                    onChange={(event) => {
+                                        setSelectedFile(event.target.files[0]);
+                                    }}
+                                />
+                                {selectedFile && (
+                                        <div>
+                                            <br/>
+                                            <Button sx={{backgroundColor:"red",color:"white"}} size='small' onClick={()=>{
+                                                ref.current.value = null;
+                                                setSelectedFile(null)}}>Remove</Button>
+                                            <br/>
+                                        </div>
+                                )}
+                            </div>
+                        </Box>
+                        {selectedFile && <Box
+                            display='flex'
+                            flexWrap="wrap"
+                            
+                            sx={{justifyContent:'center', mt:1}}
+                        >
+                            <Button  variant="contained" onClick={handleSubmit} sx={{backgroundColor:"green",color:"white"}}>
+                                Save
+                            </Button>
+                        </Box>}
+                    </div>
                     : <Box></Box>
                 }
                 {
                     Svalue === "quiz" 
-                    ? <h4>This is quiz</h4>
+                    ? <Box 
+                        display='flex'
+                        flexWrap="wrap"
+                        flexDirection='column'
+                        sx={{justifyContent:'center'}}
+                    >
+                        {quiz && <Container  maxWidth='sm'> 
+                            <Typography>Selected Quiz : {quiz.title}</Typography>
+                            <Box
+                                display='flex'
+                                flexWrap="wrap"
+                                sx={{justifyContent:'center', mt:1}}
+                            >
+                                <Button  variant="contained" onClick={handleSubmit} sx={{backgroundColor:"green",color:"white"}}>
+                                    Save
+                                </Button>
+                            </Box>
+                        </Container>}
+                        <Dialog onClose={handleClose} open={open}>
+                            <DialogTitle>Select a Quiz</DialogTitle>
+                            <List sx={{ pt: 0 }}>
+                                {data.map((quiz) => (
+                                    <ListItem button onClick={() => {handleClose();setQuiz(quiz)}} key={quiz._id}>
+                                    <ListItemAvatar>
+                                        <Avatar sx={{ bgcolor: '#c6cbec', color: '#303f9f' }}>
+                                        <AddIcon />
+                                        </Avatar>
+                                    </ListItemAvatar>
+                                        <ListItemText primary={quiz.title} />
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </Dialog>
+                    </Box>    
                     : <Box></Box>
                 }
                 {
@@ -156,7 +306,7 @@ export default function AddDoc() {
                                 name="text"
                                 fullWidth
                                 id="text"
-                                label="Text"
+                                label="Text/Link"
                                 margin="normal"
                                 multiline={true}
                                 onChange={e => setText(e.target.value)}
@@ -167,7 +317,7 @@ export default function AddDoc() {
                                 flexDirection='row'
                                 sx={{justifyContent:'center', mt:1}}
                             >
-                                <Button  variant="contained" type="submit" sx={{backgroundColor:"green",color:"white"}}>
+                                <Button  variant="contained" onClick={handleSubmit} sx={{backgroundColor:"green",color:"white"}}>
                                     Save
                                 </Button>
 
@@ -185,9 +335,9 @@ export default function AddDoc() {
                 sx={{justifyContent:'center'}}
             >
                 {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
-                {error && <div color="red">{error}</div>}
+                {error && <Typography color="red">{error}</Typography>}
                 {isLoading && <CircularProgress color="primary" />}
-            </Box>
+        </Box>
     </Box>
   );
 }

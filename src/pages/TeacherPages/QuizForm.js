@@ -49,9 +49,13 @@ const QuizForm = () => {
         return questionsList;
     }
 
-    const deleteQuestion = (id) => {
-      console.log(id);
-      questions.splice(id, 1);
+    const deleteQuestion = (index) => {
+      setQuestions([
+        ...questions.slice(0, index),
+        ...questions.slice(index + 1, questions.length)
+      ]);
+      // console.log(id);
+      // questions.splice(id, 1);
       setNumberOfQuestions(numberOfQuestions - 1)
     }
 
@@ -60,6 +64,8 @@ const QuizForm = () => {
       event.preventDefault();
       console.log(questions);
     };
+
+    console.log(questions);
 
     return ( 
         <Container component="main" maxWidth="sm">
@@ -72,7 +78,7 @@ const QuizForm = () => {
             padding: 1,
           }}
         >
-          <Box component="form" validate onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <TextField
                 value={title}
                 size='small'
@@ -144,7 +150,7 @@ const QuizForm = () => {
               Create Quiz
             </Button>
             {error}
-          </Box>
+          </form>
         </Box>       
     </Container>
     );
