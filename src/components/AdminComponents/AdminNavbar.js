@@ -11,7 +11,7 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import Drawer from './AdminDrawer';
-import { BrowserRouter as Router, Route, Switch, Outlet} from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import profile from "../../images/john_doe.jpg";
 import useFetch from '../../services/useFetch';
