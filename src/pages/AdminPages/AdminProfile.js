@@ -1,81 +1,23 @@
-import * as React from 'react';
-import { useState } from 'react';
-
 import { Box } from '@mui/system';
-import { Button, Stack, Typography, Checkbox, FormControlLabel, MenuItem, IconButton, TextField,
-    useTheme, useMediaQuery, CircularProgress, FormGroup } from '@mui/material';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
-
+import { CircularProgress,} from '@mui/material';
+import { Stack, Typography,useTheme, useMediaQuery,Button } from '@mui/material';
 import useFetch from '../../services/useFetch';
 import { base_url } from '../../Const/Const';
-import { genders, titles } from '../../Const/Const';
 import Image from '../../images/profile_photo.png';
-import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import DialogAlert from '../../components/Dialog';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
 
-const AdminProfile = ({setToken}) => {
+const AdminProfile = () => {
 
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [title, setTitle] = useState(null);
-    const [name, setName] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [phone, setPhone] = useState(null);
-    const [gender, setGender] = useState(null);
-    const [school, setSchool] = useState(null);
-    const [qualifications, seQualifications] = useState(null);
-    const [errorr, setErrorr] = useState(null)
-    const [isLoadingg, setIsLoadingg] = useState(false);
-
     const {data, isLoading, error} = useFetch(base_url + '/auth/me');
     console.log(data);
+    const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const body = JSON.stringify({
-            name: name,
-            email: email,
-            phone: phone,
-            school: school,
-          });
-    
-        setIsLoadingg(true);
-        setErrorr(null);
-        
-        fetch(base_url+'/users'+data._id, {
-                method: 'PUT',
-                headers: {"Content-Type":"application/json",
-                "Authorization": "Bearer " + localStorage.getItem('token')},
-                body:body
-            }).then(res=>{
-              setIsLoadingg(true);
-              return res.json();
-            })
-            .then(dataa=>{
-              console.log(dataa);
-                setIsLoadingg(false);
-                setToken(dataa.token);
-                console.log(dataa.token);
-                if(!dataa['success']){
-                    setErrorr(dataa['error']);
-                    return;
-                }
-                localStorage.setItem('role', dataa['role']);
-                let role = localStorage.getItem('role');
-                
-            })
-            .catch(err => {
-                if(err.name === "AbortError"){
-                    console.log('Fetch aborted');
-                }else{
-                    setIsLoadingg(false);
-                    setErrorr(err.message);
-                    console.log(err.message);
-                }
-            })
-      };
-   
-    return (  
+    return (
         <Box
             display='flex'
             flexDirection='column'
@@ -83,201 +25,179 @@ const AdminProfile = ({setToken}) => {
             sx={{mt: 6, pl:2, pr:2, width:'100%'}}
         >
             <Box
-                marginTop = {2}
-                display='flex'
-                flexWrap="wrap"
-                marginBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#F2F2F2'}}
+                 marginTop = {2}
+                 marginBottom = {2}
+                 display='flex'
+                 flexWrap="wrap"
+                 paddingLeft={2}
+                 paddingTop={1}
+                paddingBottom={1}
+                //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
             >
                 <Typography
-                    sx={{fontSize:30, mb:1, mt:1}} 
+                    sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}}  
+ 
                 >
                     Admin Profile
                 </Typography>
 
             </Box>
-            <Box component="form" onSubmit={handleSubmit}  sx={{ mt: 1 ,justifyContent:'center'}}>
-            {isLoading && <CircularProgress color="success" />}
-            {data && <div>
-                <Box
-                    display='flex'
-                    flexWrap="wrap"
-                    sx={{justifyContent:'center'}}
-                >
-                    {!selectedImage && (
-                                    <div>
-                                        <img alt="profile" height="250px" src={Image}/>
-                                    </div>
-                                )}
-                    {selectedImage && (
-                                    <div>
-                                        <img alt="profile" height="250px" src={URL.createObjectURL(selectedImage)} />
-                                        <br />
-                                        <button onClick={()=>{
-                                            // ref.current.value = null;
-                                            setSelectedImage(null)}}>Remove</button>
-                                        <br/><br/>
-                                    </div>
-                                )}
-                </Box>
+
+            <Box 
+            display='flex'
+            flexWrap="wrap"
+            sx={{justifyContent:match?'center':'center'}}
+            >
+                {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
+                {error && <div>{error}</div>}
+                {isLoading && <CircularProgress color="primary" />}
                 <Box 
                     display='flex'
-                    flexWrap="wrap"
-                    sx={{justifyContent:'center'}}
-                > 
-                    <label htmlFor="icon-button-file">
-                        <input 
-                            id="icon-button-file" 
-                            type="file" 
-                            style={{display:"none"}}
-                            onChange={(event) => {
-                                setSelectedImage(event.target.files[0]);
-                            }} />
-                        <IconButton color="primary" aria-label="upload picture" >
-                            <PhotoCamera/>
-                        </IconButton>
-                    </label>
-                    
-                </Box>
-                <Box
-                    display='flex'
-                    flexWrap="wrap"
-                    component="form"
-                    sx={{'& .MuiTextField-root': { m: 1, width: '50ch'},justifyContent:'center'}}
+                    flexDirection='column'
+                    sx={{width:'100%'}}
                 >
-                    <Stack
-                        direction={{ xs: 'column', sm: 'row' }}
-                        spacing={{ xs: 1, sm: 2, md: 4 }}
-                    >
-                        <TextField 
-                            required
-                            id="title"
-                            label="Title" 
-                            name="title"
-                            size='small'
-                            select
-                            defaultValue={data.title}
-                            onChange={e => setTitle(e.target.value)}
+                    {data && <div>
+                        <Box
+                        display='flex'
+                        flexWrap="wrap"
+                        flexDirection='row'
+                        sx={{justifyContent:match?'center':'center',backgroundColor:'white'}}
                         >
-                            {titles.map((option) => (
-                                <MenuItem value={option}>{option}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                        </Stack>
-                        <Stack
-                        direction={{ xs: 'column', sm: 'row' }}
-                        spacing={{ xs: 1, sm: 2, md: 4 }}
-                    >
-                        <TextField
-                            required
-                            id="name"
-                            label="Name"
-                            name="name"
-                            size='small'
-                            defaultValue={data.name}
-                            onChange={e => setTitle(e.target.value)}/>
-                    </Stack>
-                    <Stack
-                        direction={{ xs: 'column', sm: 'row' }}
-                        spacing={{ xs: 1, sm: 2, md: 4 }}
-                    >
-                        <TextField
-                            required
-                            id='email'
-                            label="Email" 
-                            name="email"
-                            size='small'
-                            defaultValue={data.email}
-                            onChange={e => setEmail(e.target.value)}
-                        />
-                        </Stack>
-                        <Stack
-                        direction={{ xs: 'column', sm: 'row' }}
-                        spacing={{ xs: 1, sm: 2, md: 4 }}
-                    >
-                        <TextField
-                            required
-                            id='phone'
-                            label="Phone" 
-                            name="phone"
-                            size='small'
-                            defaultValue={data.phone}
-                            onChange={e => setPhone(e.target.value)}
-                        />
-                    </Stack>
-                    <Stack
-                        direction={{ xs: 'column', sm: 'row' }}
-                        spacing={{ xs: 1, sm: 2, md: 4 }}
-                    >
-                        <TextField 
-                            required
-                            id="gender"
-                            label="Gender" 
-                            name='gender'
-                            size='small'
-                            select
-                            defaultValue={data.gender}
-                            onChange={e => setGender(e.target.value)}
-                        >
-                            {genders.map((option) => (
-                                <MenuItem value={option}>{option}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                        </Stack>
-                        <Stack
-                        direction={{ xs: 'column', sm: 'row' }}
-                        spacing={{ xs: 1, sm: 2, md: 4 }}
-                    >
-                        <TextField
-                            required
-                            id="school" 
-                            label="School/Institute"
-                            name="school"
-                            size='small'
-                            defaultValue={data.school} 
-                            onChange={e => setSchool(e.target.value)}
-                        />
-                    </Stack>
-                    <Stack
-                        direction={{ xs: 'column', sm: 'row' }}
-                        spacing={{ xs: 1, sm: 2, md: 4 }}
-                    >
-                        
-                            <FormControlLabel control={<Checkbox checked/>} label="Undergraduate"></FormControlLabel>
-                            <FormControlLabel control={<Checkbox/>} label="Postgraduate"></FormControlLabel>
-                            <FormControlLabel control={<Checkbox/>} label="BSc"></FormControlLabel>
-                            <FormControlLabel control={<Checkbox/>} label="MSc"></FormControlLabel>
-                            <FormControlLabel control={<Checkbox/>} label="PHD"></FormControlLabel>
-                       
-                    </Stack>
+
+                        <Box  sx={{ m:1}}>
+                            <Card 
+                            sx={{justifyContent:match?'center':'center',width:match?'85vw':450,height:match?400:400, display: 'flex',backgroundColor:'#c6cbec', boxShadow: 0,border:0,borderRadius:2}}
+                            >
+                                {isLoading && <CircularProgress color="primary" />}
+                                {data && <div>
+                                
+                                {data.photo.webContentLink && (
+                                                                        <div>
+                                                                            <CardMedia
+                                                                                component="img"
+                                                                                image={data.photo.webContentLink}
+                                                                                alt="admin"
+                                                                            />
+                                                                        </div>
+                                                                    )} 
+                                {!data.photo.webContentLink && (
+                                                                        <div>
+                                                                            <CardMedia
+                                                                                component="img"
+                                                                                image={Image}
+                                                                                alt="admin"
+                                                                            />
+                                                                        </div>
+                                                                    )}
+
+                                </div>}
+                           
+                            </Card>   
+                        </Box> 
+
+                            <Box  sx={{ m:1}}>
+                                <Card sx={{justifyContent:match?'center':'center',width:match?'85vw':450,height:match?400:400, display: 'flex',backgroundColor:'#c6cbec', boxShadow: 0,border:0,borderRadius:2}}  >
+                                    <Box  sx={{ m:1}}>
+                                        <Box
+                                        flexDirection='row'
+                                        sx={{justifyContent:match?'center':'center', mt:8}}
+                                        >
+                                            <Box
+                                            display='flex'
+                                            flexWrap="wrap"
+                                            flexDirection='row'
+                                            sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                <Typography sx={{justifyContent:match?'center':'center',fontSize:18,fontWeight:600}}>Name</Typography>
+                                            </Box>
+
+                                            <Box
+                                            display='flex'
+                                            flexWrap="wrap"
+                                            flexDirection='row'
+                                            sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                <Typography sx={{justifyContent:match?'center':'center'}}>{data.name}</Typography>
+                                            </Box>
+
+                                            <Box
+                                            display='flex'
+                                            flexWrap="wrap"
+                                            flexDirection='row'
+                                            sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                <Typography sx={{justifyContent:match?'center':'center',fontSize:18,fontWeight:600}}>Email</Typography>
+                                            </Box>
+
+                                            <Box
+                                            display='flex'
+                                            flexWrap="wrap"
+                                            flexDirection='row'
+                                            sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                <Typography sx={{jjustifyContent:match?'center':'center'}}>{data.email}</Typography>
+                                            </Box>
+
+                                            <Box
+                                            display='flex'
+                                            flexWrap="wrap"
+                                            flexDirection='row'
+                                            sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                <Typography sx={{justifyContent:match?'center':'center',fontSize:18,fontWeight:600}}>Phone Number</Typography>
+                                            </Box>
+
+                                            <Box
+                                            display='flex'
+                                            flexWrap="wrap"
+                                            flexDirection='row'
+                                            sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                <Typography sx={{justifyContent:match?'center':'center'}}>{data.phone}</Typography>
+                                            </Box>
+
+
+                                            <Box
+                                            display='flex'
+                                            flexWrap="wrap"
+                                            flexDirection='row'
+                                            sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                <Typography sx={{justifyContent:match?'center':'center',fontSize:18,fontWeight:600}}>Gender</Typography>
+                                            </Box>
+
+                                            <Box
+                                            display='flex'
+                                            flexWrap="wrap"
+                                            flexDirection='row'
+                                            sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                <Typography sx={{justifyContent:match?'center':'center'}}>{data.gender}</Typography>
+                                            </Box>
+
+                                            <Box
+                                                display='flex'
+                                                flexWrap="wrap"
+                                                //backgroundColor="#EDf5E1"
+                                            
+                                                sx={{justifyContent:match?'center':'center'}}
+                                                >
+                                                    <Stack direction={{ xs: 'column', sm: 'row' }}
+                                                    spacing={{ xs: 1, sm: 2, md: 4 }}>
+                                                        {!isLoading && <Button  type="submit" variant="contained" sx={{ mt: 1, mb: 1 ,backgroundColor: '#3F51B5'}}
+                                                        onClick={()=>{
+                                                            navigate("/admin/profileedit")
+                                                            }}>
+                                                            Update
+                                                        </Button>}
+                                                        
+                                                    </Stack>
+                                                </Box>
+
+                                        </Box>
+                                    </Box>
+                            
+                                </Card>   
+                            </Box> 
+                        </Box>
+                    </div>}
                 </Box>
-                <Box
-                display='flex'
-                flexWrap="wrap"
-                //backgroundColor="#EDf5E1"
-                paddingTop={2}
-                paddingBottom={2}
-                sx={{justifyContent:match?'center':'center'}}
-                >
-                    <Stack direction={{ xs: 'column', sm: 'row' }}
-                    spacing={{ xs: 1, sm: 2, md: 4 }}>
-                        {!isLoading && <Button  type="submit" variant="contained" color="success" sx={{ mt: 3, mb: 2 ,backgroundColor: '#4b0082'}}>
-                            Update
-                        </Button>}
-                        
-                    </Stack>
-                </Box>
-            </div>}
             </Box>
         </Box>
     );
 }
-
-AdminProfile.propTypes = {
-    setToken: PropTypes.func.isRequired
-}
  
-export default AdminProfile;
+export default AdminProfile ;
 

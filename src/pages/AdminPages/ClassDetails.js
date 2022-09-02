@@ -2,22 +2,81 @@ import { useParams } from 'react-router-dom';
 import DialogAlert from '../../components/Dialog';
 
 import { Box } from '@mui/system';
-import { Stack, Typography, TextField, CircularProgress, Rating} from '@mui/material';
+import { Button, Typography,CircularProgress, Rating,Avatar} from '@mui/material';
 
 import useFetch from '../../services/useFetch';
 import { base_url } from '../../Const/Const';
+import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import Card from '@mui/material/Card';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useState, useEffect } from "react";
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
-const ClassDetails = () => {
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
 
+  
+
+const ClassDetails = () => {   
     const { subjectid } = useParams();
     const {data, isLoading, error} = useFetch(base_url + '/subjects/' + subjectid);
+    const navigate = useNavigate();
+    const theme = useTheme();
+    const match = useMediaQuery(theme.breakpoints.down("sm"));
+    console.log(data);
+    
+
+    const [dataa, setDataa] = useState(null);
+    const [isLoadingg, setIsLoadingg] = useState(true);
+    const [errorr, setErrorr] = useState(null);
+    console.log('blah',dataa);
+
+    useEffect(()=>{
+        const abortCont = new AbortController();
+
+        fetch(base_url + '/subjects/' + subjectid + '/reviews', {
+            method: 'GET',
+            headers: {"Content-Type":"application/json",
+            "Authorization": "Bearer " + localStorage.getItem('token')}},
+        {signal:abortCont.signal})
+            .then(res =>{
+                return res.json();
+            })
+            .then(data => {
+                if(data['success']){
+                    setDataa(data['data']);
+                }else{
+                    setErrorr(data['error'])
+                }
+                setIsLoadingg(false);
+            })
+            .catch(err => {
+                if(err.name === "AbortError"){
+                    setErrorr('Fetch aborted');
+                }else{
+                    setIsLoadingg(false);
+                    setErrorr(err.message);
+                }
+            })
+
+            return () => abortCont.abort();
+
+    },[base_url + '/subjects/' + subjectid + '/reviews'])
+    console.log('blah',dataa);
 
     return (
         <Box
-            display='flex'
-            flexDirection='column'
-            padding={2}
-            sx={{mt: 6, pl:2, pr:2, width:'100%'}}
+        display='flex'
+        flexDirection='column'
+        sx={{  mt: 8, pl:2,pr:2, width:'100%'}}
         >
             <Box
                 marginTop = {2}
@@ -25,180 +84,282 @@ const ClassDetails = () => {
                 display='flex'
                 flexWrap="wrap"
                 paddingLeft={2}
-                paddingBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#F2F2F2',borderRadius: 2}}
+                paddingTop={1}
+                paddingBottom={1}
+                //sx={{justifyContent:'center',backgroundColor:'#F2F2F2', border:1, borderColor:'#E0E0E0', borderRadius:2}}
             >
                 <Typography
-                    sx={{fontSize:30, mb:1, mt:1}} 
+                    sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}}  
                 >
                     Class Details
                 </Typography>
-
             </Box>
-            <Box
-                display='flex'
-                flexWrap="wrap"
-                sx={{justifyContent:'center'}}
+
+            <Box 
+            display='flex'
+            flexWrap="wrap"
+            sx={{justifyContent:match?'center':'center'}}
             >
                 {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
                 {error && <div>{error}</div>}
                 {isLoading && <CircularProgress color="primary" />}
-                
-                {data && <div>
-                    <Box
+                <Box 
+                    display='flex'
+                    flexDirection='column'
+                    sx={{width:'100%'}}
+                >
+                    {data && <div>
+                        <Box
                         display='flex'
                         flexWrap="wrap"
                         flexDirection='row'
-                        sx={{justifyContent:'center', mt:1}}
-                    >
-                        <img alt="profile" height="250px" src={data.subject.post.webContentLink}/>
-                    </Box>
+                        sx={{justifyContent:match?'center':'center',backgroundColor:'white'}}
+                        >
+
+                            <Box  sx={{ m:1}}>
+                                <Card 
+                                sx={{pt:2,justifyContent:match?'center':'center',width:match?'85vw':450,height:match?400:400, display: 'flex',backgroundColor:'#c6cbec', boxShadow: 0,border:0,borderRadius:2}}
+                                >
+                                <Box
+                                    display='flex'
+                                    flexWrap="wrap"
+                                    sx={{justifyContent:match?'center':'center'}}
+                                    >
+                                    {isLoading && <CircularProgress color="primary" />}
+                                    {data && <div>
+                                        <Box
+                                            display='flex'
+                                            flexWrap="wrap"
+                                            sx={{justifyContent:'center'}}
+                                        >
+                                            {data.subject.teacher.photo.webContentLink && (
+                                                                            <div>
+                                                                                <img alt="profile" height="250px" src={data.subject.teacher.photo.webContentLink}/>
+                                                                            </div>
+                                                                        )} 
+                                            {!data.subject.teacher.photo.webContentLink && (
+                                                                            <div>
+                                                                                <img alt="profile" height="250px" src={Image}/>
+                                                                            </div>
+                                                                        )}
+                                        </Box>
+                                        
+                                        <Box
+                                        flexDirection='row'
+                                        sx={{justifyContent:'center', mt:2}}
+                                        >
+                                            <Box
+                                            display='flex'
+                                            flexWrap="wrap"
+                                            flexDirection='row'
+                                            sx={{justifyContent:'center', mt:0}}>
+                                                <Typography sx={{justifyContent:'center'}}>{data.subject.teacher.title +" "+data.subject.teacher.name}</Typography>
+                                            </Box>
+
+                                        
+                                            <Box
+                                            display='flex'
+                                            flexWrap="wrap"
+                                            flexDirection='row'
+                                            sx={{justifyContent:'center', mt:0}}>
+                                                <Typography sx={{justifyContent:'center'}}>{data.subject.teacher.email}</Typography>
+                                            </Box>
+                                        
+
+                                            <Box
+                                                display='flex'
+                                                flexWrap="wrap"
+                                                flexDirection='row'
+                                                sx={{justifyContent:'center', mt:1}}>
+                                                
+                                                <Button variant="contained" 
+                                                    onClick={()=>{
+                                                    navigate("/admin/adminteacherdetails/"+data.subject.teacher._id)
+                                                    }}
+                                                    sx={{backgroundColor:"#3F51B5",color:"white"}}>
+                                                        Profile
+                                                    </Button>        
+                                            </Box>
+                                            
+                                        </Box>
+                                    </div>}
+                                </Box>
+                                </Card>   
+                            </Box> 
+
+                            <Box  sx={{ m:1}}>
+                                    <Card sx={{pt:1,pb:1,justifyContent:match?'center':'center',width:match?'85vw':450,height:match?400:400, display: 'flex',backgroundColor:'#c6cbec', boxShadow: 0,border:0,borderRadius:2}}  >
+                                        <Box  sx={{ m:1}}>
+                                            <Box
+                                            flexDirection='row'
+                                            sx={{justifyContent:match?'center':'center', mt:10}}
+                                            >
+                                                {/* <Box
+                                                display='flex'
+                                                flexWrap="wrap"
+                                                flexDirection='row'
+                                                sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                    <Typography sx={{justifyContent:match?'center':'center'}}>{data.subject.description}</Typography>
+                                                </Box> */}
+
+                                                <Box
+                                                display='flex'
+                                                flexWrap="wrap"
+                                                flexDirection='row'
+                                                sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                    <Typography sx={{justifyContent:match?'center':'center'}}>Stream: {data.subject.stream}</Typography>
+                                                </Box>
+
+                                                <Box
+                                                display='flex'
+                                                flexWrap="wrap"
+                                                flexDirection='row'
+                                                sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                    <Typography sx={{jjustifyContent:match?'center':'center'}}>Class Type: {data.subject.type}</Typography>
+                                                </Box>
+
+                                                <Box
+                                                display='flex'
+                                                flexWrap="wrap"
+                                                flexDirection='row'
+                                                sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                    <Typography sx={{justifyContent:match?'center':'center'}}>Medium: {data.subject.medium}</Typography>
+                                                </Box>
+
+                                                <Box
+                                                display='flex'
+                                                flexWrap="wrap"
+                                                flexDirection='row'
+                                                sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                    <Typography sx={{justifyContent:match?'center':'center'}}>Date and Time: {data.subject.period.day+' '+data.subject.period.time}</Typography>
+                                                </Box>
+
+                                                <Box
+                                                display='flex'
+                                                flexWrap="wrap"
+                                                flexDirection='row'
+                                                sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                    <Typography sx={{justifyContent:match?'center':'center'}}>No of Students: {data.subject.enrolledStudents.length}</Typography>
+                                                </Box>
+
+                                                <Box
+                                                display='flex'
+                                                flexWrap="wrap"
+                                                flexDirection='row'
+                                                sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                    <Typography sx={{justifyContent:match?'center':'center'}}>Class Fee: {data.subject.fee}</Typography>
+                                                </Box>
+                                            
+
+                                                <Box
+                                                    display='flex'
+                                                    flexWrap="wrap"
+                                                    flexDirection='row'
+                                                    sx={{justifyContent:match?'center':'center', mt:5}}>
+                                                    <PictureAsPdfIcon/><Box sx={{pr:1}}></Box>
+                                                    <a href = {data.subject.post.webViewLink} target={"_blank"} variant='body1'>Class Post</a>
+                                                        
+                                                </Box>
+
+                                                <Box
+                                                    display='flex'
+                                                    flexWrap="wrap"
+                                                    flexDirection='row'
+                                                    sx={{justifyContent:match?'center':'center', mt:5}}>
+                                                    
+                                                    <Button variant="contained" 
+                                                        onClick={()=>{
+                                                        navigate("/admin/adminpayments/"+subjectid)
+                                                        }}
+                                                        sx={{backgroundColor:"#3F51B5",color:"white"}}>
+                                                            Payment Details
+                                                        </Button> 
+                                                                
+                                                </Box>
+                                            </Box>
+                                        </Box>
+                                
+                                    </Card>   
+                            </Box> 
+                        </Box>
+                    </div>}
+
+            
+                    {/* class image and ratings */}
                     <Box
-                        display='flex'
-                        flexWrap="wrap"
-                        component="form"
-                        sx={{'& .MuiTextField-root': { m: 1, width: '50ch'},justifyContent:'center'}}
-                    >  
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 1, sm: 2, md: 4 }}
-                        >
-                            <TextField 
-                                id="name"
-                                label="name" 
-                                name="name"
-                                size='small'
-                                disabled = {true}
-                                defaultValue={data.subject.teacher.title +" "+data.subject.teacher.name}
-                            />
-                        </Stack>
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 1, sm: 2, md: 4 }}
-                        >
-                            <TextField
-                                id="description"
-                                label="Description"
-                                name="description"
-                                size='small'
-                                disabled = {true}
-                                defaultValue={data.subject.description}/>
-                        </Stack>
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 1, sm: 2, md: 4 }}
-                        >
-                            <TextField
-                                id='type'
-                                label="Class Type" 
-                                name="type"
-                                size='small'
-                                disabled = {true}
-                                defaultValue={data.subject.type}
-                            />
-                        </Stack>
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 1, sm: 2, md: 4 }}
-                        >
-                            <TextField
-                                id='stream'
-                                label="Stream" 
-                                name="stream"
-                                size='small'
-                                disabled = {true}
-                                defaultValue={data.subject.stream}
-                            />
-                        </Stack>
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 1, sm: 2, md: 4 }}
-                        >
-                            <TextField
-                                id='fee'
-                                label="Fee" 
-                                name="fee"
-                                size='small'
-                                disabled = {true}
-                                defaultValue={data.subject.fee}
-                            />
-                        </Stack>
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 1, sm: 2, md: 4 }}
-                        >
-                            <TextField
-                                id='medium'
-                                label="Medium" 
-                                name="medium"
-                                size='small'
-                                disabled = {true}
-                                defaultValue={data.subject.medium}
-                            />
-                        </Stack>
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 1, sm: 2, md: 4 }}
-                        >
-                            <TextField
-                                id='paydate'
-                                label="Paydate" 
-                                name="paydate"
-                                size='small'
-                                disabled = {true}
-                                defaultValue={data.subject.payDate}
-                            />
-                        </Stack>
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 1, sm: 2, md: 4 }}
-                        >
-                            <TextField
-                                id='maxStudents'
-                                label="Maximum Students" 
-                                name="maxStudents"
-                                size='small'
-                                disabled = {true}
-                                defaultValue={data.subject.maxStudents}
-                            />
-                        </Stack>
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 1, sm: 2, md: 4 }}
-                        >
-                            <TextField
-                                id='medium'
-                                label="Medium" 
-                                name="medium"
-                                size='small'
-                                disabled = {true}
-                                defaultValue={data.subject.medium}
-                            />
-                        </Stack>
-                        <Stack
-                            direction={{ xs: 'column', sm: 'row' }}
-                            spacing={{ xs: 1, sm: 2, md: 4 }}
-                        >
-                            <TextField
-                                id='createdat'
-                                label="Createdat" 
-                                name="createdat"
-                                size='small'
-                                disabled = {true}
-                                defaultValue={data.subject.createdAt.substring(0,10)}
-                            />
-                        </Stack>                     
-                    </Box>
-                    <Box
-                        display='flex'
-                        flexWrap="wrap"
-                        flexDirection='row'
-                        sx={{justifyContent:'center', mt:1}}
+                        sx={{mb:2,justifyContent:match?'center':'center',}}
                     >
-                        <Rating value={data.subject.averageRating} precision={0.5} readOnly />
-                    </Box>   
-                </div>}
-            </Box>         
+                        {data && <div>
+                        <Box>
+                            <Box
+                            sx={{alignItems:'center', border:1, borderColor:'#E0E0E0', borderRadius:2}}>
+                            {/* Ratings */}
+                            {data && data.length != 0 && <div>
+                            <Box
+                                        display='flex'
+                                        flexWrap="wrap"
+                                        flexDirection='row'
+                                        sx={{justifyContent:match?'center':'center', mt:1}}
+                                    >
+                                        <Typography sx={{fontWeight:'bold'}}>
+                                            Average Rating and Comments
+                                        </Typography>  
+                            </Box>
+
+                            <Box
+                                        display='flex'
+                                        flexWrap="wrap"
+                                        flexDirection='row'
+                                        sx={{justifyContent:'center', mt:0}}
+                                    >
+                                        <Typography sx={{fontWeight:'bold'}}>
+                                            {data.subject.averageRating}/5.0
+                                        </Typography>  
+                            </Box>
+
+                            <Box
+                                        display='flex'
+                                        flexWrap="wrap"
+                                        flexDirection='row'
+                                        sx={{justifyContent:'center', mt:1}}
+                                    >
+                                        <Rating value={data.subject.averageRating} precision={0.5} readOnly />
+                            </Box>
+
+                            <Box
+                                        display='flex'
+                                        flexDirection='column'
+                                        sx={{width: '100%', mt:2, border:0, borderColor:'#E0E0E0', borderRadius:0}}
+                                    >
+                                        {dataa && dataa.map((item) => (
+                                            <div key={item._id}>
+                                                <Box 
+                                                    display='flex'
+                                                    flexWrap="wrap"
+                                                    flexDirection='row'
+                                                    sx={{backgroundColor:'#c6cbec', pl:1, pr:1, mt:0, alignItems:'center', border:0, borderColor:'#E0E0E0', borderRadius:2}}
+                                                >
+                                                    <Avatar alt="logo" src={item.student.photo.webContentLink}/>
+                                                    <Box sx={{pl:1}}></Box>
+                                                    <Box 
+                                                        display='flex'
+                                                        flexDirection='column'
+                                                    >
+                                                        <Typography variant='subtitle2'>{item.student.name}</Typography>
+                                                        <Typography variant='caption' sx={{fontStyle:'italic'}}>{item.comment}</Typography>
+                                                        <Rating defaultValue={item.rating} precision={0.5} size='small' readOnly />
+                                                    </Box>
+                                                </Box>
+                                            </div>
+                                        ))}
+                            </Box>
+                            </div>}
+                            </Box>
+                        </Box>
+                        </div>}
+                    </Box> 
+                </Box>    
+            </Box>    
         </Box>
     );
 }
