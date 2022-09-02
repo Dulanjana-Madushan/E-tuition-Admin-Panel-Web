@@ -10,11 +10,11 @@ import DialogContentText from '@mui/material/DialogContentText';
 
 export default function DialogAlert() {
   const [open, setOpen] = useState(true);
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setOpen(false);
-    history.push('/login');
+    navigate('/login');
   };
 
   return (

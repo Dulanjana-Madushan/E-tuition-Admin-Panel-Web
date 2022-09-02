@@ -1,20 +1,21 @@
-import { Button, Typography } from "@mui/material";
-import React, { useState, useRef } from "react";
-import Stack from '@mui/material/Stack';
+import React, { useRef } from "react";
+import { useEffect } from "react";
 
-const FilePicker = () => {
-    const [image, setImage] = useState(null);
+import { 
+    Button, 
+    Typography, 
+    Box, 
+    Stack } from "@mui/material";
+
+const FilePicker = ({image, setImage}) => {
+
+  useEffect(()=>{},[image]);
+
     const inputFile = useRef(null);
 
     const handleFileUpload = e => {
         const { files } = e.target;
         if (files && files.length) {
-            const filename = files[0].name;
-
-            var parts = filename.split(".");
-            const fileType = parts[parts.length - 1];
-            console.log("fileType", fileType); //ex: zip, rar, jpg, svg etc.
-
             setImage(files[0]);
         }
     };
@@ -23,7 +24,10 @@ const FilePicker = () => {
         inputFile.current.click();
     };
 
-    console.log("imageimage", image);
+    const clearImage = () => {
+      setImage(null);
+  };
+
     return (
         <div>
             <input
@@ -33,27 +37,39 @@ const FilePicker = () => {
                 type="file"
             />
 
-            <Stack spacing={2} direction="row" border={1} m={1} p={1}>
-                <Button variant="contained" onClick={onButtonClick}
-                    sx={{backgroundColor:"green",color:"white"}}>
-                        Choose a file
-                </Button>   
-                {
-                    handleFileUpload.filename !== ""  //if there is a file
-                    ?<Typography
-                        sx={{fontFamily:"Times New Roman" , fontSize
-                        :20,}}
-                    >
-                        File choosed
-                    </Typography>
-                    :<Typography
-                        sx={{fontFamily:"Times New Roman" , fontSize
-                        :20,}}
-                    >
-                        No file choosen
-                    </Typography>
-                }
+            <Stack spacing={2} direction="row" border={1} p={1} borderRadius={2}>
+                <Button variant="contained" onClick={onButtonClick}>
+                    Choose file
+                </Button>  
+                <Box
+                    display='flex'
+                    flexWrap="wrap"
+                    flexDirection='column'
+                    sx={{justifyContent:'center'}}
+                >
+                    {image != null //if there is a file
+                        ?<Typography>
+                            {image.name}
+                        </Typography>
+                        :<Typography>
+                            No file choosen
+                        </Typography>
+                      }
+                  </Box> 
+                
             </Stack>
+            {image != null && <Box
+                    display='flex'
+                    flexWrap="wrap"
+                    flexDirection='row'
+                    sx={{justifyContent:'right', mt:1}}
+                >
+                    <Button  variant="contained" onClick={clearImage} sx={{backgroundColor:"red",color:"white"}}>
+                        Clear
+                    </Button>
+
+                </Box>
+    }
         </div>
     );
 };

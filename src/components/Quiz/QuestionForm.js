@@ -44,7 +44,7 @@ const QuestionForm = ({question, setQuestion, id, deleteQuestion, total}) => {
                     autoFocus
                     margin="dense"
                     multiline={true}
-                    onChange={e => setQuestion({...question, question: e.target.value})}
+                    onChange={e => setQuestion({question: e.target.value})}
                 />
                 <TextField
                     // value={question.option_1}
@@ -57,7 +57,7 @@ const QuestionForm = ({question, setQuestion, id, deleteQuestion, total}) => {
                     autoComplete="option1"
                     margin="dense"
                     multiline={true}
-                    onChange={e => setQuestion({...question, option_1: e.target.value})}
+                    onChange={e => setQuestion({option_1: e.target.value})}
                 />
                 <TextField
                     // value={question.option_2}

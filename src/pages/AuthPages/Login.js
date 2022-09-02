@@ -8,12 +8,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-import {base_url} from './Const/Const';
+import {base_url} from '../../Const/Const';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import Image1 from './images/cover_two_students.jpg';
-import Image2 from './images/web_login.png';
+import Image1 from '../../images/cover_two_students.jpg';
+import Image2 from '../../images/web_login.png';
 
 function Copyright(props) {
   return (
@@ -158,20 +158,14 @@ export default function Login({setToken}) {
                 </Button>}
                 <Grid container>
                     <Grid item xs>
-                    <Link href="#" variant="body2">
-                        Forgot password?
-                    </Link>
+                        <Link href="/forgetpwd" variant="body2">
+                            Forgot password?
+                        </Link>
                     </Grid>
                     <Grid item xs>
-                    <Link 
-                    href="/register" 
-                    variant="body2" 
-                    // onClick={() => {
-                    //     navigate("/register");
-                    // }}
-                    >
-                        Don't have an account? Sign Up
-                    </Link>
+                        <Link href="/register" variant="body2">
+                            Don't have an account? Sign Up
+                        </Link>
                     </Grid>
                 </Grid>
                 </Box>
