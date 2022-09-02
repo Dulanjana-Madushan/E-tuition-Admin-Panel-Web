@@ -10,12 +10,15 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
-import Drawer from './AdminDrawer';
+import Drawer from './SideDrawer';
 import { BrowserRouter as Router, Route, Switch, Outlet} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import profile from "../../images/john_doe.jpg";
 import useFetch from '../../services/useFetch';
 import { base_url } from '../../Const/Const';
+import logo from '../../images/web_nav_logo.png';
+import { styled } from '@mui/material/styles';
+import Badge from '@mui/material/Badge';
 
 export default function AdminNavbar() {
 
@@ -77,6 +80,7 @@ export default function AdminNavbar() {
           
         >
           <Avatar />
+          {/* <Outlet /> */}
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -110,6 +114,36 @@ export default function AdminNavbar() {
     
   );
 
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+      backgroundColor: '#44b700',
+      color: '#44b700',
+      boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+      '&::after': {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        borderRadius: '50%',
+        //animation: 'ripple 1.2s infinite ease-in-out',
+        //border: '1px solid currentColor',
+        content: '""',
+      },
+    },
+    '@keyframes ripple': {
+      '0%': {
+        transform: 'scale(.8)',
+        opacity: 1,
+      },
+      '100%': {
+        transform: 'scale(2.4)',
+        opacity: 0,
+      },
+    },
+  }));
+  
+
   return (
     <>
       <Box sx={{display:'flex', backgroundColor: '#adc345', height:"5"}}>
@@ -130,6 +164,15 @@ export default function AdminNavbar() {
             >
               <MenuIcon />
             </IconButton>
+            <IconButton
+                size="medium"
+                edge="start"
+                color="inherit"
+                aria-label="logo"
+                sx={{ display: { xs: 'none', sm: 'flex' } }}
+              >
+                <Avatar alt="tutorLK" src={logo}  />
+              </IconButton>
             <Typography
               variant="h6"
               noWrap
@@ -158,10 +201,16 @@ export default function AdminNavbar() {
                 aria-haspopup="true"
                 //onClick={handleMobileMenuOpen}
                 onClick={()=>{
-                 navigate("/admin/admin-profile");
+                 navigate("/admin/aprofile");
                 }}
               >
-                <Avatar alt="John Doe" src={data.photo.webContentLink}/>
+                 <StyledBadge
+                    overlap="circular"
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    variant="dot"
+                  >
+                    <Avatar alt="John Doe" src={data.photo.webContentLink}/>
+                </StyledBadge>
               </IconButton>
             } 
             </Box>
@@ -171,7 +220,7 @@ export default function AdminNavbar() {
       </Box>
     
       <Box sx={{display:'flex'}}>
-        <Drawer open={!open}/>
+        <Drawer open={open}/>
         <Outlet/>
       </Box>
       
