@@ -8,9 +8,16 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { base_url } from '../../Const/Const';
 import DialogAlert from '../../components/Dialog';
 
+import Paper from '@mui/material/Paper';
+import InputBase from '@mui/material/InputBase';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
+import { useState, useEffect } from "react";
+
 const TeachersDetails = () => {
 
   const {data, isLoading, error} = useFetch(base_url + '/admin/teachers');
+  var [name, setName] = useState('');
   const theme = useTheme();
   const match = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -36,7 +43,27 @@ const TeachersDetails = () => {
               Teachers Details
             </Typography>
             </Box>
-
+            <Box
+                display='flex'
+                flexWrap="wrap"
+                flexDirection='row'
+                sx={{justifyContent:'right'}}
+            >
+                <Paper
+                component="form"
+                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, borderRadius: 2 }}
+                >
+                    <InputBase
+                        sx={{ ml: 1, flex: 1 }}
+                        placeholder="Search by Students Name"
+                        inputProps={{ 'aria-label': 'search by name' }}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                        <SearchIcon />
+                    </IconButton>
+                </Paper>
+            </Box>
 
             <Box
             display='flex'

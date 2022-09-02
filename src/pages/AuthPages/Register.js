@@ -17,9 +17,27 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
+// import Avatar from '@mui/material/Avatar';
+// import Button from '@mui/material/Button';
+// import TextField from '@mui/material/TextField';
+// import Link from '@mui/material/Link';
+import CssBaseline from '@mui/material/CssBaseline';
+// import Grid from '@mui/material/Grid';
+// import Box from '@mui/material/Box';
+import LoginOutlined from '@mui/icons-material/LoginOutlined';
+// import Typography from '@mui/material/Typography';
+// import Container from '@mui/material/Container';
+// import { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import Image1 from './images/cover_two_students.jpg';
+// import Image2 from './images/web_login.png';
+// import {base_url} from './Const/Const';
+import Image3 from '../../images/web_cover2.jpg';
+import { makeStyles }from '@mui/styles';
+
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography variant="body2" color="white" align="center" {...props}>
       {'Copyright © '}
         tutorLK
       {' '}
@@ -29,8 +47,24 @@ function Copyright(props) {
   );
 }
 
-const Register = () => {
-    const ref = useRef();
+const useStyles = makeStyles({
+  glass: {
+      backgroundColor: "rgba(255,255,255,0.7)",
+      backdropFilter: "blur(8.5px)",
+  },
+  app: {
+     width:"100%",
+     backgroundImage: `url(${Image3})`,
+     backgroundSize: "cover",
+     backgroundPosition: "center",
+     backgroundAttachment: "fixed",
+  },
+  
+});
+
+export default function Register() {
+
+     const ref = useRef();
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
@@ -38,6 +72,7 @@ const Register = () => {
     const [gender, setGender] = useState(genders[0]);
     const [selectedImage, setSelectedImage] = useState(null);
     const [show, setShow] = useState(false);
+    const styles = useStyles();
 
     const handleChange = (event) => {
       setGender(event.target.value);
@@ -53,7 +88,7 @@ const Register = () => {
     setIsLoading(true);
     
     console.log(body);
-    fetch(base_url+'/auth/login', {
+    fetch(base_url+'/auth/register', {
             method: 'POST',
             headers: {"Content-Type":"application/json"},
             body:body
@@ -78,41 +113,32 @@ const Register = () => {
   };
 
   return (
-  <Grid container>
-    <Grid item md={6}>
-      <Box
-        sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        border: 'none',
-        padding: 4,
-        }}
-      >
-        <div className="container">
-            <img alt="profile" height="550px" width="100%" src={Image1}/>
-        </div>
-      </Box>
-    </Grid>
-    <Grid item md={6} sm={12}>
-      <Container component="main" maxWidth="sm">
+    <div className={styles.app}>
+    <CssBaseline />
+    <Container component="main" maxWidth="sm" sx={{paddingTop:3}}>
         <Box
+          className={styles.glass}
           sx={{
-            marginTop: 2,
+            // marginTop: 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             border: 'none',
-            padding: 2,
-            backgroundColor: '#F2F2F2',
+            paddingTop: 2,
+            paddingLeft: 8,
+            paddingRight: 8,
+            paddingBottom: 1,
+            //backgroundColor: '#F2F2F2',
             borderRadius: 2,
           }}
         >
           <Avatar src={Image2} sx={{bgcolor: '#3F51B5', width:60,height:60}}/>
-          <Typography component="h1" variant="h5">
+            {/* <LoginOutlined />
+          </Avatar> */}
+          <Typography component="h1" variant="h5" color='#3F51B5'>
               <span style= {{fontSize:40}}>Sign up</span>
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <form onSubmit={handleSubmit}>
             <TextField 
               required
               id="title"
@@ -253,15 +279,10 @@ const Register = () => {
                 </Link>
               </Grid>
             </Grid>
-          </Box>
+          </form>
         </Box>
-        <Copyright 
-        sx={{ mt: 1 }} 
-        />
+        <Copyright sx={{ mt: 2, mb:2 }} />
     </Container>
-    </Grid>
-  </Grid>
+    </div> 
   );
 }
-
-export default Register;

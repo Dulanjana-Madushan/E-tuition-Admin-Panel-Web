@@ -10,6 +10,7 @@ import DialogAlert from '../../components/Dialog';
 import Card from '@mui/material/Card';
 import { useNavigate } from 'react-router-dom';
 import CardMedia from '@mui/material/CardMedia';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 const OneTeacher = () => {
 
@@ -52,7 +53,7 @@ const OneTeacher = () => {
             sx={{justifyContent:match?'center':'center'}}
             >
                 {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
-                {error && <div>{error}</div>}
+                {error && <Typography color='red'>{error}</Typography>}
                 {isLoading && <CircularProgress color="primary" />}
                 <Box 
                     display='flex'
@@ -202,6 +203,15 @@ const OneTeacher = () => {
                                             flexDirection='row'
                                             sx={{justifyContent:match?'center':'center', mt:0}}>
                                                 <Typography sx={{justifyContent:match?'center':'center'}}>{data.user.school}</Typography>
+                                            </Box>
+                                            <Box
+                                                    display='flex'
+                                                    flexWrap="wrap"
+                                                    flexDirection='row'
+                                                    sx={{justifyContent:match?'center':'center', mt:2}}>
+                                                    <PictureAsPdfIcon/><Box sx={{pr:1}}></Box>
+                                                    <a href = {data.user.verification.webViewLink} target={"_blank"} variant='body1'>Proofs</a>
+                                                        
                                             </Box>
                         
                                         </Box>

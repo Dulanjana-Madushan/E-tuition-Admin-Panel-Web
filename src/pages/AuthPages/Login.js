@@ -14,10 +14,15 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import Image1 from '../../images/cover_two_students.jpg';
 import Image2 from '../../images/web_login.png';
+import Image3 from '../../images/web_cover2.jpg';
+import { makeStyles }from '@mui/styles';
+
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography variant="body2" color="white" align="center" {...props}>
       {'Copyright © '}
         tutorLK
       {' '}
@@ -27,12 +32,34 @@ function Copyright(props) {
   );
 }
 
+const useStyles = makeStyles({
+    glass: {
+        backgroundColor: "rgba(255,255,255,0.7)",
+        backdropFilter: "blur(8.5px)",
+    },
+    app: {
+       width:"100%",
+       height: "100vh",
+       backgroundImage: `url(${Image3})`,
+       backgroundSize: "cover",
+       backgroundPosition: "center",
+       backgroundAttachment: "fixed",
+    },
+    textfield:{
+        backgroundColor: "rgba(255,255,255,0.05)",
+        color:'white',
+    }
+    
+});
+
 export default function Login({setToken}) {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false);
+    const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
+    const styles = useStyles();
 
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -77,104 +104,106 @@ export default function Login({setToken}) {
           })
     };
 
-  return (
-    <Grid container>
-        <Grid item md={6}>
-        <Box
-                sx={{
-                //marginTop: 4,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                border: 'none',
-                padding: 4,
-                }}
-            >
-            <div className="container">
-                <img alt="profile" height="550px" width="100%" src={Image1}/>
-            </div>
-            </Box>
-        </Grid>
-        <Grid item md={6} sm={12}>
-            <Container component="main" maxWidth="sm">
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleToggle = () => {
+        setOpen(!open);
+    };
+
+    return (
+        <div className={styles.app}>
             <CssBaseline />
-            <Box
-                sx={{
-                marginTop: 15,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                border: 'none',
-                padding: 5,
-                backgroundColor: '#F2F2F2',
-                borderRadius: 2,
-                }}
-            >
-                <Avatar src={Image2} sx={{bgcolor: '#3F51B5', width:60,height:60}} />
-                <Typography component="h1" variant="h5">
-                    <span style= {{fontSize:40}}>Log In</span>
-                </Typography>
-                <Box component="form" onSubmit={handleSubmit}  sx={{ mt: 1 }}>
-                <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    onChange={e => setEmail(e.target.value)}
-                />
-                <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    onChange={e => setPassword(e.target.value)}
-                />
-                <Typography>
-                    <span style= {{
-                        fontSize:15, 
-                        color:'red',
-                        display: 'flex', 
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}>
-                        {error}
-                    </span>
-                </Typography>
-                {!isLoading && <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 ,backgroundColor: '#3F51B5'}}
+            <Container component="main" maxWidth="sm" sx={{paddingTop: 10}}>
+                <Box
+                    className={styles.glass}
+                    sx={{
+                    //marginTop: 15,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    border: 'none',
+                    padding: 5,
+                    //backgroundColor: '#F2F2F2',
+                    borderRadius: 2,
+                    }}
                 >
-                    Log In
-                </Button>}
-                <Grid container>
-                    <Grid item xs>
-                        <Link href="/forgetpwd" variant="body2">
-                            Forgot password?
-                        </Link>
-                    </Grid>
-                    <Grid item xs>
-                        <Link href="/register" variant="body2">
-                            Don't have an account? Sign Up
-                        </Link>
-                    </Grid>
-                </Grid>
+                    <Avatar src={Image2} sx={{bgcolor: '#3F51B5', width:80,height:80}} />
+                    <Typography component="h1" variant="h5" color='#3F51B5'>
+                        <span style= {{fontSize:40,}}>tutorLK</span>
+                    </Typography>
+                    
+                    <form onSubmit={handleSubmit}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                        <Typography>
+                            <span style= {{
+                                fontSize:15, 
+                                color:'red',
+                                display: 'flex', 
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}>
+                                {error}
+                            </span>
+                        </Typography>
+                        {!isLoading && <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 
+                                ,backgroundColor: '#3F51B5'
+                            }}
+                        >
+                            Log In
+                        </Button>}
+                        {isLoading && <Backdrop
+                                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                open={open}
+                                onClick={handleClose}
+                            >
+                                <CircularProgress color="inherit" />
+                            </Backdrop>}
+                        <Grid container>
+                            <Grid item xs>
+                                <Link href="/forgetpwd" variant="body2">
+                                    Forgot password?
+                                </Link>
+                            </Grid>
+                            <Grid item xs>
+                                <Link 
+                                href="/register" 
+                                variant="body2" 
+                                >
+                                    Don't have an account? Sign Up
+                                </Link>
+                            </Grid>
+                        </Grid>
+    
+                    </form>
                 </Box>
-            </Box>
-            <Copyright sx={{ mt: 2, mb:2 }} />
+                <Copyright sx={{ mt: 2, mb:2 }} />
             </Container>
-        </Grid>
-    </Grid>
-  );
+     </div>
+   
+   );
 }
 
 Login.propTypes = {
