@@ -3,7 +3,15 @@ import { useNavigate } from 'react-router-dom';
 
 import { Box } from '@mui/system';
 import { makeStyles }from '@mui/styles';
-import { Typography, Card, CardContent, CardMedia, CardActionArea, useTheme, useMediaQuery } from '@mui/material';
+import { 
+    Typography, 
+    Button, 
+    Card, 
+    CardContent, 
+    CardMedia, 
+    CardActions, 
+    useTheme, 
+    useMediaQuery } from '@mui/material';
 
 const useStyles = makeStyles({
     media: {
@@ -24,26 +32,25 @@ export default function ClassCard({data}) {
         <Box
           sx={{backgroundColor:'#EDF5E1', m:1}}
         >
-            <Card
-                sx = {{width: match?'85vw':200, height:match?'':300}} 
-                onClick={()=>{navigate("/teacher/subjects/" + data._id);}}
-            >
-                <CardActionArea>
-                    <CardMedia
-                        alt="class media"
-                        className={classes.media}
-                        style={{height: 50, paddingTop: '56.25%'}}
-                        image={data.post.webContentLink}
-                    />
-                    <CardContent>
-                        <Typography  gutterBottom height={30} overflow='clip' variant="h6" component="div">
-                            {data.subject}
-                        </Typography>
-                        <Typography height={55} overflow='clip' variant="body2" color="text.secondary">
-                            {data.description}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
+            <Card sx = {{width: match?'85vw':200}}>
+                <CardMedia
+                    alt="class media"
+                    className={classes.media}
+                    style={{height: 50, paddingTop: '56.25%'}}
+                    image={data.post.webContentLink}
+                />
+                <CardContent onClick={()=>{navigate("/teacher/subjects/" + data._id);}}>
+                    <Typography  gutterBottom height={30} overflow='clip' variant="h6" component="div">
+                        {data.subject}
+                    </Typography>
+                    <Typography height={55} overflow='clip' variant="body2" color="text.secondary">
+                        {data.description}
+                    </Typography>
+                </CardContent>
+                <CardActions >
+                    <Button size="small" onClick={()=>navigate('/teacher/subjects/' + data._id + '/update')}>Update</Button>
+                    <Button sx={{color:'red'}} size="small">Delete</Button>
+                </CardActions>
             </Card>
         </Box>
     );

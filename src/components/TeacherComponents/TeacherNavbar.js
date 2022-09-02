@@ -13,7 +13,7 @@ import Drawer from './TeacherDrawer';
 // import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { Outlet, useNavigate } from 'react-router-dom';
 // import { maxWidth } from '@mui/system';
-import logo from '../../images/logo.png';
+import logo from '../../images/web_login.png';
 import profile from "../../images/john_doe.jpg";
 import { Button } from '@mui/material';
 
@@ -24,7 +24,7 @@ export default function TeacherNavbar() {
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const toggleDrawer = event => {
     if (
@@ -96,7 +96,7 @@ export default function TeacherNavbar() {
             <IconButton
                 edge="start"
                 onClick={()=>{
-                  history.push("/teacher");
+                  navigate("/teacher");
               }}
               >
                 <Avatar alt="logo" src={logo}/>
@@ -113,7 +113,7 @@ export default function TeacherNavbar() {
             <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
               <Button onClick={()=>{
                   localStorage.removeItem('token');
-                  history.push("/login");
+                  navigate("/login");
                   }} 
                   sx={{fontSize:15,color:"#EDF5E1"}}>
                 LogOut
@@ -126,7 +126,7 @@ export default function TeacherNavbar() {
                 aria-label="account of current user"
                 color="inherit"
                 onClick={()=>{
-                  history.push("/tprofile");
+                  navigate("/teacher/profile");
               }}
               >
                 <Avatar alt="John Doe" src={profile}/>
