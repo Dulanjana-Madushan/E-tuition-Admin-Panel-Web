@@ -19,8 +19,8 @@ const QuestionForm = ({question, setQuestion, id, deleteQuestion, total}) => {
                 display: 'flex',
                 flexDirection: 'column',
                 // alignItems: 'center',
-                bgcolor:'#E1EDE0',
-                padding:1,
+                bgcolor:"#c6cbec",
+                padding:2,
                 marginTop:1,
                 borderRadius: '10px!important',
                 
@@ -117,6 +117,7 @@ const QuestionForm = ({question, setQuestion, id, deleteQuestion, total}) => {
                         margin="dense"
                         type={'number'}
                         onChange={e => setQuestion({...question, correctAnswer: e.target.value})}
+                        
                     />
                     <TextField
                     // value={question.mark}
@@ -130,6 +131,7 @@ const QuestionForm = ({question, setQuestion, id, deleteQuestion, total}) => {
                         margin="dense"
                         type={'number'}
                         onChange={e => setQuestion({...question, mark: e.target.value})}
+                        sx={{ml:1}}
                     />                
                 </Box>
                 <Grid container justifyContent="flex-end">

@@ -156,16 +156,19 @@ const Announcements = () => {
             sx={{ mt: 8, pl:2,pr:2, width:'100%'}}  
         >
              <Box
-                marginTop = {2}
-                display='flex'
-                flexWrap="wrap"
-                marginBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
+               marginTop = {2}
+               marginBottom = {2}
+               display='flex'
+               flexWrap="wrap"
+               paddingLeft={2}
+               paddingTop={1}
+               paddingBottom={1}
+               //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
             >
                 <Typography
-                    sx={{fontSize:30,mb:1,mt:1}} 
+                    sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}}
                 >
-                    Announcements 
+                    Announcements
                 </Typography>
             </Box>
             <Box
@@ -175,8 +178,8 @@ const Announcements = () => {
                 sx={{justifyContent:'right', mb:2}}
             >
                 <Button variant="contained"  onClick={handleClickOpen}
-                sx={{backgroundColor:"#4b0082",color:"white"}}>
-                    Send Notification
+                sx={{backgroundColor:"#3F51B5",color:"white"}}>
+                    Make an Announcement
                 </Button>          
             </Box>
             <Dialog open={open} onClose={handleClose}>
@@ -233,7 +236,7 @@ const Announcements = () => {
                 {data && data.map((item) => (
                     <div key={item._id}>
                         <Box sx={{ mt: 2}}>
-                            <Accordion>
+                            <Accordion sx={{backgroundColor:"#c6cbec"}}>
                                 <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls="panel1a-content"

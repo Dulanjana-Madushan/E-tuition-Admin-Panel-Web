@@ -39,13 +39,17 @@ const TNotification = () => {
         >
              <Box
                 marginTop = {2}
+                marginBottom = {2}
                 display='flex'
                 flexWrap="wrap"
-                marginBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
+                paddingLeft={2}
+                paddingTop={1}
+                paddingBottom={1}
+               //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
+                
             >
             <Typography
-              sx={{fontSize:30,mb:1,mt:1}} 
+             sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}} 
             >
               My Notifications
             </Typography>

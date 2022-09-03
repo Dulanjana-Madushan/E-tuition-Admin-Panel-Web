@@ -159,25 +159,28 @@ export default function AddDoc(props) {
     >
         <Box
             marginTop = {2}
+            marginBottom = {2}
             display='flex'
             flexWrap="wrap"
-            marginBottom={2}
-            sx={{justifyContent:'center',backgroundColor:'#D9DDDC', borderRadius: 2}}
-        >
+            paddingLeft={2}
+            paddingTop={1}
+            paddingBottom={1}
+            //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
+         >
             <Typography
-                sx={{fontSize:30,mb:1,mt:1}}
+                sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}}
             >
                 Uplaod Documents
             </Typography>
         </Box>
-        <Typography sx={{fontSize:20,}} >Select class materials type</Typography>
+        <Typography sx={{ml:2,fontSize:20,color:"#3F51B5"}} >Select class materials type</Typography>
         <Grid container direction={"row"}>
             <Grid
                 sx={{
                     textAlign: "left",
                 }}
             >
-                <FormControl sx={{ mt: 3 }}>
+                <FormControl sx={{ ml:2,mt: 3 }}>
                     <RadioGroup
                         row
                         aria-labelledby="demo-row-radio-buttons-group-label"
@@ -250,7 +253,7 @@ export default function AddDoc(props) {
                             
                             sx={{justifyContent:'center', mt:1}}
                         >
-                            <Button  variant="contained" onClick={handleSubmit} sx={{backgroundColor:"green",color:"white"}}>
+                            <Button  variant="contained" onClick={handleSubmit} sx={{backgroundColor:"#3F51B5",color:"white"}}>
                                 Save
                             </Button>
                         </Box>}
@@ -272,7 +275,7 @@ export default function AddDoc(props) {
                                 flexWrap="wrap"
                                 sx={{justifyContent:'center', mt:1}}
                             >
-                                <Button  variant="contained" onClick={handleSubmit} sx={{backgroundColor:"green",color:"white"}}>
+                                <Button  variant="contained" onClick={handleSubmit} sx={{backgroundColor:"#3F51B5",color:"white"}}>
                                     Save
                                 </Button>
                             </Box>
@@ -317,7 +320,7 @@ export default function AddDoc(props) {
                                 flexDirection='row'
                                 sx={{justifyContent:'center', mt:1}}
                             >
-                                <Button  variant="contained" onClick={handleSubmit} sx={{backgroundColor:"green",color:"white"}}>
+                                <Button  variant="contained" onClick={handleSubmit} sx={{backgroundColor:"#3F51B5",color:"white"}}>
                                     Save
                                 </Button>
 

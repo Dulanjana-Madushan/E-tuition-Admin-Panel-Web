@@ -281,7 +281,7 @@ export default function Register() {
             </Grid>
           </form>
         </Box>
-        <Copyright sx={{ mt: 2, mb:2 }} />
+        <Copyright sx={{ mt: 2, pb:2 }} />
     </Container>
     </div> 
   );

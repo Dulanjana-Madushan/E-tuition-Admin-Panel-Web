@@ -1,6 +1,7 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -10,14 +11,20 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import Drawer from './TeacherDrawer';
-// import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import { Outlet, useNavigate } from 'react-router-dom';
-// import { maxWidth } from '@mui/system';
-import logo from '../../images/web_login.png';
+import { BrowserRouter as Router, Route, Switch, Outlet} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import profile from "../../images/john_doe.jpg";
-import { Button } from '@mui/material';
+import useFetch from '../../services/useFetch';
+import { base_url } from '../../Const/Const';
+import logo from '../../images/web_nav_logo.png';
+import { styled } from '@mui/material/styles';
+import Badge from '@mui/material/Badge';
 
-export default function TeacherNavbar() {
+export default function AdminNavbar() {
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const {data, isLoading, error} = useFetch(base_url + '/auth/me');
+  console.log(data);
   
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
@@ -41,6 +48,11 @@ export default function TeacherNavbar() {
     setMobileMoreAnchorEl(null);
   };
 
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -58,7 +70,8 @@ export default function TeacherNavbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      
+
+
       <MenuItem>
         <IconButton
           size="large"
@@ -67,20 +80,78 @@ export default function TeacherNavbar() {
           
         >
           <Avatar />
+          {/* <Outlet /> */}
         </IconButton>
         <p>Profile</p>
       </MenuItem>
+      
+      {/* <MenuItem>
+        <IconButton
+          size="medium"
+          aria-label="account of current user"
+          color="inherit"
+          onClick={()=>{
+            navigate("/aprofile");
+          }}
+          
+        >
+      
+        </IconButton >
+        <p>Profile</p>
+      </MenuItem>
+
+      <MenuItem>
+        <IconButton
+          size="medium"
+          aria-label="log out"
+          color="inherit"
+        >
+       
+        </IconButton>
+        <p>log out</p>
+      </MenuItem> */}
     </Menu>
+    
   );
+
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+      backgroundColor: '#44b700',
+      color: '#44b700',
+      boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+      '&::after': {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        borderRadius: '50%',
+        //animation: 'ripple 1.2s infinite ease-in-out',
+        //border: '1px solid currentColor',
+        content: '""',
+      },
+    },
+    '@keyframes ripple': {
+      '0%': {
+        transform: 'scale(.8)',
+        opacity: 1,
+      },
+      '100%': {
+        transform: 'scale(2.4)',
+        opacity: 0,
+      },
+    },
+  }));
+  
 
   return (
     <>
-      <Box sx={{display:'flex', height:"5"}}>
+      <Box sx={{display:'flex', backgroundColor: '#adc345', height:"5"}}>
         <AppBar 
           position="fixed" 
           sx={{ 
             zIndex: (theme) => theme.zIndex.drawer + 1, 
-            backgroundColor:"#4b0082" }}
+            backgroundColor:'white' }}
         >
           <Toolbar>
             <IconButton
@@ -89,25 +160,26 @@ export default function TeacherNavbar() {
               color="inherit"
               aria-label="open drawer"
               onClick={toggleDrawer}
-              sx={{ mr: 2 ,display:{xm:'flex', sm:'none'}}}
+              sx={{ mr: 2 ,display:{xm:'flex', sm:'none'},color: "#3F51B5"}}
             >
               <MenuIcon />
             </IconButton>
             <IconButton
+                size="medium"
                 edge="start"
-                onClick={()=>{
-                  navigate("/teacher");
-              }}
+                color="inherit"
+                aria-label="logo"
+                sx={{ display: { xs: 'none', sm: 'flex' } }}
               >
-                <Avatar alt="logo" src={logo}/>
-            </IconButton>
+                <Avatar alt="tutorLK" src={logo}  />
+              </IconButton>
             <Typography
               variant="h6"
               noWrap
               component="div"
-              sx={{fontSize:30,color:"#EDF5E1"}}
+              sx={{fontSize:30,color:"#3F51B5"}}
             >
-              tutorLK
+             tutorLK
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
@@ -115,31 +187,43 @@ export default function TeacherNavbar() {
                   localStorage.removeItem('token');
                   navigate("/login");
                   }} 
-                  sx={{fontSize:15,color:"#EDF5E1"}}>
+                  sx={{fontSize:15,color:"#3F51B5"}}>
                 LogOut
               </Button>
             </Box>
             <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
-              <IconButton
+            {data && <IconButton
                 size="large"
                 edge="end"
-                aria-label="account of current user"
                 color="inherit"
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                //onClick={handleMobileMenuOpen}
                 onClick={()=>{
-                  navigate("/teacher/profile");
-              }}
+                 navigate("/teacher/tprofile");
+                }}
               >
-                <Avatar alt="John Doe" src={profile}/>
+                 <StyledBadge
+                    overlap="circular"
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    variant="dot"
+                  >
+                    <Avatar alt="John Doe" src={data.photo.webContentLink}/>
+                </StyledBadge>
               </IconButton>
+            } 
             </Box>
           </Toolbar>
         </AppBar>
         {renderMobileMenu}
       </Box>
+    
       <Box sx={{display:'flex'}}>
         <Drawer open={open}/>
         <Outlet/>
       </Box>
+      
         
     
     

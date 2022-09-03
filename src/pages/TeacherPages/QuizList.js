@@ -20,17 +20,20 @@ const QuizList = () => {
             sx={{ mt: 8, pl:2,pr:2, width:'100%'}}  
         >
              <Box
-                marginTop = {2}
-                display='flex'
-                flexWrap="wrap"
-                marginBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#D9DDDC'}}
+               marginTop = {2}
+               marginBottom = {2}
+               display='flex'
+               flexWrap="wrap"
+               paddingLeft={2}
+               paddingTop={1}
+               paddingBottom={1}
+               //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
             >
-            <Typography
-                sx={{fontSize:30,mb:1,mt:1}}
-            >
-                Quiz List
-            </Typography>
+                <Typography
+                    sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}}
+                >
+                    Quiz List
+                </Typography>
             </Box>
             <Box
                 display='flex'
@@ -39,7 +42,7 @@ const QuizList = () => {
                 sx={{justifyContent:'right'}}
             >
                 <Button variant="contained" startIcon={<AddIcon />} onClick={()=>{navigate("/teacher/subjects/" + subjectid + "/createquiz");}}
-                sx={{backgroundColor:"#4b0082",color:"white"}}>
+                sx={{backgroundColor:"#3F51B5",color:"white"}}>
                     Create Quiz
                 </Button>          
             </Box>
@@ -49,7 +52,7 @@ const QuizList = () => {
                 sx={{justifyContent:'center'}}
             >
                 {error && <div>{error}</div>}
-                {isLoading && <CircularProgress color="success" />}
+                {isLoading && <CircularProgress color="primary" />}
             </Box>
             <Box
                 display='flex'
@@ -58,7 +61,7 @@ const QuizList = () => {
             >
                 {data && data.map((item) => (
                     <div key={item._id}>
-                        <Box sx={{backgroundColor:'#f2cafe', pl:1, pr:1,borderRadius: 2}}>
+                        <Box sx={{backgroundColor:'#c6cbec', pl:1, pr:1,borderRadius: 2}}>
                         <Typography variant='body2'>
                                 Created At : {item.createdAt.substring(0,10)}
                             </Typography>
@@ -71,7 +74,7 @@ const QuizList = () => {
                             <Button 
                                 size='small'
                                 variant="contained"
-                                sx={{mb:1,backgroundColor:"#4b0082",color:"white"}}
+                                sx={{mb:1,backgroundColor:"#3F51B5",color:"white"}}
                                 onClick={()=>{navigate("/teacher/quiz/" + item._id);}}
                             >
                                 Update

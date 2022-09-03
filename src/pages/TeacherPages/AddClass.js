@@ -98,17 +98,22 @@ const AddClass = () => {
         <Box
             display='flex'
             flexDirection='column'
-            sx={{mt: 6, pl:2, pr:2, width:'100%'}}
+            sx={{mt: 8, pl:2, pr:2, width:'100%'}}
         >
             <Box
-                marginTop = {2}
-                display='flex'
-                flexWrap="wrap"
+               marginTop = {2}
+               marginBottom = {2}
+               display='flex'
+               flexWrap="wrap"
+               paddingLeft={2}
+               paddingTop={1}
+               paddingBottom={1}
+               //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
             >
                 <Typography
-                    sx={{fontSize:30, mb:1, mt:1}} 
+                    sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}}
                 >
-                    Create Class
+                    Class Notes
                 </Typography>
             </Box>
             <Box
@@ -122,7 +127,7 @@ const AddClass = () => {
                     component="main"
                     flexDirection='column'
                     width={match?'100%':'50%'}
-                    sx={{justifyContent:'center',border:2, borderColor:'gray', borderRadius:2, padding: 2, mb:4}}
+                    sx={{justifyContent:'center',border:2, borderColor:'#E0E0E0', borderRadius:2, padding: 2, mb:4}}
                 >
                     <form onSubmit={handleSubmit}>
                         <TextField 
@@ -293,7 +298,11 @@ const AddClass = () => {
                                 onChange={e => setMaxStudents(e.target.value)}
                             />
                         </Box>
-                        <p>Add a class poster<br/>File should be *.jpg, *.png</p>
+                        <Box sx={{ml:1}}>
+                        <Typography>Add a class poster</Typography>
+                        <Typography><span style= {{fontSize:12, color:'gray'}}>File should be *.jpg, *.png</span></Typography>
+                        
+                        </Box>
                         <Box 
                             display='flex'
                             flexWrap="wrap"
@@ -343,7 +352,7 @@ const AddClass = () => {
                             {error && <Typography color='red'>{error}</Typography>}
                             {isLoading && <CircularProgress />}
                             <Button variant="contained"  type="submit"
-                                sx={{ mt: 3, mb: 2,backgroundColor:"#4b0082",color:"white" }}
+                                sx={{ mt: 3, mb: 2,backgroundColor:"#3F51B5",color:"white" }}
                             >
                                 Create
                             </Button>

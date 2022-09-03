@@ -47,7 +47,7 @@ export default function ClassCard({data}) {
                         {data.description}
                     </Typography>
                 </CardContent>
-                <CardActions >
+                <CardActions sx={{justifyContent:'center'}}>
                     <Button size="small" onClick={()=>navigate('/teacher/subjects/' + data._id + '/update')}>Update</Button>
                     <Button sx={{color:'red'}} size="small">Delete</Button>
                 </CardActions>

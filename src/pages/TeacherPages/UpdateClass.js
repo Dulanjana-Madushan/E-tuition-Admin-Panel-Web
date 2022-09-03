@@ -136,12 +136,17 @@ const UpdateClass = () => {
             sx={{mt: 6, pl:2, pr:2, width:'100%'}}
         >
             <Box
-                marginTop = {2}
-                display='flex'
-                flexWrap="wrap"
+               marginTop = {2}
+               marginBottom = {2}
+               display='flex'
+               flexWrap="wrap"
+               paddingLeft={2}
+               paddingTop={1}
+               paddingBottom={1}
+               //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
             >
                 <Typography
-                    sx={{fontSize:30, mb:1, mt:1}} 
+                    sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}}
                 >
                     Update Class
                 </Typography>
@@ -192,7 +197,7 @@ const UpdateClass = () => {
                     component="main"
                     flexDirection='column'
                     width={match?'100%':'50%'}
-                    sx={{justifyContent:'center',border:2, borderColor:'gray', borderRadius:2, padding: 2, mb:4}}
+                    sx={{justifyContent:'center',border:2, borderColor:'#E0E0E0', borderRadius:2, padding: 2, mb:4}}
                 >
                     <form onSubmit={handleSubmit}>
                         <TextField 

@@ -203,17 +203,20 @@ const Lms = () => {
         <Box 
             display='flex'
             flexDirection='column'
-            sx={{ mt: 8, pl:2,pr:2, width:'100%'}}  
+            sx={{ mt: 8,mb:1, pl:2,pr:2, width:'100%'}}  
         >
             <Box
-                marginTop = {2}
-                display='flex'
-                flexWrap="wrap"
-                marginBottom={2}
-                sx={{justifyContent:'center',backgroundColor:'#D9DDDC', borderRadius: 2}}
+               marginTop = {2}
+               marginBottom = {2}
+               display='flex'
+               flexWrap="wrap"
+               paddingLeft={2}
+               paddingTop={1}
+               paddingBottom={1}
+               //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
             >
                 <Typography
-                    sx={{fontSize:30,mb:1,mt:1}}
+                    sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}}
                 >
                     Class Notes
                 </Typography>
@@ -251,7 +254,7 @@ const Lms = () => {
                         sx={{justifyContent:'right', mt:1}}
                     >
                         <Button variant="contained"  type="submit"
-                        sx={{backgroundColor:"green",color:"white"}}>
+                        sx={{backgroundColor:"#3F51B5",color:"white"}}>
                             Add
                         </Button>          
                     </Box>
@@ -265,7 +268,7 @@ const Lms = () => {
                 {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
                 {error && <Typography color="red">{error}</Typography>}
                 {isLoading && <BeatLoader
-                    color="indigo"
+                    color="#3F51B5"
                     speedMultiplier={1}
                     />
                 }
@@ -277,9 +280,9 @@ const Lms = () => {
             >
                 {data && data.map((item) => (
                     <div key={item._id}>
-                        <Box sx={{border:1, pl:1, pr:1, mt:1,borderRadius: 2}}>
+                        <Box sx={{backgroundColor:"#c6cbec",border:1,borderColor:'#E0E0E0', pl:1, pr:1, mt:2,borderRadius: 2}}>
                             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-                                <Typography variant='h6' sx={{textDecoration:'underline'}}>
+                                <Typography variant='h6' sx={{textDecoration:'underline',color:"black"}}>
                                     {item.title}
                                 </Typography>
                                 <Box>
@@ -346,7 +349,7 @@ const Lms = () => {
                                     </Dialog>
                                 </Box>
                             </Box>
-                            <Typography>
+                            <Typography  sx={{color:"black"}}>
                                 {item.description}
                             </Typography>
                             <Box >
@@ -356,7 +359,7 @@ const Lms = () => {
                                         {content.uploadType === 'text' && 
                                             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'start', alignItems:'center'}}>
                                                 <NotesIcon/><Box sx={{pr:1,}}></Box>
-                                                    <Typography variant='body2' >{content.text}</Typography>
+                                                    <Typography variant='body2'>{content.text}</Typography>
                                             </Box>}
                                         {content.uploadType === 'classNotes' && 
                                             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'start', alignItems:'center'}}>
@@ -392,7 +395,7 @@ const Lms = () => {
                                 <Button 
                                     size='small'
                                     variant="contained"
-                                    sx={{mb:1, mt:1,backgroundColor:"#4b0082",color:"white"}}
+                                    sx={{mb:1, mt:1,backgroundColor:"#3F51B5",color:"white"}}
                                     onClick={()=>{navigate("/teacher/subjects/" + subjectid + "/lms/" + item._id);}}
                                 >
                                     Add Documents

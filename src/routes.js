@@ -34,8 +34,9 @@ import AddStudent from './pages/TeacherPages/AddStudent';
 import Review from './pages/TeacherPages/Review';
 import AddDoc from './pages/TeacherPages/AddDocs';
 import ViewSubmissions from './pages/TeacherPages/ViewSubmissions';
-// import Chat from './pages/TeacherPages/Chat';
-// import TNotification from './pages/TeacherPages/Notification';
+import Chat from './pages/TeacherPages/Chat';
+import TNotification from './pages/TeacherPages/Notification';
+import TeacherSettings from './pages/TeacherPages/TeacherSettings';
 import TeacherProfile from './pages/TeacherPages/TeacherProfile';
 import QuizForm from './pages/TeacherPages/QuizForm';
 import QuizList from './pages/TeacherPages/QuizList';
@@ -108,9 +109,10 @@ const router = (role, setToken)=>[
             { path: 'subjects/:subjectid/quiz', element: <QuizList/> },
             { path: 'subjects/:subjectid/createquiz', element: <QuizForm/> },
             { path: 'quiz/:quizid', element: <QuizForm/> },
-            // { path: '/chat', element: <Chat/> },  
-            // { path: '/tnotification', element: <TNotification/> },
-            { path: 'profile', element: <TeacherProfile/> }
+            { path: 'chat', element: <Chat/> },  
+            { path: 'tnotification', element: <TNotification/> },
+            { path: 'tsettings', element: <TeacherSettings/> }, 
+            { path: 'tprofile', element: <TeacherProfile/> }
         ]
     },
     {

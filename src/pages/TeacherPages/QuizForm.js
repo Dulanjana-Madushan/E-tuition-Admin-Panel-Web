@@ -130,7 +130,7 @@ const QuizForm = () => {
             <Grid container justifyContent="flex-end">
                 <Grid item>
                     <Button
-                    color="success"
+                    color="primary"
                     onClick={() => {
                       setNumberOfQuestions(numberOfQuestions + 1)
                     }}
@@ -143,8 +143,8 @@ const QuizForm = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              color="success"
+              sx={{ mt: 3, mb: 2 ,backgroundColor:"#3F51B5"}}
+              //color="success"
               disabled={isLoading}
             >
               Create Quiz
