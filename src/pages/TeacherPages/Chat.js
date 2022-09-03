@@ -99,10 +99,6 @@ const Chat = () => {
 
   console.log(data)
   
-
-
-  
-
     function renderRow(props) {
       const { index, style } = props;
      

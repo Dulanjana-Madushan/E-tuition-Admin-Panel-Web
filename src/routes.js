@@ -74,7 +74,7 @@ const router = (role, setToken)=>[
             // { path: '/subjects', element: <AddClass/> },  
             // { path: '/quiz/:quizid', element: <QuizForm/> },
             // { path: '/chat', element: <Chat/> },  
-            // { path: '/tnotification', element: <TNotification/> },
+            { path: 'tnotification', element: <TNotification/> },
             // { path: '/tprofile', element: <TeacherProfile/> }
         ]
     }

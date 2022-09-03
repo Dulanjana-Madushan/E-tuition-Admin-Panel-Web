@@ -104,7 +104,7 @@ export default function SideDrawer({open}) {
                         selected={selectedIndex === 2}
                         onClick={() => {
                         setSelectedIndex(2);
-                        navigate("/tnotification")}}
+                        navigate("/teacher/tnotification")}}
                         classes={{
                             root: styles.root,
                             selected: styles.selected
