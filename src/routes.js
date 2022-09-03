@@ -14,6 +14,7 @@ import ClassDetails from './pages/AdminPages/ClassDetails';
 import StudentsDetails from './pages/AdminPages/StudentsDetails';
 import AdminProfile from './pages/AdminPages/AdminProfile';
 import Notification from './pages/AdminPages/Notification';
+import Verification from './pages/AdminPages/Verifications';
 import OneStudent from './pages/AdminPages/OneStudent';
 import OneTeacher from './pages/AdminPages/OneTeacher';
 import AdminPayments from './pages/AdminPages/AdminPayments';
@@ -83,6 +84,7 @@ const router = (role, setToken)=>[
             { path: 'allstudents', element: <StudentsDetails/> }, 
             { path: 'studentdetails/:userid', element: <OneStudent/> }, 
             { path: 'notification', element: <Notification/> }, 
+            { path: 'verification', element: <Verification/> },
             { path: 'settings', element: <Settings setToken={setToken}/> }, 
             { path: 'aprofile', element: <AdminProfile/> },
             { path: 'profileedit', element: <ProfileEdit/> },

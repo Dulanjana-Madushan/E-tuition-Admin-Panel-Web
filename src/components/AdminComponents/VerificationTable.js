@@ -13,6 +13,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
+import { useState } from 'react';
+import {base_url} from '../../Const/Const';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -36,9 +38,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export default function StudentTable({data}) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+export default function StudentTable({data, updated, setUpdated}) {
+    const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(false);  
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -50,7 +54,38 @@ export default function StudentTable({data}) {
   };
 
   const navigate = useNavigate();
-  //const {data, isLoading, error} = useFetch(base_url + '/admin/students');
+
+
+  const handleSubmit = (userid) => {
+    setIsLoading(true);
+    setError(null);
+    
+    fetch(base_url+'/admin/'+userid+'/verify', {
+            method: 'PUT',
+            headers: {"Content-Type":"application/json", "Authorization": "Bearer " + localStorage.getItem('token')},
+        }).then(res=>{
+          setIsLoading(true);
+          return res.json();
+        })
+        .then(data=>{
+            setIsLoading(false);
+            if(!data['success']){
+                setError(data['error']);
+                return;
+            }else{
+                setUpdated(!updated);
+            }
+            
+        })
+        .catch(err => {
+            if(err.name === "AbortError"){
+                console.log('Fetch aborted');
+            }else{
+                setIsLoading(false);
+                setError(err.message);
+            }
+        })
+  };
 
   return (
       <Box 
@@ -58,8 +93,19 @@ export default function StudentTable({data}) {
         flexDirection='column'
         sx={{ mt: 4, width:'100%'}}  
      >
+        {data && data.length === 0 &&<Box
+        marginTop = {2}
+        marginBottom = {2}
+        display='flex'
+        flexWrap="wrap"
+        paddingLeft={2}
+        paddingTop={1}
+        paddingBottom={1}
+        sx={{justifyContent:'center'}}>
+            <Typography>No user to Verify</Typography>
+            </Box> }
 
-        {data &&<TableContainer sx={{  mt: 1}} component={Paper}>
+        {data && data.length !== 0 && <TableContainer sx={{  mt: 1}} component={Paper}>
           <Table  size="small" aria-label="customized table">
             <TableHead sx={{backgroundColor: "#3F51B5"}}>
               <TableRow Color= "white">
@@ -67,7 +113,9 @@ export default function StudentTable({data}) {
                 <StyledTableCell align="center"><Typography color= "white">Name</Typography></StyledTableCell>
                 <StyledTableCell align="center"><Typography color= "white">Email</Typography></StyledTableCell>
                 <StyledTableCell align="center"><Typography color= "white">Status</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">Proof</Typography></StyledTableCell>
                 <StyledTableCell align="center"></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">Approve</Typography></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -87,24 +135,51 @@ export default function StudentTable({data}) {
                   </StyledTableCell>
                   <StyledTableCell align="center">{row.name}</StyledTableCell>
                   <StyledTableCell align="center">{row.email}</StyledTableCell>
-                  {row.isPending.toString() === 'false' && (
-                  <StyledTableCell align="center">Verified</StyledTableCell>
-                  )}
-                  {row.isPending.toString() !== 'false' && (
-                  <StyledTableCell align="center">Pending</StyledTableCell>
-                  )}
+        
+          
+                  <StyledTableCell align="center"><Box
+                  sx={{justifyContent:'right', mt:0}}
+                  >
+                  <Button sx={{backgroundColor:'yellow',color:'blue',borderRadius:5}} disabledElavation>
+                     Pending
+                  </Button>          
+                  </Box></StyledTableCell>
+
+                  <StyledTableCell align="center" >
+                  <Box
+                    display='flex'
+                    flexDirection='row'
+                    sx={{justifyContent:'center'}}
+                  >
+                    <a href = {row.verification.webViewLink} target="_blank">view proof documents</a>
+                    
+                    </Box>
+                  </StyledTableCell>
+          
                   <StyledTableCell align="center">
                   <Box
                     sx={{justifyContent:'right', mt:0}}
                   >
                     <Button variant="contained" onClick={()=>{
-                      navigate("/admin/studentdetails/"+row._id)
+                      navigate("/admin/adminteacherdetails/"+row._id)
                     }}
                     sx={{backgroundColor:"#3F51B5",color:"white"}}>
                         view
                     </Button>          
                   </Box>
                   </StyledTableCell>
+
+                  <StyledTableCell align="center">
+                  <Box
+                    sx={{justifyContent:'right', mt:0}}
+                  >
+                    <Button variant="contained" onClick={()=>handleSubmit(row._id)}
+                    sx={{backgroundColor:"#3F51B5",color:"white"}}>
+                        Verify
+                    </Button>          
+                  </Box>
+                  </StyledTableCell>
+                  
                 </StyledTableRow>
               ))}
             </TableBody>

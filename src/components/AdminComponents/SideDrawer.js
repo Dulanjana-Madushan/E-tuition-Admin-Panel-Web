@@ -11,6 +11,7 @@ import BoyRoundedIcon from '@mui/icons-material/BoyRounded';
 import EscalatorWarningRoundedIcon from '@mui/icons-material/EscalatorWarningRounded';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import SettingsIcon from '@mui/icons-material/Settings';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import { useTheme } from '@mui/material/styles';
 import { makeStyles }from '@mui/styles';
 import { useState } from 'react';
@@ -157,7 +158,24 @@ export default function SideDrawer({open}) {
                         <Typography sx={{fontWeight: 600}}>Students</Typography>
                     </ListItemButton>
 
+
+
                     <ListItemButton
+                        selected={selectedIndex === 4}
+                        onClick={(event) => {handleListItemClick(4);
+                        navigate("/admin/verification")}}
+                        classes={{
+                            root: styles.root,
+                            selected: styles.selected
+                        }}
+                    >
+                        <ListItemIcon>
+                            <WorkspacePremiumIcon sx={{color:'#3F51B5'}}/>
+                        </ListItemIcon>
+                        <Typography sx={{fontWeight: 600}}>Verification</Typography>
+                    </ListItemButton>
+
+                    {/* <ListItemButton
                         selected={selectedIndex === 4}
                         onClick={(event) => {handleListItemClick(4);
                         navigate("/admin/notification")}}
@@ -170,7 +188,7 @@ export default function SideDrawer({open}) {
                             <NotificationsIcon sx={{color:'#3F51B5'}}/>
                         </ListItemIcon>
                         <Typography sx={{fontWeight: 600}}>Notifications</Typography>
-                    </ListItemButton>
+                    </ListItemButton> */}
 
                     <ListItemButton
                         selected={selectedIndex === 5}
