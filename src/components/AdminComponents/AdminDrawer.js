@@ -1,21 +1,22 @@
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { useState } from 'react';
+import React, { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
+
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import BoyRoundedIcon from '@mui/icons-material/BoyRounded';
 import EscalatorWarningRoundedIcon from '@mui/icons-material/EscalatorWarningRounded';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { useTheme } from '@mui/material/styles';
+import {
+    Drawer,
+    Typography,
+    ListItemIcon,
+    ListItemButton,
+    List,
+    Toolbar, 
+    useTheme, 
+    useMediaQuery } from '@mui/material/styles';
 import { makeStyles }from '@mui/styles';
-import { useState } from 'react';
-import React, { useNavigate } from 'react-router-dom';
-
-import { Typography } from '@mui/material';
 
 const useStyles = makeStyles({
     root: {

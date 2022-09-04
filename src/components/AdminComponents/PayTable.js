@@ -1,19 +1,18 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import { useNavigate,useParams} from 'react-router-dom';
+
+import { Box } from '@mui/system';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import { Typography, Button } from '@mui/material';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import { Box } from '@mui/system';
+import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { base_url } from '../../Const/Const';
-import useFetch from '../../services/useFetch';
-import { useNavigate,useParams} from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
-
+import { 
+  Typography, 
+  Button, 
+  Paper, 
+  styled } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   ['&.${tableCellClasses.head}']: {
@@ -50,42 +49,34 @@ export default function PayTable(data) {
 
                 {'Today - ' + new Date().toDateString()}
         </Typography>
-        {/* {data && */}
         <TableContainer sx={{  mt: 1}} component={Paper}>
           <Table  size="small" aria-label="customized table">
             <TableHead sx={{backgroundColor: "#3F51B5"}}>
               <TableRow Color= "white">
-                <StyledTableCell align="center"></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">Id</Typography></StyledTableCell>
                 <StyledTableCell align="center"><Typography color= "white">Name</Typography></StyledTableCell>
                 <StyledTableCell align="center"><Typography color= "white">Email</Typography></StyledTableCell>
-                <StyledTableCell align="center"><Typography color= "white">Verified</Typography></StyledTableCell>
-                <StyledTableCell align="center"></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">IsPaid</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">Paid Date</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">Enrolled Date</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">View</Typography></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {data && data.data.students.map((row) => (
-                <StyledTableRow key={row.name}>
-                  <StyledTableCell align="center" >
-                  <Box
-                    sx={{justifyContent:'right', ml:3}}
-                  >
-                    {/* <Avatar alt="John Doe" src={row.photo.webContentLink}/> */}
-                    </Box>
-                  </StyledTableCell>
+                <StyledTableRow key={row.id}>
+                  <StyledTableCell align="center">{row.id}</StyledTableCell>
                   <StyledTableCell align="center">{row.name}</StyledTableCell>
                   <StyledTableCell align="center">{row.email}</StyledTableCell>
-                  {/* {row.isPending.toString() === 'false' && (
-                  <StyledTableCell align="center">Verified</StyledTableCell>
-                  )} */}
-                  {/* {row.isPending !== 'false' && (
-                  <StyledTableCell align="center">Pending</StyledTableCell>
-                  )} */}
+                  <StyledTableCell align="center">{row.payment._id !== null ?'No':'Yes'}</StyledTableCell>
+                  <StyledTableCell align="center">{row.paidDate}</StyledTableCell>
+                  <StyledTableCell align="center">{row.enrolledDate.substring(0,10)}</StyledTableCell>
                   <StyledTableCell align="center">
                   <Box
                     sx={{justifyContent:'right', mt:0}}
                   >
-                    <Button variant="none" onClick={()=>{
-                      navigate("/admin/studentdetails/"+row._id)
+                    <Button variant="contained" onClick={()=>{
+                      navigate("/admin/studentdetails/"+row.id)
                     }}
                     sx={{backgroundColor:"#3F51B5",color:"white"}}>
                         view
@@ -97,7 +88,6 @@ export default function PayTable(data) {
             </TableBody>
           </Table>
         </TableContainer>
-        {/* }      */}
       </Box>
   );
 }

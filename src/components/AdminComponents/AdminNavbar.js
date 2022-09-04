@@ -1,35 +1,24 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { 
+  AppBar, 
+  Box, 
+  Button, 
+  Toolbar, 
+  Avatar,
+  Badge, 
+  styled, 
+  Typography } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+
 import Drawer from './SideDrawer';
-import { BrowserRouter as Router, Route, Switch, Outlet} from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import profile from "../../images/john_doe.jpg";
-import useFetch from '../../services/useFetch';
-import { base_url } from '../../Const/Const';
 import logo from '../../images/web_nav_logo.png';
-import { styled } from '@mui/material/styles';
-import Badge from '@mui/material/Badge';
 
 export default function AdminNavbar() {
-
-  const [selectedImage, setSelectedImage] = useState(null);
-  const {data, isLoading, error} = useFetch(base_url + '/auth/me');
-  console.log(data);
   
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
-
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   
   const navigate = useNavigate();
 
@@ -44,76 +33,6 @@ export default function AdminNavbar() {
     setOpen(!open);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-
-
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          color="inherit"
-          
-        >
-          <Avatar />
-          {/* <Outlet /> */}
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-      
-      {/* <MenuItem>
-        <IconButton
-          size="medium"
-          aria-label="account of current user"
-          color="inherit"
-          onClick={()=>{
-            navigate("/aprofile");
-          }}
-          
-        >
-      
-        </IconButton >
-        <p>Profile</p>
-      </MenuItem>
-
-      <MenuItem>
-        <IconButton
-          size="medium"
-          aria-label="log out"
-          color="inherit"
-        >
-       
-        </IconButton>
-        <p>log out</p>
-      </MenuItem> */}
-    </Menu>
-    
-  );
-
   const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
       backgroundColor: '#44b700',
@@ -126,8 +45,6 @@ export default function AdminNavbar() {
         width: '100%',
         height: '100%',
         borderRadius: '50%',
-        //animation: 'ripple 1.2s infinite ease-in-out',
-        //border: '1px solid currentColor',
         content: '""',
       },
     },
@@ -143,7 +60,6 @@ export default function AdminNavbar() {
     },
   }));
   
-
   return (
     <>
       <Box sx={{display:'flex', backgroundColor: '#adc345', height:"5"}}>
@@ -185,6 +101,7 @@ export default function AdminNavbar() {
             <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
               <Button onClick={()=>{
                   localStorage.removeItem('token');
+                  localStorage.removeItem('role');
                   navigate("/login");
                   }} 
                   sx={{fontSize:15,color:"#3F51B5"}}>
@@ -192,14 +109,12 @@ export default function AdminNavbar() {
               </Button>
             </Box>
             <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
-            {data && <IconButton
+            <IconButton
                 size="large"
                 edge="end"
                 color="inherit"
                 aria-label="show more"
-                aria-controls={mobileMenuId}
                 aria-haspopup="true"
-                //onClick={handleMobileMenuOpen}
                 onClick={()=>{
                  navigate("/admin/aprofile");
                 }}
@@ -209,14 +124,13 @@ export default function AdminNavbar() {
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                     variant="dot"
                   >
-                    <Avatar alt="John Doe" src={data.photo.webContentLink}/>
+                    <Avatar/>
                 </StyledBadge>
               </IconButton>
-            } 
+            
             </Box>
           </Toolbar>
         </AppBar>
-        {renderMobileMenu}
       </Box>
     
       <Box sx={{display:'flex'}}>

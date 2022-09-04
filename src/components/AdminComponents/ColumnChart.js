@@ -1,9 +1,9 @@
-import Chart from 'react-apexcharts';
 import React from 'react';
-import { base_url } from '../../Const/Const';
-import useFetch from '../../services/useFetch';
 import { Box } from '@mui/system';
 import CircularProgress from '@mui/material/CircularProgress';
+import Chart from 'react-apexcharts';
+import useFetch from '../../services/useFetch';
+import { base_url } from '../../Const/Const';
 
 
 function ColumnChart() {
@@ -19,13 +19,10 @@ function ColumnChart() {
         width={500}
         series={[
           {
-          //  name:'teachers',
               data : [data.science,data.art,data.commerce,data.tech,data.others]
-          //  color:['#cccccc','#666666','#777777']
           }
         ]}
         options={{
-          //colors:['green','blue','#888888'],
           plotOptions: {
               bar: {
                 columnWidth: '75%',

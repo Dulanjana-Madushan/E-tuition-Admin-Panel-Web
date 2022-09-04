@@ -1,18 +1,21 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+
+import { Box } from '@mui/system';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import { Typography, Button } from '@mui/material';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import { Box } from '@mui/system';
+import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
+import { 
+  Typography, 
+  Button, 
+  styled } from '@mui/material';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -50,7 +53,6 @@ export default function StudentTable({data}) {
   };
 
   const navigate = useNavigate();
-  //const {data, isLoading, error} = useFetch(base_url + '/admin/students');
 
   return (
       <Box 
@@ -122,8 +124,6 @@ export default function StudentTable({data}) {
                     }}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                    //ActionsComponent={TablePaginationActions}
-                    //component={Box}
                     labelDisplayedRows={({ page }) => {
                       return `Page: ${page}`;
                     }}

@@ -1,12 +1,13 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+
 import { Box } from '@mui/system';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Avatar from '@mui/material/Avatar';
+import { 
+  Typography, 
+  Avatar, 
+  Card, 
+  CardContent, 
+  useTheme, 
+  useMediaQuery } from '@mui/material';
 
 export default function AnalyzeCard({data}) {
   const theme = useTheme();
@@ -28,10 +29,6 @@ export default function AnalyzeCard({data}) {
       <Box sx={{p:0.5,width:"100%",display: 'flex', flexDirection: 'column'}}>
       <Avatar src={data.image} sx={{bgcolor: '#f2f2f2', width:160,height:160,border:1,borderColor:'#E0E0E0'}} />
       </Box>
-      {/* <CardMedia
-        sx={{ width: 300 }}
-        image={data.image} 
-      /> */}
     </Card>   
     </Box>    
   );

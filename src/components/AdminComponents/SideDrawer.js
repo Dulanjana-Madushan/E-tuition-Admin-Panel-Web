@@ -1,5 +1,8 @@
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { useState } from 'react';
+import React, { useNavigate } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -9,27 +12,19 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import BoyRoundedIcon from '@mui/icons-material/BoyRounded';
 import EscalatorWarningRoundedIcon from '@mui/icons-material/EscalatorWarningRounded';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import SettingsIcon from '@mui/icons-material/Settings';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import { useTheme } from '@mui/material/styles';
 import { makeStyles }from '@mui/styles';
-import { useState } from 'react';
-import React, { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 
 const useStyles = makeStyles({
     root: {
         "&$selected": {
           backgroundColor: "#F2F2F2",
-          //width:200,
           borderRadius:10,
           marginLeft:5,
           marginRight:5,
-          //border:20,
-          //color: "#3F51B5",
-          //borderTopLeftRadius:10,
-          //borderBottomLeftRadius:10,
           "&:hover": {
             backgroundColor: "#F2F2F2"
           }
@@ -41,16 +36,13 @@ const useStyles = makeStyles({
           }
     },
     selected: {},
-    // drawer:{
-    //   width:"200px"
-    // }
 })
 
 export default function SideDrawer({open}) {
 
     const styles = useStyles();
     const theme = useTheme();
-     const navigate = useNavigate();
+    const navigate = useNavigate();
     const isMdUp = useMediaQuery(theme.breakpoints.up("sm"));  
     const [selectedIndex, setSelectedIndex] = useState(0);
     const drawerWidth = 200;
@@ -157,9 +149,6 @@ export default function SideDrawer({open}) {
                         </ListItemIcon>
                         <Typography sx={{fontWeight: 600}}>Students</Typography>
                     </ListItemButton>
-
-
-
                     <ListItemButton
                         selected={selectedIndex === 4}
                         onClick={(event) => {handleListItemClick(4);
@@ -174,22 +163,6 @@ export default function SideDrawer({open}) {
                         </ListItemIcon>
                         <Typography sx={{fontWeight: 600}}>Verification</Typography>
                     </ListItemButton>
-
-                    {/* <ListItemButton
-                        selected={selectedIndex === 4}
-                        onClick={(event) => {handleListItemClick(4);
-                        navigate("/admin/notification")}}
-                        classes={{
-                            root: styles.root,
-                            selected: styles.selected
-                        }}
-                    >
-                        <ListItemIcon>
-                            <NotificationsIcon sx={{color:'#3F51B5'}}/>
-                        </ListItemIcon>
-                        <Typography sx={{fontWeight: 600}}>Notifications</Typography>
-                    </ListItemButton> */}
-
                     <ListItemButton
                         selected={selectedIndex === 5}
                         onClick={(event) => {handleListItemClick(5);
@@ -204,8 +177,6 @@ export default function SideDrawer({open}) {
                         </ListItemIcon>
                         <Typography sx={{fontWeight: 600}}>Settings</Typography>
                     </ListItemButton>
-
-
                 </List>
             </Box>
         </Drawer>

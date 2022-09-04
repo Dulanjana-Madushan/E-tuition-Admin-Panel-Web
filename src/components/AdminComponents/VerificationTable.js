@@ -1,19 +1,23 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { Box } from '@mui/system';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import { Typography, Button } from '@mui/material';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import { Box } from '@mui/system';
+import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
-import { useState } from 'react';
+import { 
+  Typography, 
+  Button, 
+  styled } from '@mui/material';
+
 import {base_url} from '../../Const/Const';
 
 
@@ -151,7 +155,7 @@ export default function StudentTable({data, updated, setUpdated}) {
                     flexDirection='row'
                     sx={{justifyContent:'center'}}
                   >
-                    <a href = {row.verification.webViewLink} target="_blank">view proof documents</a>
+                    <a href = {row.verification.webViewLink} rel='noreferrer' target="_blank">view proof documents</a>
                     
                     </Box>
                   </StyledTableCell>
@@ -197,8 +201,6 @@ export default function StudentTable({data, updated, setUpdated}) {
                     }}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                    //ActionsComponent={TablePaginationActions}
-                    //component={Box}
                     labelDisplayedRows={({ page }) => {
                       return `Page: ${page}`;
                     }}
