@@ -1,13 +1,3 @@
-/*import React from 'react'
-
-function Notification() {
-  return (
-    <div className="notification">Notification</div>
-  );
-}
-
-export default Notification;*/
-
 import { useState, useEffect } from "react";
 import { useParams} from 'react-router-dom';
 import { base_url } from '../../Const/Const';
@@ -15,11 +5,9 @@ import DialogAlert from '../../components/Dialog';
 
 import { Box } from '@mui/system';
 import Typography from '@mui/material/Typography';
-import useFetch from '../../services/useFetch';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CircularProgress from '@mui/material/CircularProgress';
-
 
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
@@ -33,14 +21,10 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import Container from '@mui/material/Container';
 import List from '@mui/material/List';
-
-import { makeStyles } from '@mui/styles';
-
-
- 
-
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import { CardActionArea } from '@mui/material';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -57,11 +41,9 @@ const TNotification = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [updated, setUpdated] = useState(false);
-    const [title, setTitle] = useState(null);
-    const [message, setMessage] = useState(null);
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
-    const [openx, setOpenx] = useState(false);
+    // const [openx, setOpenx] = useState(false);
 
     const [selectedIndex, setSelectedIndex] = React.useState([]);
 
@@ -71,13 +53,13 @@ const TNotification = () => {
       console.log(event);
     }
 
-    const handleClickOpen = () => {
-        setOpenx(true);
-    };
+    // const handleClickOpen = () => {
+    //     setOpenx(true);
+    // };
 
-    const handleClose = () => {
-        setOpenx(false);
-    };
+    // const handleClose = () => {
+    //     setOpenx(false);
+    // };
 
     useEffect(()=>{
         const abortCont = new AbortController();
@@ -115,12 +97,11 @@ const TNotification = () => {
 
     function renderRow(props) {
       const { index, style } = props;
+      
      
       return (
-        
         <List component="nav" aria-label="main mailbox folders">
-        <ListItem style={{height:'70'}} key={index} component="div" disablePadding >
-
+        <ListItem style={{height:'70'}} key={index} component="div" >
           <ListItemButton 
               selected={index}
               onClick={(event) => handleListItemClick(datax[index], index)}
@@ -133,13 +114,12 @@ const TNotification = () => {
             </ListItemAvatar>
           
               
-                <ListItemText primary={<Typography variant="h10" style={{ color: '#000000' ,fontSize: '10'}}>{datax[index].title}</Typography>} 
-                secondary={datax[index].description}  />
+            <ListItemText primary={<Typography variant="h10" style={{ color: '#000000' ,fontSize: '10'}}>{datax[index].title}</Typography>} 
+            secondary={datax[index].description}  />
               
           </ListItemButton>
-          
         </ListItem>
-      </List>
+        </List>
       );
     }
 
@@ -149,21 +129,23 @@ const TNotification = () => {
             flexDirection='column'
             sx={{  mt: 8, pl:2,pr:2, width:'100%'}}
         >
-             <Box
+            <Box
                 marginTop = {2}
                 display='flex'
                 flexWrap="wrap"
                 marginBottom={2}
                 sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
             >
+
             <Typography
               sx={{fontSize:30,mb:1,mt:1}} 
             >
-              My Notifications
+                My Notifications
             </Typography>
+
             </Box>
 
-            <Box style = {{backgroundColor:'#D9DDDC'}}> 
+            <Box style = {{backgroundColor:'#FFFFFF'}}> 
             <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 
               {/* Notification List */}
@@ -179,7 +161,7 @@ const TNotification = () => {
               <Item>
                   <Box sx={{ width: '100%', height: 480, maxWidth: 360, bgcolor: 'background.paper' }}>
                     {datax && datax.map((data) => (
-                      <div key={data._id}>
+                      <div>
                         <FixedSizeList 
                         height={480}
                         width={300}
@@ -187,28 +169,20 @@ const TNotification = () => {
                         overscanCount={5}
                         itemCount={datax.length}
                       >
+                            
                         {renderRow}
+     
                       </FixedSizeList>
                       </div>
-                    ))}
+                     ))} 
                   
                   </Box>
               </Item>
 
             </Grid>
 
-            {/* Full Notification */}
+            {/* Details of  Notification */}
             <Grid item xs={9}>
-
-            {/* <Item>
-              <Typography
-                  sx={{fontFamily:"Times New Roman" , fontSize:20,mb:1,mt:1}} 
-                  >
-                     
-                  </Typography>
-              </Item> */}
-
-            <Container fixed>
               <Box 
               display='flex'
               flexDirection='column'
@@ -219,53 +193,59 @@ const TNotification = () => {
                     display='flex'
                     flexWrap="wrap"
                     marginBottom={2}
-                    sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 2}}
+                    sx={{justifyContent:'center',backgroundColor:'#D9DDDC',borderRadius: 5}}
                 >
-                
                 </Box>
-            
                 <Box
                     display='flex'
                     flexWrap="wrap"
                     sx={{justifyContent:'center'}}
                 >
 
-                {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
-                {error && <div color="red">{error}</div>}
-                {isLoading && <CircularProgress color="primary" />}
+                  {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
+                  {error && <div color="red">{error}</div>}
+                  {isLoading && <CircularProgress color="primary" />}
 
                 </Box>
-                <Box
-                  display='flex'
-                  flexWrap="wrap"
-                  flexDirection="column"
-                  sx={{justifyContent:match?'center':'start'}}
-                >
-                 
-                {/* {datax && datax.map((item) => (
-                    <div key={item._id}>
-                        <Box sx={{ mt: 2}}>
-                            <Typography>{item.title}</Typography>
-                            <Typography>{item.description}</Typography>
-                            <Typography>{item.time.substring(0,10)}</Typography> 
-                        </Box>
-                    </div>
-                ))} */}
-                <Box sx={{ mt: 2}}>
-                            <Typography>{selectedIndex.title}</Typography>
-                            <Typography>{selectedIndex.description}</Typography>
-                            <Typography>{selectedIndex.time}</Typography> 
-                        </Box>
-              </Box>
-           </Box>
-          </Container>
-          </Grid>
-          </Grid>
-        </Box>
-        </Box>  
-    );
-}
 
- 
+                <Box margin = {1}>
+                  <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'start',
+                        justifyContent: 'center',
+                        height: '100vh',
+                      }}
+                    >
+
+                  <Card 
+                    sx={{width:match?700:700,height:match?300:300 ,textAlign:"center", Position:"center"}} 
+                  >
+                    <CardActionArea sx={{width:match?700:700,height:match?300:300}}>
+                      <CardContent>
+                        
+                        <Typography variant="h6" component="div">
+                          <h4>{selectedIndex.title}</h4>
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          <p>{selectedIndex.description}</p>
+                        </Typography>
+                        <Typography variant="body3" color="text.secondary">
+                          <p>{selectedIndex.time}</p>
+                        </Typography>
+                        
+                      </CardContent>
+                    </CardActionArea>  
+                  </Card> 
+                  </div>
+                </Box>   
+              </Box>         
+            </Grid>
+            </Grid>
+           </Box>
+          </Box>  
+    );
+  }
+
 export default TNotification;
 
