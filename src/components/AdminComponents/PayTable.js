@@ -1,67 +1,93 @@
 import * as React from 'react';
+import { useNavigate,useParams} from 'react-router-dom';
+
+import { Box } from '@mui/system';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import { Box } from '@mui/system';
+import { 
+  Typography, 
+  Button, 
+  Paper, 
+  styled } from '@mui/material';
 
-function createData(name, email, isPaid) {
-  return { name, email, isPaid };
-}
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  ['&.${tableCellClasses.head}']: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  ['&.${tableCellClasses.body}']: {
+    fontSize: 14,
+  },
+}));
 
-const rows = [
-  createData('student1', 'student1@email.com', "yes"),
-  createData('student2', 'student2@email.com', "no"),
-  createData('student3', 'student3@email.com', "no"),
-  createData('student4', 'student4@email.com', "yes"),
-  createData('student5', 'student5@email.com', "yes"),
-];
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
-export default function PayTable() {
+
+
+export default function PayTable(data) {
+  const { subjectid } = useParams();
+  const navigate = useNavigate();
   return (
-    <Box
-      display='flex'
-      flexDirection='column'
-      sx={{  mt: 8, pl:2,pr:2, width:'100%', height:'90vh'}}
-    >
-      <Typography sx={{fontFamily:"Times New Roman" , fontSize:30,mb:1,mt:1}}>
-        Students' Payment Details 
-      </Typography>
-      <Typography sx={{fontFamily:"Times New Roman" , fontSize:15,}}>
-        {'On ' + new Date().toDateString()}
-      </Typography>
-      <TableContainer sx={{  mt: 1,}} >
-        <Table sx={{ maxWidth: '85vw' }} size="small" aria-label="a dense table" stickyHeader>
-            <TableHead>
-            <TableRow>
-                <TableCell  sx={{fontSize:20}}>Name</TableCell>
-                <TableCell align="right" sx={{fontSize:20}}>Email</TableCell>
-                <TableCell align="right" sx={{fontSize:20}}>IsPaid</TableCell>
-                {/* <TableCell align="right" sx={{fontSize:20}}>Carbs&nbsp;(g)</TableCell>
-                <TableCell align="right" sx={{fontSize:20}}>Protein&nbsp;(g)</TableCell> */}
-            </TableRow>
+      <Box 
+        display='flex'
+        flexDirection='column'
+        sx={{ mt: 4, width:'100%'}}  
+     >
+        <Typography sx={{fontSize:15,fontWeight: 600}}>
+
+                {'Today - ' + new Date().toDateString()}
+        </Typography>
+        <TableContainer sx={{  mt: 1}} component={Paper}>
+          <Table  size="small" aria-label="customized table">
+            <TableHead sx={{backgroundColor: "#3F51B5"}}>
+              <TableRow Color= "white">
+                <StyledTableCell align="center"><Typography color= "white">Id</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">Name</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">Email</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">IsPaid</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">Paid Date</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">Enrolled Date</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">View</Typography></StyledTableCell>
+              </TableRow>
             </TableHead>
             <TableBody>
-            {rows.map((row) => (
-                <TableRow
-                key={row.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                <TableCell component="th" scope="row">
-                    {row.name}
-                </TableCell>
-                <TableCell align="right">{row.email}</TableCell>
-                <TableCell align="right">{row.isPaid}</TableCell>
-                {/* <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell> */}
-                </TableRow>
-            ))}
+              {data && data.data.students.map((row) => (
+                <StyledTableRow key={row.id}>
+                  <StyledTableCell align="center">{row.id}</StyledTableCell>
+                  <StyledTableCell align="center">{row.name}</StyledTableCell>
+                  <StyledTableCell align="center">{row.email}</StyledTableCell>
+                  <StyledTableCell align="center">{row.payment._id !== null ?'No':'Yes'}</StyledTableCell>
+                  <StyledTableCell align="center">{row.paidDate}</StyledTableCell>
+                  <StyledTableCell align="center">{row.enrolledDate.substring(0,10)}</StyledTableCell>
+                  <StyledTableCell align="center">
+                  <Box
+                    sx={{justifyContent:'right', mt:0}}
+                  >
+                    <Button variant="contained" onClick={()=>{
+                      navigate("/admin/studentdetails/"+row.id)
+                    }}
+                    sx={{backgroundColor:"#3F51B5",color:"white"}}>
+                        view
+                    </Button>          
+                  </Box>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
             </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+          </Table>
+        </TableContainer>
+      </Box>
   );
 }

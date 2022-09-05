@@ -1,91 +1,92 @@
+import { useState } from "react";
 import { Box } from '@mui/system';
-import ClassCard from '../../components/AdminComponents/TeacherClassList';
-import Typography from '@mui/material/Typography';
-import useFetch from '../../useFetch';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import CircularProgress from '@mui/material/CircularProgress';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import AddIcon from '@mui/icons-material/Add';
-import { useState } from 'react';
-import { Container,  Modal, TextField } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { Class } from '@mui/icons-material';
+import { 
+    Paper, 
+    InputBase, 
+    IconButton, 
+    CircularProgress, 
+    Typography, 
+    useTheme, 
+    useMediaQuery } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
-
-const useStyles = makeStyles((theme) => ({
-    container:{
-        width: 500,
-        height: 500,
-        backgroundColor: "white",
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        margin: "auto",
-        //[theme.breakpoints.down("sm")]:{
-        /*"@media (max-width: 1440px)": {
-            width: "50vw",
-            height: "70vh",
-        },*/
-    },
-}));
+import useFetch from '../../services/useFetch';
+import ClassDataTable from '../../components/AdminComponents/ClassDataTable';
+import DialogAlert from '../../components/Dialog';
+import { base_url } from '../../Const/Const';
 
 const AllClasses = () => {
 
-    const {data, isLoading, error} = useFetch('http://localhost:5000/subjects');
-
+    var {data, isLoading, error} = useFetch(base_url+'/subjects');
+    var [name, setName] = useState('');
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
-    const classes = useStyles();
-    const [open, setOpen] = useState(false);
-    
 
+    //!Search function
+    if(data !== null){
+        if(name !== ''){
+            var data1 = data.filter((item) => {
+                console.log(item.subject.startsWith(name))
+                item.subject.startsWith(name)});
+        }
+        // setDate(data1);
+    }
 
-    
+    // console.log(data.filter((item) => {
+    //     console.log(item.subject)
+    //     item.subject.startsWith(name)}));
 
     return ( 
         <Box
             display='flex'
             flexDirection='column'
-            sx={{  mt: 8, pl:2,pr:2, width:'100%', backgroundColor:"#EDF5E1"}}
+            sx={{  mt: 8, pl:2,pr:2, width:'100%'}}
         >
             <Box
-                display='flex'
-                flexWrap="wrap"
-                backgroundColor="#EDf5e1"
-                paddingLeft={2}
-                paddingBottom={7}
-                sx={{justifyContent:'left'}}
+                 marginTop = {2}
+                 marginBottom = {2}
+                 display='flex'
+                 flexWrap="wrap"
+                 paddingLeft={2}
+                 paddingTop={1}
+                 paddingBottom={1}
             >
             <Typography
-              sx={{fontSize:30,mb:1,mt:1,color:"#05386B"}} 
+              sx={{fontSize:30,mt:1,color:"#3F51B5",fontWeight: 600}}  
             >
               All Classes
             </Typography>
             </Box>
-
-            {/*<Box
-                backgroundColor="#EDF5E1"
-                sx={{justifyContent:match?'center':'start'}}>
-                <ClassCard /> 
-            </Box>*/}
-
             <Box
                 display='flex'
                 flexWrap="wrap"
-                backgroundColor="#EDF5E1"
-                sx={{justifyContent:match?'center':'start'}}
+                flexDirection='row'
+                sx={{justifyContent:'right'}}
             >
-                {error && <div>{error}</div>}
-                {isLoading && <CircularProgress color="success" />}
-                {data && data.data.map((item) => (
-                    <div key={item._id}>
-                        <ClassCard data={item} />
-                    </div>
-                ))}
+                <Paper
+                component="form"
+                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, borderRadius: 2 }}
+                >
+                    <InputBase
+                        sx={{ ml: 1, flex: 1 }}
+                        placeholder="Search by Students Name"
+                        inputProps={{ 'aria-label': 'search by name' }}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                        <SearchIcon />
+                    </IconButton>
+                </Paper>
+            </Box>
+            <Box
+            display='flex'
+            flexWrap="wrap"
+            sx={{justifyContent:match?'center':'center'}}
+            >
+                {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
+                {error && <Typography color='red'>{error}</Typography>}
+                {isLoading && <CircularProgress color="primary" />}
+                {data && <ClassDataTable data={data}/>}
             </Box>
         </Box>
   
