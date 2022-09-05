@@ -27,6 +27,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import AddIcon from '@mui/icons-material/Add';
 
+import dayjs from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 export default function AddDoc(props) {
     const ref = useRef();
     const navigate = useNavigate();
@@ -40,6 +45,8 @@ export default function AddDoc(props) {
     const [error, setError] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const [open, setOpen] = useState(true);
+
+    const [date, setDate] = useState(dayjs(new Date()));
 
     useEffect(()=>{
         const abortCont = new AbortController();
@@ -91,7 +98,7 @@ export default function AddDoc(props) {
         event.preventDefault();
         var requestOptions;
         var url;
-        if(Svalue == 'classNotes' || Svalue === "assignment" ){
+        if(Svalue === 'classNotes'){
             const formData = new FormData();
             formData.append("uploadType", Svalue)
             formData.append("documents", selectedFile);
@@ -102,6 +109,17 @@ export default function AddDoc(props) {
             };
             url = base_url + '/lms/' + lmsid + '/lmsfiles';
 
+        }else if(Svalue === "assignments" ){
+            const formData = new FormData();
+            formData.append("uploadType", Svalue)
+            formData.append("documents", selectedFile);
+            formData.append("dueDate", date.toISOString().substring(0, 10));
+            requestOptions = {
+                method: 'POST',
+                headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
+                body: formData
+            };
+            url = base_url + '/lms/' + lmsid + '/lmsfiles';
         }else if(Svalue == 'quiz'){
             requestOptions = {
                 method: 'POST',
@@ -218,8 +236,8 @@ export default function AddDoc(props) {
                         mb:3
                     }}
                 >
-                {
-                    Svalue === "classNotes" || Svalue === "assignments" 
+                    {
+                    Svalue === "classNotes" 
                     ? <div>
                         <Box 
                             display='flex'
@@ -247,6 +265,72 @@ export default function AddDoc(props) {
                                 )}
                             </div>
                         </Box>
+                        
+                        {selectedFile && <Box
+                            display='flex'
+                            flexWrap="wrap"
+                            
+                            sx={{justifyContent:'center', mt:1}}
+                        >
+                            <Button size="small"  variant="contained" onClick={handleSubmit} sx={{backgroundColor:"#3F51B5",color:"white"}}>
+                                Save
+                            </Button>
+                        </Box>}
+                    </div>
+                    : <Box></Box>
+                }
+                {
+                    Svalue === "assignments" 
+                    ? <div>
+                        <Box 
+                            display='flex'
+                            flexWrap="wrap"
+                            padding={1}
+                            sx={{justifyContent:'start', border:1, borderColor:'#cfd8dc', borderRadius:1}}
+                        >
+                            <div>
+                                <input
+                                    type="file"
+                                    name="document"
+                                    ref={ref}
+                                    onChange={(event) => {
+                                        setSelectedFile(event.target.files[0]);
+                                    }}
+                                />
+                                {selectedFile && (
+                                        <div>
+                                            <br/>
+                                            <Button sx={{backgroundColor:"red",color:"white"}} size='small' onClick={()=>{
+                                                ref.current.value = null;
+                                                setSelectedFile(null)}}>Remove</Button>
+                                            <br/>
+                                        </div>
+                                )}
+                            </div>
+                        </Box>
+                        {selectedFile &&
+                         <Box
+                            display='flex'
+                            flexWrap="wrap"
+                            flexDirection='row'
+                            sx={{justifyContent:'start', alignItems:'center'}}
+                        >
+                            <Typography>Submission Due Date</Typography><Box mr={2}></Box>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                    minDate={new Date()}
+                                    maxDate={dayjs('2025-06-01')}
+                                    value={date}
+                                    inputFormat="YYYY-MM-DD"
+                                    
+                                    onChange={(newValue) => {
+                                        setDate(newValue);
+                                    }}
+                                    renderInput={(params) => <TextField {...params} helperText={null} size='small' margin='dense' disabled={true} />}
+                                />
+                            </LocalizationProvider>
+                        </Box>
+                        }
                         {selectedFile && <Box
                             display='flex'
                             flexWrap="wrap"

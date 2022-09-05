@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Image1 from '../../images/cover_two_students.jpg';
 import Image2 from '../../images/web_login.png';
 import { base_url } from '../../Const/Const';
 import MenuItem from '@mui/material/MenuItem';
@@ -17,21 +16,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-// import Avatar from '@mui/material/Avatar';
-// import Button from '@mui/material/Button';
-// import TextField from '@mui/material/TextField';
-// import Link from '@mui/material/Link';
 import CssBaseline from '@mui/material/CssBaseline';
-// import Grid from '@mui/material/Grid';
-// import Box from '@mui/material/Box';
-import LoginOutlined from '@mui/icons-material/LoginOutlined';
-// import Typography from '@mui/material/Typography';
-// import Container from '@mui/material/Container';
-// import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import Image1 from './images/cover_two_students.jpg';
-// import Image2 from './images/web_login.png';
-// import {base_url} from './Const/Const';
 import Image3 from '../../images/web_cover2.jpg';
 import { makeStyles }from '@mui/styles';
 
@@ -64,39 +49,54 @@ const useStyles = makeStyles({
 
 export default function Register() {
 
-     const ref = useRef();
-    const [error, setError] = useState(null)
-    const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
-    const [title, setTitle] = useState(titles[0]);
-    const [gender, setGender] = useState(genders[0]);
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [show, setShow] = useState(false);
-    const styles = useStyles();
+  const ref = useRef();
+  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(false);
+  const [title, setTitle] = useState(titles[0]);
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [gender, setGender] = useState(genders[0]);
+  const [school, setSchool] = useState(null);
+  const [qualifications, setQualifications] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-    const handleChange = (event) => {
-      setGender(event.target.value);
-    };
+  const styles = useStyles();
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const body = JSON.stringify({
-        email: data.get('email'),
-        password: data.get('password'),
-      });
+    const data = new FormData();
+
+    data.append("verifications", selectedImage);
+    data.append('title', title);
+    data.append('name', name);
+    data.append('email', email);
+    data.append('phone', phone);
+    data.append('password', password);
+    data.append('gender',gender);
+    data.append('role', 'teacher');
+    data.append('school', school);
+    data.append('qualifications', '['+qualifications.toString()+']' ?? '[]');
+
     setIsLoading(true);
     
-    console.log(body);
-    fetch(base_url+'/auth/register', {
+    fetch(base_url+'/users/regteacher', {
             method: 'POST',
-            headers: {"Content-Type":"application/json"},
-            body:body
-        }).then((response)=>{
-            console.log(response);
+            headers: {},
+            body:data
+        }).then(res=>{
+          setIsLoading(true);
+          return res.json();
+        })
+        .then(data=>{
             setIsLoading(false);
-            // history.go(-1);
-            // history.push('/')
+            if(!data['success']){
+                setError(data['error']);
+            }else{
+                navigate('/login');
+            }
         })
         .catch(err => {
             if(err.name === "AbortError"){
@@ -106,10 +106,6 @@ export default function Register() {
                 setError(err.message);
             }
         })
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
   };
 
   return (
@@ -119,7 +115,6 @@ export default function Register() {
         <Box
           className={styles.glass}
           sx={{
-            // marginTop: 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -128,15 +123,12 @@ export default function Register() {
             paddingLeft: 8,
             paddingRight: 8,
             paddingBottom: 1,
-            //backgroundColor: '#F2F2F2',
             borderRadius: 2,
           }}
         >
           <Avatar src={Image2} sx={{bgcolor: '#3F51B5', width:60,height:60}}/>
-            {/* <LoginOutlined />
-          </Avatar> */}
           <Typography component="h1" variant="h5" color='#3F51B5'>
-              <span style= {{fontSize:40}}>Sign up</span>
+            <span style= {{fontSize:40}}>Sign up</span>
           </Typography>
           <form onSubmit={handleSubmit}>
             <TextField 
@@ -148,6 +140,7 @@ export default function Register() {
               fullWidth
               size='small'
               select
+              value={title}
               onChange={e => setTitle(e.target.value)}
             >
               {titles.map((option) => (
@@ -163,6 +156,7 @@ export default function Register() {
               label="User Name"
               margin="dense"
               size='small'
+              onChange={e => setName(e.target.value)}
             />
             <TextField
               required
@@ -172,6 +166,7 @@ export default function Register() {
               name="email"
               margin="dense"
               size='small'
+              onChange={e => setEmail(e.target.value)}
             />
             <TextField 
               required
@@ -182,6 +177,7 @@ export default function Register() {
               fullWidth
               select
               size='small'
+              value={gender}
               onChange={e => setGender(e.target.value)}
             >
               {genders.map((option) => (
@@ -197,6 +193,7 @@ export default function Register() {
               name="contact"
               margin="dense"
               size='small'
+              onChange={e => setPhone(e.target.value)}
             />
             <TextField
               required
@@ -207,6 +204,7 @@ export default function Register() {
               id="password"
               margin="dense"
               size='small'
+              onChange={e => setPassword(e.target.value)}
             />
             <TextField
               required
@@ -216,6 +214,7 @@ export default function Register() {
               id="schools"
               margin="dense"
               size='small'
+              onChange={e => setSchool(e.target.value)}
             />
             <Box 
               display='flex'
@@ -226,11 +225,11 @@ export default function Register() {
               sx={{justifyContent:'start', border:1, borderColor:'#b0b5b8', borderRadius:1}}
             >
               <FormGroup>
-                <FormControlLabel control={<Checkbox />} value='Undergraduate' label="Undergraduate" />
-                <FormControlLabel control={<Checkbox />} value='Postgraduate' label="Postgraduate" />
-                <FormControlLabel control={<Checkbox />} value='BSc' label="BSc" />
-                <FormControlLabel control={<Checkbox />} value='MSc' label="MSc" />
-                <FormControlLabel control={<Checkbox />} value='PHD' label="PHD" />
+                <FormControlLabel control={<Checkbox onClick={()=>setQualifications([...qualifications, 'Undergraduate'])}/>} value='Undergraduate' label="Undergraduate" />
+                <FormControlLabel control={<Checkbox onClick={()=>setQualifications([...qualifications, 'Postgraduate'])}/>} value='Postgraduate' label="Postgraduate" />
+                <FormControlLabel control={<Checkbox onClick={()=>setQualifications([...qualifications, 'BSc'])}/>} value='BSc' label="BSc" />
+                <FormControlLabel control={<Checkbox onClick={()=>setQualifications([...qualifications, 'MSc'])}/>} value='MSc' label="MSc" />
+                <FormControlLabel control={<Checkbox onClick={()=>setQualifications([...qualifications, 'PHD'])}/>} value='PHD' label="PHD" />
               </FormGroup>
             </Box>
             <Typography>Add a class poster</Typography>
@@ -242,13 +241,13 @@ export default function Register() {
                 sx={{justifyContent:'start', border:1, borderColor:'#b0b5b8', borderRadius:1}}
             >
                 <div>
-                    {selectedImage && (
+                    {selectedImage && selectedImage.type === 'image/jpeg' &&(
                         <div>
                             <img alt="not fount" width={"100px"} src={URL.createObjectURL(selectedImage)} />
                             <br />
-                            <button onClick={()=>{
+                            <Button sx={{color:'red'}} size='small' onClick={()=>{
                                 ref.current.value = null;
-                                setSelectedImage(null)}}>Remove</button>
+                                setSelectedImage(null)}}>Remove</Button>
                             <br/><br/>
                         </div>
                     )}
@@ -261,6 +260,17 @@ export default function Register() {
                         }}
                     />
                     </div>
+                    {selectedImage && selectedImage.type !== 'image/jpeg' &&(
+                      <Box
+                          display='flex'
+                          flexWrap="wrap"
+                          sx={{justifyContent:'end'}}
+                      >
+                          <Button sx={{color:'red'}} size='small' onClick={()=>{
+                              ref.current.value = null;
+                              setSelectedImage(null)}}>Remove</Button>
+                      </Box>
+                  )}
             </Box>
             <Button
               type="submit"
@@ -271,7 +281,7 @@ export default function Register() {
             >
               Sign Up
             </Button>
-            {error}
+            <Typography color = 'red'>{error}</Typography>
             <Grid container justifyContent="center">
               <Grid item>
                 <Link href="/login" variant="body2">

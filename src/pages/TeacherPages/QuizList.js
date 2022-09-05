@@ -12,7 +12,6 @@ const QuizList = () => {
     const navigate = useNavigate();
     const {subjectid} = useParams();
     const {data, isLoading, error} = useFetch(base_url + '/subjects/' + subjectid + '/quiz');
-    console.log(data)
     return (
         <Box 
             display='flex'
@@ -27,7 +26,6 @@ const QuizList = () => {
                paddingLeft={2}
                paddingTop={1}
                paddingBottom={1}
-               //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
             >
                 <Typography
                     sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}}
@@ -61,7 +59,7 @@ const QuizList = () => {
             >
                 {data && data.map((item) => (
                     <div key={item._id}>
-                        <Box sx={{backgroundColor:'#c6cbec', pl:1, pr:1,borderRadius: 2}}>
+                        <Box sx={{backgroundColor:'#c6cbec', mb:2, pl:1, pr:1,borderRadius: 2}}>
                         <Typography variant='body2'>
                                 Created At : {item.createdAt.substring(0,10)}
                             </Typography>

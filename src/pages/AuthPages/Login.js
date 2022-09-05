@@ -12,7 +12,6 @@ import {base_url} from '../../Const/Const';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import Image1 from '../../images/cover_two_students.jpg';
 import Image2 from '../../images/web_login.png';
 import Image3 from '../../images/web_cover2.jpg';
 import { makeStyles }from '@mui/styles';
@@ -62,46 +61,46 @@ export default function Login({setToken}) {
     const styles = useStyles();
 
     const handleSubmit = (event) => {
-      event.preventDefault();
-      const body = JSON.stringify({
-          email: email,
-          password: password,
-        });
-  
-      setIsLoading(true);
-      setError(null);
-      
-      fetch(base_url+'/auth/login', {
-              method: 'POST',
-              headers: {"Content-Type":"application/json"},
-              body:body
-          }).then(res=>{
+        event.preventDefault();
+        const body = JSON.stringify({
+            email: email,
+            password: password,
+            });
+    
+        setIsLoading(true);
+        setError(null);
+        
+        fetch(base_url+'/auth/login', {
+            method: 'POST',
+            headers: {"Content-Type":"application/json"},
+            body:body
+        }).then(res=>{
             setIsLoading(true);
             return res.json();
-          })
-          .then(data=>{
-              setIsLoading(false);
-              setToken(data['token']);
-              if(!data['success']){
-                  setError(data['error']);
-                  return;
-              }
-              localStorage.setItem('role', data['role']);
-              if(data['role'] === 'admin'){
-                  navigate('/admin');
-              }else if(data['role'] === 'teacher'){
-                  navigate('/teacher');
-              }
-              
-          })
-          .catch(err => {
-              if(err.name === "AbortError"){
-                  console.log('Fetch aborted');
-              }else{
-                  setIsLoading(false);
-                  setError(err.message);
-              }
-          })
+        })
+        .then(data=>{
+            setIsLoading(false);
+            if(!data['success']){
+                setError(data['error']);
+                return;
+            }
+            setToken(data['token']);
+            localStorage.setItem('role', data['role']);
+            if(data['role'] === 'admin'){
+                navigate('/admin');
+            }else if(data['role'] === 'teacher'){
+                navigate('/teacher');
+            }
+            
+        })
+        .catch(err => {
+            if(err.name === "AbortError"){
+                console.log('Fetch aborted');
+            }else{
+                setIsLoading(false);
+                setError(err.message);
+            }
+        })
     };
 
     const handleClose = () => {
@@ -118,13 +117,11 @@ export default function Login({setToken}) {
                 <Box
                     className={styles.glass}
                     sx={{
-                    //marginTop: 15,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     border: 'none',
                     padding: 5,
-                    //backgroundColor: '#F2F2F2',
                     borderRadius: 2,
                     }}
                 >

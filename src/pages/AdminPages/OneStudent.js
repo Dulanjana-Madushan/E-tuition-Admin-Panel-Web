@@ -5,10 +5,10 @@ import { Avatar, CircularProgress} from '@mui/material';
 import {Typography,useTheme, useMediaQuery} from '@mui/material';
 import useFetch from '../../services/useFetch';
 import { base_url } from '../../Const/Const';
-import Image from '../../images/john_doe.jpg';
 import DialogAlert from '../../components/Dialog';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
+import dp from '../../images/dp.png';
 
 const OneStudent = () => {
 
@@ -34,7 +34,6 @@ const OneStudent = () => {
                  paddingLeft={2}
                  paddingTop={1}
                 paddingBottom={1}
-                //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
             >
                 <Typography
               sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}}  
@@ -67,7 +66,7 @@ const OneStudent = () => {
 
                         <Box  sx={{ m:1}}>
                             <Card 
-                            sx={{justifyContent:match?'center':'center',width:match?'85vw':400,height:match?400:400, display: 'flex',backgroundColor:'#c6cbec', boxShadow: 0,border:0,borderRadius:2}}
+                            sx={{justifyContent:match?'center':'center',width:match?'85vw':400,height:match?400:400, display: 'flex',backgroundColor:'#c6cbec', boxShadow: 0,border:0,borderTopLeftRadius:50,borderBottomRightRadius:50}}
                             >
                                 {isLoading && <CircularProgress color="primary" />}
                                 {data && <div>
@@ -87,7 +86,7 @@ const OneStudent = () => {
                                                                             <CardMedia
                                                                                 component="img"
                                                                                 //height="140"
-                                                                                image={Image}
+                                                                                image={dp}
                                                                                 alt="student"
                                                                             />
                                                                         </div>
@@ -100,12 +99,23 @@ const OneStudent = () => {
                         </Box> 
 
                             <Box  sx={{ m:1}}>
-                                <Card sx={{justifyContent:match?'center':'center',width:match?'85vw':400,height:match?400:400, display: 'flex',backgroundColor:'#c6cbec', boxShadow: 0,border:0,borderRadius:2}}  >
+                                <Card sx={{justifyContent:match?'center':'center',width:match?'85vw':400,height:match?400:400, display: 'flex',backgroundColor:'#c6cbec', boxShadow: 0,border:0,borderBottomLeftRadius:50,borderTopRightRadius:50}}  >
                                     <Box  sx={{ m:1}}>
                                         <Box
                                         flexDirection='row'
-                                        sx={{justifyContent:match?'center':'center', mt:5}}
+                                        sx={{justifyContent:match?'center':'center'}}
                                         >
+                                            <Box
+                                            display='flex'
+                                            flexWrap="wrap"
+                                            flexDirection='row'
+                                            sx={{justifyContent:match?'center':'center', mt:0}}>
+                                                <Typography 
+                                                    sx={{justifyContent:match?'center':'center',fontSize:18,fontWeight:600, color:data.user.isPending?'red':'blue'}}
+                                                >
+                                                    {!data.user.isPending?'Verified':'Not Verified'}
+                                                </Typography>
+                                            </Box>
                                             <Box
                                             display='flex'
                                             flexWrap="wrap"

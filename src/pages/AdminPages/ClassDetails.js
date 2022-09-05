@@ -1,43 +1,32 @@
-import { useParams } from 'react-router-dom';
-import DialogAlert from '../../components/Dialog';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { Box } from '@mui/system';
-import { Button, Typography,CircularProgress, Rating,Avatar} from '@mui/material';
-
-import useFetch from '../../services/useFetch';
-import { base_url } from '../../Const/Const';
-import { useNavigate } from 'react-router-dom';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
-import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useState, useEffect } from "react";
+import { 
+    Button, 
+    Typography, 
+    CircularProgress, 
+    Rating, 
+    Avatar, 
+    useTheme} from '@mui/material';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
-
-  
+import { base_url } from '../../Const/Const';
+import DialogAlert from '../../components/Dialog';
+import useFetch from '../../services/useFetch';
 
 const ClassDetails = () => {   
     const { subjectid } = useParams();
-    const {data, isLoading, error} = useFetch(base_url + '/subjects/' + subjectid);
     const navigate = useNavigate();
     const theme = useTheme();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
-    console.log(data);
+    const {data, isLoading, error} = useFetch(base_url + '/subjects/' + subjectid);
     
-
     const [dataa, setDataa] = useState(null);
     const [isLoadingg, setIsLoadingg] = useState(true);
     const [errorr, setErrorr] = useState(null);
-    console.log('blah',dataa);
 
     useEffect(()=>{
         const abortCont = new AbortController();
@@ -69,8 +58,7 @@ const ClassDetails = () => {
 
             return () => abortCont.abort();
 
-    },[base_url + '/subjects/' + subjectid + '/reviews'])
-    console.log('blah',dataa);
+    },[])
 
     return (
         <Box
@@ -86,7 +74,6 @@ const ClassDetails = () => {
                 paddingLeft={2}
                 paddingTop={1}
                 paddingBottom={1}
-                //sx={{justifyContent:'center',backgroundColor:'#F2F2F2', border:1, borderColor:'#E0E0E0', borderRadius:2}}
             >
                 <Typography
                     sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}}  
@@ -124,7 +111,9 @@ const ClassDetails = () => {
                                     display='flex'
                                     flexWrap="wrap"
                                     sx={{justifyContent:match?'center':'center'}}
-                                    >
+                                >
+                                    {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
+                                    {error && <Typography color='red'>{error}</Typography>}
                                     {isLoading && <CircularProgress color="primary" />}
                                     {data && <div>
                                         <Box
@@ -285,14 +274,16 @@ const ClassDetails = () => {
                     </div>}
 
             
-                    {/* class image and ratings */}
                     <Box
                         sx={{mb:2,justifyContent:match?'center':'center',}}
                     >
+                        {errorr && errorr === 'Token Expired' && <DialogAlert></DialogAlert>}
+                        {errorr && <Typography color='red'>{errorr}</Typography>}
+                        {isLoadingg && <CircularProgress color="primary" />}
                         {data && <div>
                         <Box>
                             <Box
-                            sx={{alignItems:'center', border:1, borderColor:'#E0E0E0', borderRadius:2}}>
+                            sx={{alignItems:'center', border:0, borderColor:'#E0E0E0', borderRadius:2}}>
                             {/* Ratings */}
                             {data && data.length != 0 && <div>
                             <Box

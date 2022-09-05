@@ -6,7 +6,6 @@ import { Avatar, CircularProgress, Rating, Typography } from '@mui/material';
 import DialogAlert from '../../components/Dialog';
 import useFetch from '../../services/useFetch';
 import { base_url } from '../../Const/Const';
-import profile from "../../images/john_doe.jpg";
 import { useState, useEffect } from "react"
 
 const Review = () => {

@@ -7,12 +7,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
 import { initOnLoad } from 'apexcharts';
 
-const QuestionForm = ({question, setQuestion, id, deleteQuestion, total}) => {
+const QuestionForm = ({question, onChange, onRemove}) => {
 
     // const [question, setQuestion] = useState({question});
 
     return ( 
-        <Container key = {id}>
+        <Container>
             <Box
                 variant= 'body2'
             sx={{
@@ -26,77 +26,78 @@ const QuestionForm = ({question, setQuestion, id, deleteQuestion, total}) => {
                 
             }}
             >
-                <Grid container justifyContent="flex-end">
+                {/* <Grid container justifyContent="flex-end">
                 <Grid item>
                     <p>
                         {id +1}/{total}
                     </p>
                 </Grid>
-            </Grid>
+            </Grid> */}
                 <TextField
+                    required
                     size='small' 
                     autoComplete="question"
                     name="question"
-                    // required
                     fullWidth
                     id="question"
                     label="Question"
                     autoFocus
                     margin="dense"
                     multiline={true}
-                    onChange={e => setQuestion({question: e.target.value})}
+                    value={question.question}
+                    onChange={event => onChange(question.id, event)}
                 />
                 <TextField
-                    // value={question.option_1}
+                    required
                     size='small'
-                    // required
                     fullWidth
-                    id="option1"
+                    id="option_1"
                     label="Option 1"
                     name="option1"
-                    autoComplete="option1"
+                    autoComplete="option_1"
                     margin="dense"
                     multiline={true}
-                    onChange={e => setQuestion({option_1: e.target.value})}
+                    value={question.option_1}
+                    onChange={event => onChange(question.id, event)}
                 />
                 <TextField
-                    // value={question.option_2}
+                    required
                     size='small'
-                    // required
                     fullWidth
-                    id="option2"
+                    id="option_2"
                     label="Option 2"
                     name="option2"
-                    autoComplete="option2"
+                    autoComplete="option_2"
                     margin="dense"
                     multiline={true}
-                    onChange={e => setQuestion({...question, option_2: e.target.value})}
+                    value={question.option_2}
+                    onChange={event => onChange(question.id, event)}
                 />
                 <TextField
-                // value={question.option_3}
-                size='small'
-                    // required
+                    required
+                    size='small'
                     fullWidth
-                    id="option3"
+                    id="option_3"
                     label="Option 3"
                     name="option3"
-                    autoComplete="option3"
+                    autoComplete="option_3"
                     margin="dense"
                     multiline={true}
-                    onChange={e => setQuestion({...question, option_3: e.target.value})}
+                    value={question.option_3}
+                    onChange={event => onChange(question.id, event)}
                 />
                 <TextField
-                // value={question.option_4}
-                size='small'
-                    // required
+                    required
+                    size='small'
                     fullWidth
-                    id="option4"
+                    id="option_4"
                     label="Option 4"
                     name="option4"
-                    autoComplete="option4"
+                    autoComplete="option_4"
                     margin="dense"
                     multiline={true}
-                    onChange={e => setQuestion({...question, option_4: e.target.value})}
+                    value={question.option_4}
+                    onChange={event => onChange(question.id, event)}
                 />
                 <Box
                     sx={{
@@ -106,9 +107,8 @@ const QuestionForm = ({question, setQuestion, id, deleteQuestion, total}) => {
                     }}>
                 
                     <TextField
-                    // value={question.correctAnswer}
-                    size='small'
-                        // required
+                        required
+                        size='small'
                         fullWidth
                         id="correctAnswer"
                         label="Correct Answer"
@@ -116,21 +116,22 @@ const QuestionForm = ({question, setQuestion, id, deleteQuestion, total}) => {
                         autoComplete="correctAnswer"
                         margin="dense"
                         type={'number'}
-                        onChange={e => setQuestion({...question, correctAnswer: e.target.value})}
+                        value={question.correctAnswer}
+                        onChange={event => onChange(question.id, event)}
                         
                     />
                     <TextField
-                    // value={question.mark}
-                    size='small'
-                        // required
+                        required
+                        size='small'
                         fullWidth
-                        id="marks"
+                        id="mark"
                         label="Marks"
                         name="marks"
-                        autoComplete="marks"
+                        autoComplete="mark"
                         margin="dense"
                         type={'number'}
-                        onChange={e => setQuestion({...question, mark: e.target.value})}
+                        value={question.mark}
+                        onChange={event => onChange(question.id, event)}
                         sx={{ml:1}}
                     />                
                 </Box>
@@ -140,7 +141,7 @@ const QuestionForm = ({question, setQuestion, id, deleteQuestion, total}) => {
                             aria-label="delete" 
                             color='error' 
                             onClick={() => {
-                            deleteQuestion(id);
+                            onRemove(question.id);
                         }}>
                             <DeleteIcon />
                         </IconButton>

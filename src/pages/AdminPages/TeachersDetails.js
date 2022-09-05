@@ -38,7 +38,7 @@ const TeachersDetails = () => {
               //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
             >
             <Typography
-              sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}} 
+              sx={{fontSize:30,mt:1,color:"#3F51B5",fontWeight: 600}} 
             >
               Teachers Details
             </Typography>

@@ -5,8 +5,9 @@ import { Box } from '@mui/system';
 import { 
     Typography, 
     Button, 
-     TextField,
-    Container, 
+    TextField,
+    Container,
+    CircularProgress, 
     Dialog, 
     DialogContent, 
     DialogTitle, 
@@ -166,11 +167,11 @@ const Lms = () => {
         })  
     }
 
-    const handleDelete = (lmsId) => {
+    const handleDelete = () => {
 
         setIsLoading(true);
         setError(null);
-        fetch(base_url+ '/lms/' + lmsId, {
+        fetch(base_url+ '/lms/' + dialogData._id, {
             method: 'DELETE',
             headers: {"Content-Type":"application/json",
                 "Authorization": "Bearer " + localStorage.getItem('token')
@@ -213,7 +214,6 @@ const Lms = () => {
                paddingLeft={2}
                paddingTop={1}
                paddingBottom={1}
-               //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
             >
                 <Typography
                     sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}}
@@ -267,11 +267,11 @@ const Lms = () => {
             >
                 {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
                 {error && <Typography color="red">{error}</Typography>}
-                {isLoading && <BeatLoader
+                {isLoading && <CircularProgress/>}
+                {/* <BeatLoader
                     color="#3F51B5"
                     speedMultiplier={1}
-                    />
-                }
+                    /> */}
             </Box>
             <Box
                 display='flex'
@@ -327,7 +327,7 @@ const Lms = () => {
                                     <Button 
                                         size='small'
                                         sx={{mb:1, mt:1, mr:5, color: 'red'}}
-                                        onClick={handleDeleteOpen}
+                                        onClick={()=>{setDialogData(item);handleDeleteOpen()}}
                                     >
                                         Delete
                                     </Button>
@@ -339,7 +339,7 @@ const Lms = () => {
                                             Do you want to delete this?"
                                         </DialogTitle>
                                         <DialogActions>
-                                        <Button onClick={()=>handleDelete(item._id)}>
+                                        <Button onClick={()=>{handleDelete()}}>
                                             Yes
                                         </Button>
                                         <Button onClick={handleDeleteClose}>

@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { useNavigate, useParams} from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { useParams} from 'react-router-dom';
 import { 
     styled, 
     CircularProgress, 
@@ -41,7 +40,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function ViewSubmissions() {
-    const navigate = useNavigate();
     const {subjectid, submissionid} = useParams();
     const {data, isLoading, error} = useFetch(base_url + '/subjects/' + subjectid + '/submissions/' + submissionid + '/all');
 

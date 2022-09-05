@@ -1,25 +1,20 @@
 import * as React from 'react';
-import { Box } from '@mui/system';
-import Typography from '@mui/material/Typography';
-import useFetch from '../../services/useFetch';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState } from 'react';
-import { makeStyles } from '@mui/styles';
+import { useParams } from 'react-router-dom';
+import { Box } from '@mui/system';
+import { 
+    Typography, 
+    CircularProgress, 
+    TextField } from '@mui/material';
+
+import useFetch from '../../services/useFetch';
 import PayTable from '../../components/AdminComponents/PayTable';
-//import CustomPaginationGrid from '../components/AdminComponents/StudentsDataTable';
-import CircularProgress from '@mui/material/CircularProgress';
-import { base_url } from '../../Const/Const';
 import DialogAlert from '../../components/Dialog';
-import { useNavigate,useParams } from 'react-router-dom';
+import { base_url } from '../../Const/Const';
 import dayjs from 'dayjs';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
-
 
 const AdminPayments = () => {
 
@@ -28,10 +23,6 @@ const AdminPayments = () => {
     const [date1, setDate1] = useState(date);
     const { subjectid } = useParams();
     const {data, isLoading, error} = useFetch(base_url + '/subjects/' + subjectid + '/getpayments?date=' + date1);
-    const theme = useTheme();
-    const match = useMediaQuery(theme.breakpoints.down("sm"));
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = React.useState(dayjs());
 
     return (  
         <Box
@@ -44,13 +35,9 @@ const AdminPayments = () => {
                 marginBottom = {2}
                 display='flex'
                 flexWrap="wrap"
-                //backgroundColor="#EDf5e1"
                 paddingLeft={2}
                 paddingTop={1}
-                paddingBottom={1}
-            //    sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2
-            // }}
-                
+                paddingBottom={1}  
             >
             <Typography
              sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}} 

@@ -5,70 +5,99 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { useState } from 'react';
 import QuestionForm from '../../components/Quiz/QuestionForm';
+import { base_url } from '../../Const/Const';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Typography } from '@mui/material';
+
+const initialInputs = {
+  title: "",
+  description: "",
+  duration: "",
+};
 
 const QuizForm = () => {
+  const navigate = useNavigate();
+  const {subjectid} = useParams();
+  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const [inputs, setInputs] = useState(initialInputs);
+  const [questions, setQuestions] = useState([]);
 
-    const [title, setTitle] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [duration, setDuration] = useState(null);
-    
-    const [error, setError] = useState(null)
-    const [isLoading, setIsLoading] = useState(false);
-    const [numberOfQuestions, setNumberOfQuestions] = useState(0);
-    const questionsList = [];
-    const [questions, setQuestions] = useState([]);
-    const [question, setQuestion] = useState({
-      question : null,
-      option_1 : null,
-      option_2 : null,
-      option_3 : null,
-      option_4 : null,
-      correctAnswer : null,
-      mark : null
-    });
+  const handleInputChange = (event) => {
+    setInputs({ ...inputs, [event.target.id]: event.target.value });
+  };
 
-    const handleAddNewQuestions = (question) => {
-      const newQuestions = [
-        ...questions,
-        question
-      ];
-      setQuestions(newQuestions);
-    }
-
-    const createQuestions = (number) => {
-        for (let i = 0; i < number; i++) {
-            questions.push(question);
-            questionsList.push(<QuestionForm 
-              question = {questions[i]}
-              setQuestion = {setQuestion}
-              id = {i} 
-              key = {i}
-              deleteQuestion = {deleteQuestion} 
-              total = {numberOfQuestions}/>);
+  const handleQuestionInputChange = (id, event) => {
+    setQuestions(
+      questions.map((q) => {
+        if (q.id === id) {
+          return {
+            ...q,
+            [event.target.id]: event.target.value,
+          };
         }
-        return questionsList;
-    }
+        return q;
+      })
+    );
+  };
 
-    const deleteQuestion = (index) => {
-      setQuestions([
-        ...questions.slice(0, index),
-        ...questions.slice(index + 1, questions.length)
-      ]);
-      // console.log(id);
-      // questions.splice(id, 1);
-      setNumberOfQuestions(numberOfQuestions - 1)
-    }
+  const handleQuestionAdd = () => {
+    const id = `${Date.now()}-${Math.random()}`;
+    setQuestions([...questions, { id }]);
+  };
 
+  const handleQuestionRemove = (id) => {
+    setQuestions(questions.filter((q) => q.id !== id));
+  };
 
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      console.log(questions);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    var qq = null
+    const data = {
+      ...inputs,
+      questions,
     };
-
-    console.log(questions);
+    if(!error)
+    data.questions.map((q) => {
+      q.option_1 = {optId : 1, answer: q.option_1};
+      q.option_2 = {optId : 2, answer: q.option_2};
+      q.option_3 = {optId : 3, answer: q.option_3};
+      q.option_4 = {optId : 4, answer: q.option_4};
+      return q;
+    });
+    setIsLoading(true);
+    
+    fetch(base_url+'/subjects/' + subjectid + '/quiz', {
+      method: 'POST',
+      headers: {"Content-Type":"application/json",
+          "Authorization": "Bearer " + localStorage.getItem('token')
+      },
+      body:JSON.stringify(data)
+    }).then(res=>{
+      setIsLoading(true);
+      return res.json();
+    })
+    .then(data=>{
+        setIsLoading(false);
+        if(!data['success']){
+            setError(data['error']);
+        }else{
+            navigate(-1);
+        }
+    })
+    .catch(err => {
+        if(err.name === "AbortError"){
+            console.log('Fetch aborted');
+        }else{
+            setIsLoading(false);
+            setError(err.message);
+        }
+    })
+  };
 
     return ( 
-        <Container component="main" maxWidth="sm">
+        <Container maxWidth="sm">
         <Box
           sx={{
             marginTop: 10,
@@ -80,20 +109,20 @@ const QuizForm = () => {
         >
           <form onSubmit={handleSubmit}>
             <TextField
-                value={title}
+                required
+                value={inputs.title}
                 size='small'
                 autoComplete="title"
                 name="title"
-                // required
                 fullWidth
                 id="title"
                 label="Quiz Title"
                 autoFocus
                 margin="dense"
-                onChange={e => setTitle(e.target.value)}
+                onChange={handleInputChange}
             />
             <TextField
-                value={description}
+                value={inputs.description}
                 size='small'
                 autoComplete="description"
                 name="description"
@@ -103,53 +132,68 @@ const QuizForm = () => {
                 autoFocus
                 margin="dense"
                 multiline={true}
-                onChange={e => setDescription(e.target.value)}
+                onChange={handleInputChange}
             />
             <TextField
-                value={duration}
+                required
+                value={inputs.duration}
                 size='small'
                 autoComplete="duration"
                 name="duration"
-                // required
                 fullWidth
                 id="duration"
                 label="Duration"
                 type={'number'}
                 autoFocus
                 margin="dense"
-                onChange={e => setDuration(e.target.value)}
+                onChange={handleInputChange}
             />
             <Grid container justifyContent="flex-end">
                 <Grid item>
                     <p>
-                        Total Questions: {numberOfQuestions}
+                        Total Questions: {questions.length}
                     </p>
                 </Grid>
             </Grid>
-            {createQuestions(numberOfQuestions)}
             <Grid container justifyContent="flex-end">
                 <Grid item>
                     <Button
                     color="primary"
-                    onClick={() => {
-                      setNumberOfQuestions(numberOfQuestions + 1)
-                    }}
+                    onClick={
+                      handleQuestionAdd
+                    }
                     >
                         Add new question
                     </Button>
                 </Grid>
             </Grid>
+            {questions &&
+              questions.map((q) => (
+                <QuestionForm
+                  key={q.id}
+                  question={q}
+                  onChange={handleQuestionInputChange}
+                  onRemove={handleQuestionRemove}
+                />
+              ))}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 ,backgroundColor:"#3F51B5"}}
-              //color="success"
-              disabled={isLoading}
+              // disabled={isLoading}
             >
               Create Quiz
             </Button>
-            {error}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+              >
+              <Typography color='red'>{error}</Typography>
+            </Box>
           </form>
         </Box>       
     </Container>

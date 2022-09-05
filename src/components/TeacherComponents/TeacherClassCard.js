@@ -12,6 +12,8 @@ import {
     CardActions, 
     useTheme, 
     useMediaQuery } from '@mui/material';
+    import { base_url } from '../../Const/Const';
+
 
 const useStyles = makeStyles({
     media: {
@@ -22,11 +24,42 @@ const useStyles = makeStyles({
     }
 });
 
-export default function ClassCard({data}) {
+export default function ClassCard({data, isLoading, setIsLoading, error, setError, updated, setUpdated}) {
     const theme = useTheme();
     const classes = useStyles();
     const navigate = useNavigate();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
+
+    // const handleDelete = (subjectid) => {
+
+    //     setIsLoading(true);
+    //     setError(null);
+    //     fetch(base_url+'/subjects/' + subjectid , {
+    //         method: 'DELETE',
+    //         headers: {"Content-Type":"application/json",
+    //             "Authorization": "Bearer " + localStorage.getItem('token')
+    //         },
+    //     }).then(res=>{
+    //     setIsLoading(true);
+    //     return res.json();
+    //     })
+    //     .then(data=>{
+    //         setIsLoading(false);
+    //         if(!data['success']){
+    //             setError(data['error']);
+    //         }else{
+    //             setUpdated(!updated);
+    //         }
+    //     })
+    //     .catch(err => {
+    //         if(err.name === "AbortError"){
+    //             console.log('Fetch aborted');
+    //         }else{
+    //             setIsLoading(false); 
+    //             setError(err.message);
+    //         }
+    //     })  
+    // }
 
     return (
         <Box
@@ -49,7 +82,7 @@ export default function ClassCard({data}) {
                 </CardContent>
                 <CardActions sx={{justifyContent:'center'}}>
                     <Button size="small" onClick={()=>navigate('/teacher/subjects/' + data._id + '/update')}>Update</Button>
-                    <Button sx={{color:'red'}} size="small">Delete</Button>
+                    {/* <Button sx={{color:'red'}} onClick={()=>{handleDelete(data._id)}} size="small">Delete</Button> */}
                 </CardActions>
             </Card>
         </Box>

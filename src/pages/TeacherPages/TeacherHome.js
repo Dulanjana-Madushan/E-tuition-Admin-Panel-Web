@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Box } from '@mui/system';
@@ -12,11 +13,46 @@ import { base_url } from '../../Const/Const';
 
 const TeacherHome = () => {
 
-    const {data, isLoading, error} = useFetch(base_url + '/subjects/mysubjects');
+    // const {data, isLoading, error} = useFetch(base_url + '/subjects/mysubjects');
 
     const theme = useTheme();
     const navigate = useNavigate();
     const match = useMediaQuery(theme.breakpoints.down("sm"));
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [updated, setUpdated] = useState(false);
+
+    useEffect(()=>{
+        const abortCont = new AbortController();
+        fetch(base_url + '/subjects/mysubjects', {
+            method: 'GET',
+            headers: {"Content-Type":"application/json",
+            "Authorization": "Bearer " + localStorage.getItem('token')}},
+        )
+            .then(res =>{
+                return res.json();
+            })
+            .then(data => {
+                if(data['success']){
+                    setData(data['data']);
+                }else{
+                    setError(data['error'])
+                }
+                setIsLoading(false);
+            })
+            .catch(err => {
+                if(err.name === "AbortError"){
+                    setError('Fetch aborted');
+                }else{
+                    setIsLoading(false);
+                    setError(err.message);
+                }
+            })
+
+            return () => abortCont.abort();
+
+    },[updated])
 
     return ( 
         <Box
@@ -68,7 +104,7 @@ const TeacherHome = () => {
             >
                 {data && data.map((item) => (
                     <div key={item._id}>
-                        <ClassCard data={item} />
+                        <ClassCard data={item} isLoading={isLoading} setIsLoading={setIsLoading} error={error} setError={setError} updated={updated} setUpdated={setUpdated}  />
                     </div>
                 ))}
             </Box>

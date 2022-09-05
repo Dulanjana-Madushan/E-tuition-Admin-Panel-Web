@@ -1,9 +1,11 @@
 import { Box } from '@mui/system';
-import Typography from '@mui/material/Typography';
+import {
+  Typography, 
+  CircularProgress,
+  useTheme,
+  useMediaQuery} from '@mui/material';
+
 import useFetch from '../../services/useFetch';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import CircularProgress from '@mui/material/CircularProgress';
 import DialogAlert from '../../components/Dialog';
 import AnalyzeCard from '../../components/AdminComponents/AnalyzeCards';
 import ColumnChart from '../../components/AdminComponents/ColumnChart';
@@ -31,7 +33,6 @@ const AdminHome = () => {
                  paddingLeft={2}
                  paddingTop={1}
                  paddingBottom={1}
-                 //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
              >
              <Typography
                sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}} 
@@ -64,19 +65,11 @@ const AdminHome = () => {
               paddingLeft={2}
               paddingTop={1}
               paddingBottom={1}
-              // sx={{justifyContent:'center',
-              // border:1,
-              // backgroundColor:'#F2F2F2',
-              // borderColor:'#E0E0E0',
-              // borderRadius: 2
-              // }}
               >
               <Typography sx={{fontSize:20,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}} >
                 Subject Stream Analysis
               </Typography>
             </Box>
-
-
             <Box
               display='flex'
               flexWrap="wrap"

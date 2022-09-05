@@ -163,7 +163,6 @@ const Announcements = () => {
                paddingLeft={2}
                paddingTop={1}
                paddingBottom={1}
-               //sx={{justifyContent:'center',backgroundColor:'#F2F2F2',border:1, borderColor:'#E0E0E0',borderRadius: 2}}
             >
                 <Typography
                     sx={{fontSize:30,mb:1,mt:1,color:"#3F51B5",fontWeight: 600}}
@@ -224,7 +223,7 @@ const Announcements = () => {
                 sx={{justifyContent:'center'}}
             >
                 {error && error === 'Token Expired' && <DialogAlert></DialogAlert>}
-                {error && <div color="red">{error}</div>}
+                {error && <Typography color="red">{error}</Typography>}
                 {isLoading && <CircularProgress color="primary" />}
             </Box>
             <Box

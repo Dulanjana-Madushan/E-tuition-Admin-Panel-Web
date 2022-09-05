@@ -6,11 +6,7 @@ import AdminNavbar from './components/AdminComponents/AdminNavbar';
 import AdminHome from './pages/AdminPages/AdminHome';
 import TeacherDetails from './pages/AdminPages/TeachersDetails';
 import AllClasses from './pages/AdminPages/AllClasses';
-// import SignUp from "./pages/AuthPages/Register";
-// import Navbar from './components/AdminComponents/AdminNavbar';
 import ClassDetails from './pages/AdminPages/ClassDetails';
-// import TeachersDetails from './pages/AdminPages/TeachersDetails';
-// import { makeStyles } from '@mui/styles';
 import StudentsDetails from './pages/AdminPages/StudentsDetails';
 import AdminProfile from './pages/AdminPages/AdminProfile';
 import Notification from './pages/AdminPages/Notification';
@@ -18,7 +14,6 @@ import Verification from './pages/AdminPages/Verifications';
 import OneStudent from './pages/AdminPages/OneStudent';
 import OneTeacher from './pages/AdminPages/OneTeacher';
 import AdminPayments from './pages/AdminPages/AdminPayments';
-import ProfileEdit from './pages/AdminPages/ProfileEdit';
 import Settings from './pages/AdminPages/Settings';
 import PageNotFound from './pages/PageNotFound';
 
@@ -35,10 +30,11 @@ import AddStudent from './pages/TeacherPages/AddStudent';
 import Review from './pages/TeacherPages/Review';
 import AddDoc from './pages/TeacherPages/AddDocs';
 import ViewSubmissions from './pages/TeacherPages/ViewSubmissions';
-import Chat from './pages/TeacherPages/Chat';
+// import Chat from './pages/TeacherPages/Chat';
 import TNotification from './pages/TeacherPages/Notification';
 import TeacherSettings from './pages/TeacherPages/TeacherSettings';
 import TeacherProfile from './pages/TeacherPages/TeacherProfile';
+import TeacherUpdateProfile from './pages/TeacherPages/TeacherUpdateProfile';
 import QuizForm from './pages/TeacherPages/QuizForm';
 import QuizList from './pages/TeacherPages/QuizList';
 
@@ -55,25 +51,9 @@ const router = (role, setToken)=>[
         path: '/forgetpwd',
         element: <ForgetPwd/>,
     },
-    // {
-    //     path: '/admin',
-    //     element: role === "admin" ? <AdminNavbar/> :  <Login/>,
-    //     children: [
-    //         { path: '/admin', element: <AdminHome/> },
-    //         { path: 'home', element: <AdminHome/> },
-    //         { path: 'all-classes', element: <AllClasses/> },
-    //         { path: 'class-details/:subjectid', element: <ClassDetails/> }, 
-    //         { path: 'all-teachers', element: <TeacherDetails/> },
-    //         { path: 'teacher-details/:userid', element: <OneTeacher/> }, 
-    //         { path: 'allstudents', element: <StudentsDetails/> }, 
-    //         { path: 'student-details/:userid', element: <OneStudent/> }, 
-    //         { path: 'notification', element: <Notification/> }, 
-    //         { path: 'admin-profile', element: <AdminProfile/> }, 
-    //     ]
-    // },
     {
         path: '/admin',
-        element: role == "admin" ? <AdminNavbar/> :  <Login/>,
+        element: role === "admin" ? <AdminNavbar/> :  <Login/>,
         children: [
             { path: '/admin', element: <AdminHome/> },
             { path: 'home', element: <AdminHome/> },
@@ -87,7 +67,6 @@ const router = (role, setToken)=>[
             { path: 'verification', element: <Verification/> },
             { path: 'settings', element: <Settings setToken={setToken}/> }, 
             { path: 'aprofile', element: <AdminProfile/> },
-            { path: 'profileedit', element: <ProfileEdit/> },
             { path: 'adminpayments/:subjectid', element: <AdminPayments/> },
         ]
     },
@@ -111,10 +90,12 @@ const router = (role, setToken)=>[
             { path: 'subjects/:subjectid/quiz', element: <QuizList/> },
             { path: 'subjects/:subjectid/createquiz', element: <QuizForm/> },
             { path: 'quiz/:quizid', element: <QuizForm/> },
-            { path: 'chat', element: <Chat/> },  
+            // { path: 'chat', element: <Chat/> },  
             { path: 'tnotification', element: <TNotification/> },
             { path: 'tsettings', element: <TeacherSettings/> }, 
-            { path: 'tprofile', element: <TeacherProfile/> }
+            { path: 'profile', element: <TeacherProfile/> },
+            { path: 'updateprofile', element: <TeacherUpdateProfile/> },
+            { path: 'studentdetails/:userid', element: <OneStudent/> }, 
         ]
     },
     {

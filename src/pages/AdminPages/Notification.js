@@ -15,9 +15,6 @@ const Notification = () => {
     const match = useMediaQuery(theme.breakpoints.down("sm"));
     const [open, setOpen] = useState(false);
 
-
-    
-
     return (  
         <Box
             display='flex'

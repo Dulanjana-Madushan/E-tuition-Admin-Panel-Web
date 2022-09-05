@@ -1,5 +1,5 @@
-//export const base_url = 'http://localhost:5000';
-export const base_url = 'https://tutorlk-data.herokuapp.com';
+export const base_url = 'http://localhost:5000';
+// export const base_url = 'https://tutorlk-data.herokuapp.com';
 
 export const types = [
     "Mass class",
@@ -112,4 +112,4 @@ export const days = [
     "Saturday"
 ];
 
-export const genders = ['Gender', 'Male', 'Female'];
+export const genders = ['Male', 'Female'];

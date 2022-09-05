@@ -11,7 +11,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useNavigate } from 'react-router-dom';
+import { base_url } from '../../Const/Const';
+import useFetch from '../../services/useFetch';
+import { useNavigate,useParams} from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 
 
@@ -36,7 +38,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export default function StudentListTable({data}) {
+
+export default function TeacherPayTable(data) {
+  const { subjectid } = useParams();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -48,64 +52,52 @@ export default function StudentListTable({data}) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
   const navigate = useNavigate();
-
   return (
       <Box 
         display='flex'
         flexDirection='column'
         sx={{ mt: 4, width:'100%'}}  
      >
+        <Typography sx={{fontSize:15,fontWeight: 600}}>
 
-        {data &&<TableContainer sx={{  mt: 1}} component={Paper}>
+                {'Today - ' + new Date().toDateString()}
+        </Typography>
+        {data && <TableContainer sx={{  mt: 1}} component={Paper}>
           <Table  size="small" aria-label="customized table">
             <TableHead sx={{backgroundColor: "#3F51B5"}}>
               <TableRow Color= "white">
-                <StyledTableCell align="center"><Typography color= "white">Photo</Typography></StyledTableCell>
                 <StyledTableCell align="center"><Typography color= "white">Name</Typography></StyledTableCell>
                 <StyledTableCell align="center"><Typography color= "white">Email</Typography></StyledTableCell>
-                <StyledTableCell align="center"><Typography color= "white">Phone</Typography></StyledTableCell>
-                <StyledTableCell align="center"><Typography color= "white">School</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">IsPaid</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">Paid Date</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">Enrolled Date</Typography></StyledTableCell>
+                <StyledTableCell align="center"><Typography color= "white">View</Typography></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {(rowsPerPage > 0
-              ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : data
+            {(rowsPerPage > 0
+              ? data.data.students.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : data.data.students
               ).map((row) => (
-                <StyledTableRow key={row.student.name}>
-                  <StyledTableCell align="center" >
-                  <Box
-                    display='flex'
-                    flexDirection='row'
-                    sx={{justifyContent:'center'}}
-                  >
-                    <Avatar alt="John Doe" src={row.student.photo.webContentLink}/>
-                    </Box>
-                  </StyledTableCell>
-                  <StyledTableCell align="center">{row.student.name}</StyledTableCell>
-                  <StyledTableCell align="center">{row.student.email}</StyledTableCell>
-                  <StyledTableCell align="center">{row.student.phone}</StyledTableCell>
-                  <StyledTableCell align="center">{row.student.school}</StyledTableCell>
-                  {/* {row.isPending.toString() === 'false' && (
-                  <StyledTableCell align="center">Verified</StyledTableCell>
-                  )}
-                  {row.isPending.toString() !== 'false' && (
-                  <StyledTableCell align="center">Pending</StyledTableCell>
-                  )} */}
-                  {/* <StyledTableCell align="center">
+                <StyledTableRow key={row.id}>
+                  <StyledTableCell align="center">{row.name}</StyledTableCell>
+                  <StyledTableCell align="center">{row.email}</StyledTableCell>
+                  <StyledTableCell align="center">{row.payment._id ?'Yes':'No'}</StyledTableCell>
+                  <StyledTableCell align="center">{!row.payment._id ?"-" : row.payment.date.substring(0,10)}</StyledTableCell>
+                  <StyledTableCell align="center">{row.enrolledDate.substring(0,10)}</StyledTableCell>
+                  <StyledTableCell align="center">
                   <Box
                     sx={{justifyContent:'right', mt:0}}
                   >
-                    <Button variant="none" onClick={()=>{
-                      navigate("/admin/studentdetails/"+row._id)
+                    <Button variant="contained" onClick={()=>{
+                      navigate("/teacher/studentdetails/"+row.id)
                     }}
                     sx={{backgroundColor:"#3F51B5",color:"white"}}>
                         view
                     </Button>          
                   </Box>
-                  </StyledTableCell> */}
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -113,7 +105,7 @@ export default function StudentListTable({data}) {
               <TableRow>
                     <TablePagination
                     rowsPerPageOptions={[2,4,6,8,10]}
-                    count={data.length}
+                    count={data.data.students.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     SelectProps={{
@@ -123,10 +115,8 @@ export default function StudentListTable({data}) {
                     }}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                    //ActionsComponent={TablePaginationActions}
-                    //component={Box}
                     labelDisplayedRows={({ page }) => {
-                      return `Page: ${page+1}`;
+                      return `Page: ${page +1}`;
                     }}
                     backIconButtonProps={{
                       color: "secondary"
@@ -150,7 +140,7 @@ export default function StudentListTable({data}) {
               </TableRow>
             </TableFooter>
           </Table>
-        </TableContainer>}     
+        </TableContainer>}
       </Box>
   );
 }

@@ -1,18 +1,19 @@
+import { useState } from "react";
 import { Box } from '@mui/system';
-import ClassDataTable from '../../components/AdminComponents/ClassDataTable';
-import Typography from '@mui/material/Typography';
-import useFetch from '../../services/useFetch';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import CircularProgress from '@mui/material/CircularProgress';
-import { base_url } from '../../Const/Const';
-import DialogAlert from '../../components/Dialog';
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import IconButton from '@mui/material/IconButton';
+import { 
+    Paper, 
+    InputBase, 
+    IconButton, 
+    CircularProgress, 
+    Typography, 
+    useTheme, 
+    useMediaQuery } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { useState, useEffect } from "react";
-import { set, setDate } from 'date-fns';
+
+import useFetch from '../../services/useFetch';
+import ClassDataTable from '../../components/AdminComponents/ClassDataTable';
+import DialogAlert from '../../components/Dialog';
+import { base_url } from '../../Const/Const';
 
 const AllClasses = () => {
 

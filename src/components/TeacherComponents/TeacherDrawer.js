@@ -38,9 +38,6 @@ const useStyles = makeStyles({
           }
     },
     selected: {},
-    // drawer:{
-    //   width:"200px"
-    // }
 })
 
 export default function SideDrawer({open}) {
@@ -109,7 +106,7 @@ export default function SideDrawer({open}) {
                         </ListItemIcon>
                         <Typography sx={{fontWeight: 600}}>Home</Typography>
                     </ListItemButton>
-                    <ListItemButton
+                    {/* <ListItemButton
                         selected={selectedIndex === 1}
                         onClick={(event) => {handleListItemClick(1);
                          navigate("/teacher/chat")}}
@@ -123,7 +120,7 @@ export default function SideDrawer({open}) {
                         </ListItemIcon>
                         <Typography sx={{fontWeight: 600}}>Chat</Typography>
 
-                    </ListItemButton>
+                    </ListItemButton> */}
 
                     <ListItemButton
                         selected={selectedIndex === 2}

@@ -13,7 +13,6 @@ import { useState } from 'react';
 import Drawer from './TeacherDrawer';
 import { BrowserRouter as Router, Route, Switch, Outlet} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import profile from "../../images/john_doe.jpg";
 import useFetch from '../../services/useFetch';
 import { base_url } from '../../Const/Const';
 import logo from '../../images/web_nav_logo.png';
@@ -201,7 +200,7 @@ export default function AdminNavbar() {
                 aria-haspopup="true"
                 //onClick={handleMobileMenuOpen}
                 onClick={()=>{
-                 navigate("/teacher/tprofile");
+                 navigate("/teacher/profile");
                 }}
               >
                  <StyledBadge
