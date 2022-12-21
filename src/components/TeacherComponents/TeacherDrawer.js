@@ -137,7 +137,7 @@ export default function SideDrawer({open}) {
                         <Typography sx={{fontWeight: 600}}>Notifications</Typography>
                     </ListItemButton>
 
-                    <ListItemButton
+                    {/* <ListItemButton
                         selected={selectedIndex === 3}
                         onClick={(event) => {handleListItemClick(3);
                         navigate("/teacher/tsettings")}}
@@ -150,7 +150,7 @@ export default function SideDrawer({open}) {
                             <SettingsIcon sx={{color:'#3F51B5'}}/>
                         </ListItemIcon>
                         <Typography sx={{fontWeight: 600}}>Settings</Typography>
-                    </ListItemButton>
+                    </ListItemButton> */}
 
                 </List>
             </Box>

@@ -175,8 +175,8 @@ export default function ForgetPwd() {
                         />
                         </DialogContent>
                         <DialogActions>
-                        {/* <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={navigate('/login')}>Save</Button> */}
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={navigate('/login')}>Save</Button>
                         </DialogActions>
                     </Dialog>
                     <Grid container>

@@ -163,7 +163,7 @@ export default function SideDrawer({open}) {
                         </ListItemIcon>
                         <Typography sx={{fontWeight: 600}}>Verification</Typography>
                     </ListItemButton>
-                    <ListItemButton
+                    {/* <ListItemButton
                         selected={selectedIndex === 5}
                         onClick={(event) => {handleListItemClick(5);
                         navigate("/admin/settings")}}
@@ -176,7 +176,7 @@ export default function SideDrawer({open}) {
                             <SettingsIcon sx={{color:'#3F51B5'}}/>
                         </ListItemIcon>
                         <Typography sx={{fontWeight: 600}}>Settings</Typography>
-                    </ListItemButton>
+                    </ListItemButton> */}
                 </List>
             </Box>
         </Drawer>
